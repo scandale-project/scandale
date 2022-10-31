@@ -1,8 +1,5 @@
 # pumpkin
 
-[![PyPI - Version](https://img.shields.io/pypi/v/pumpkin.svg)](https://pypi.org/project/pumpkin)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pumpkin.svg)](https://pypi.org/project/pumpkin)
-
 -----
 
 **Table of Contents**
