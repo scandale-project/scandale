@@ -1,61 +1,58 @@
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[project]
+[tool.poetry]
 name = "pumpkin"
-description = 'The demoniac MAS monitoring platform.'
-readme = "README.md"
-requires-python = ">=3.8"
+version = "0.1.0"
+description = "The demoniac MAS monitoring platform. 🎃"
+authors = ["Cédric Bonhomme <cedric@cedricbonhomme.org>"]
 license = "AGPL-3.0-or-later"
-keywords = ["MAS", "SPADE", "XMPP", "monitorin", "security"]
-authors = [
-  { name = "Cédric Bonhomme", email = "cedric@cedricbonhomme.org" },
-]
+readme = "README.md"
+homepage = "https://sr.ht/~cedric/pumpkin"
+repository = "https://git.sr.ht/~cedric/pumpkin"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+spade = "^3.2.2"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^0.982"
+flake8 = "^5.0.4"
+reorder-python-imports = "^3.9.0"
+pre-commit = "^2.20.0"
+black = "^22.10.0"
+pyupgrade = "^3.2.0"
+autoflake = "^1.7.7"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+keywords = ["MAS", "SPADE", "XMPP", "monitoring", "security"]
+
 classifiers = [
-  "Development Status :: 4 - Beta",
-  "Programming Language :: Python",
-  "Programming Language :: Python :: 3.7",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: Implementation :: CPython",
-  "Programming Language :: Python :: Implementation :: PyPy",
-]
-dependencies = []
-dynamic = ["version"]
-
-[project.urls]
-Documentation = "https://github.com/cedricbonhomme/pumpkin#readme"
-Issues = "https://github.com/cedricbonhomme/pumpkin/issues"
-Source = "https://github.com/cedricbonhomme/pumpkin"
-
-[tool.hatch.version]
-path = "pumpkin/__about__.py"
-
-[tool.hatch.envs.default]
-dependencies = [
-  "pytest",
-  "pytest-cov",
-]
-[tool.hatch.envs.default.scripts]
-cov = "pytest --cov-report=term-missing --cov-config=pyproject.toml --cov=pumpkin --cov=tests {args}"
-no-cov = "cov --no-cov {args}"
-
-[[tool.hatch.envs.test.matrix]]
-python = ["37", "38", "39", "310", "311"]
-
-[tool.coverage.run]
-branch = true
-parallel = true
-omit = [
-  "pumpkin/__about__.py",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Topic :: Security",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"
 ]
 
-[tool.coverage.report]
-exclude_lines = [
-  "no cov",
-  "if __name__ == .__main__.:",
-  "if TYPE_CHECKING:",
-]
+[tool.mypy]
+python_version = "3.11"
+check_untyped_defs = true
+ignore_errors = false
+ignore_missing_imports = true
+strict_optional = true
+no_implicit_optional = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unreachable = true
+
+show_error_context = true
+pretty = true
+
+exclude = "build|dist|docs|stegano.egg-info"

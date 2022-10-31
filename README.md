@@ -9,9 +9,7 @@
 
 ## Installation
 
-```console
-pip install pumpkin
-```
+
 
 ## License
 
