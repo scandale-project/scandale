@@ -1,4 +1,4 @@
-# pumpkin
+# pumpkin - The demoniac MAS monitoring platform 🎃
 
 -----
 
@@ -9,7 +9,7 @@
 
 ## Installation
 
-
+Install an XMPP server, for example prosody.
 
 ## License
 
