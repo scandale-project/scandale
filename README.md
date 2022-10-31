@@ -18,4 +18,5 @@ pip install pumpkin
 
 ## License
 
-`pumpkin` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
+`pumpkin` is distributed under the terms of the
+[GNU Affero General Public License version 3](https://www.gnu.org/licenses/agpl-3.0.html).
