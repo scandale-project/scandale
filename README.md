@@ -1,4 +1,4 @@
-# pumpkin - The demoniac MAS monitoring platform 🎃
+# pumpkin - The MAS Demonic Surveillance Platform 🎃
 
 -----
 
@@ -7,9 +7,15 @@
 - [Installation](#installation)
 - [License](#license)
 
+
 ## Installation
 
-Install an XMPP server, for example prosody.
+Install an XMPP server.
+To create a new XMPP account for each demon you can follow the steps of
+[here](https://xmpp.org/getting-started/).
+To choose an XMPP server, visit this [page](https://xmpp.org/software/servers.html).
+I have tested with [Prosody](https://prosody.im).
+
 
 ## License
 
