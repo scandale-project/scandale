@@ -2,7 +2,9 @@
 name = "pumpkin"
 version = "0.1.0"
 description = "The MAS Demonic Surveillance Platform. 🎃"
-authors = ["Cédric Bonhomme <cedric@cedricbonhomme.org>"]
+authors = [
+    "Cédric Bonhomme <cedric@cedricbonhomme.org>"
+]
 license = "AGPL-3.0-or-later"
 readme = "README.md"
 homepage = "https://sr.ht/~cedric/pumpkin"
