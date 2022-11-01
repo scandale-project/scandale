@@ -8,6 +8,19 @@
 - [License](#license)
 
 
+```mermaid
+flowchart LR
+
+A[Probe with periodic behaviour] -->|JSON formatted result| B(Aggregation)
+AA[Probe with cyclic behaviour] -->|JSON formatted result| B
+AAA[Probe with one shot behaviour] -->|JSON formatted result| B
+B --> C(Correlation Engine with cyclic behaviour)
+C -->|Write| D[Database]
+C -->|Send| E[Ad hoc module]
+F[External source] -->|HTTP POST| C
+```
+
+
 ## Installation
 
 ### Install an XMPP server
