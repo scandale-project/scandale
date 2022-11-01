@@ -1,11 +1,13 @@
 import time
+import getpass
 import asyncio
+from spade import quit_spade
 from spade.agent import Agent
 from spade.behaviour import CyclicBehaviour
 
 
 class CorrelationEngine(Agent):
-    class MyBehav(CyclicBehaviour):
+    class CollectingBehav(CyclicBehaviour):
         async def on_start(self):
             print("Starting behaviour . . .")
             self.counter = 0
@@ -17,12 +19,14 @@ class CorrelationEngine(Agent):
 
     async def setup(self):
         print("Agent starting . . .")
-        b = self.MyBehav()
+        b = self.CollectingBehav()
         self.add_behaviour(b)
 
 
 if __name__ == "__main__":
-    agent = CorrelationEngine("CE@localhost", "passwordCE")
+    jid = "CE@localhost"
+    passwd = getpass.getpass("Password for {}:\n".format(jid))
+    agent = CorrelationEngine("CE@localhost", passwd)
     future = agent.start()
     future.result()
     agent.web.start(hostname="127.0.0.1", port="10000")
@@ -34,3 +38,5 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("Stopping...")
     agent.stop()
+
+    quit_spade()
