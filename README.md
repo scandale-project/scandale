@@ -36,7 +36,8 @@ To choose an XMPP server, visit this [page](https://xmpp.org/software/servers.ht
 
 To create a new XMPP account you can follow the steps
 [here](https://xmpp.org/getting-started/).
-Create an XMPP account for each demon.  
+Create an XMPP account for each demon.
+Each demon will have a different JID and a different password.
 
 ### Install the correlation agent
 
@@ -44,7 +45,6 @@ Create an XMPP account for each demon.
 ```shell
 $ poetry install
 ```
-
 
 ## License
 
