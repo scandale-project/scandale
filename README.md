@@ -8,6 +8,8 @@
 - [License](#license)
 
 
+## Conceptual architecture
+
 ```mermaid
 flowchart LR
 
