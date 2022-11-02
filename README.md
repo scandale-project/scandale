@@ -4,6 +4,7 @@
 
 **Table of Contents**
 
+- [Conceptual architecture](#conceptual-architecture)
 - [Installation](#installation)
 - [License](#license)
 
