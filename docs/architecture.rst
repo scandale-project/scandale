@@ -34,7 +34,7 @@ Screen shots
 .. figure:: _static/02-list-of-messages.png
    :alt: Messages received by the Correlation Engine
 
-   Messages received by the Correlation Engine
+   Messages received by the Correlation Engine from various probes.
 
 
 .. figure:: _static/03-presence-notification.png
