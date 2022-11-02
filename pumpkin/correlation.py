@@ -46,6 +46,9 @@ class CorrelationEngine(Agent):
         self.sharing_behav = self.SharingBehav()
         self.add_behaviour(self.sharing_behav)
 
+        self.presence.set_available()
+        self.presence.subscribe("probe2@localhost")
+
 
 
 if __name__ == "__main__":

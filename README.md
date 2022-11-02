@@ -27,6 +27,7 @@ You can see some screen shots [here](docs/_static/).
 ``Ad hoc module``: a module in order to share data with external platforms,
 such as MISP or other database systems.
 
+The correlation agent also provides a PubSub mechanism.
 
 ## Installation
 
