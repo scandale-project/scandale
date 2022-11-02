@@ -24,6 +24,9 @@ F[External source] -->|HTTP POST| C
 
 You can see some screen shots [here](docs/_static/).
 
+``Ad hoc modules``: module to share data with external platforms, such as MISP
+ or other database systems.
+
 
 ## Installation
 
