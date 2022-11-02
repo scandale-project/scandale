@@ -16,6 +16,9 @@ Architecture
 
 |
 
+Each agent is authenticated, registered and declare its availability
+(for the presence notification system).
+
 ``Ad hoc module``: a module in order to share data with external platforms,
 such as MISP or other database systems.
 
