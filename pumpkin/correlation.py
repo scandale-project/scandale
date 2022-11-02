@@ -51,7 +51,7 @@ class CorrelationEngine(Agent):
 if __name__ == "__main__":
     jid = "CE@localhost"
     passwd = getpass.getpass("Password for {}:\n".format(jid))
-    agent = CorrelationEngine("CE@localhost", passwd)
+    agent = CorrelationEngine(jid, passwd)
     future = agent.start()
     future.result()
     agent.web.start(hostname="127.0.0.1", port="10000")
