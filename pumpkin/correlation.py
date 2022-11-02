@@ -18,15 +18,20 @@ class CorrelationEngine(Agent):
             self.counter += 1
             await asyncio.sleep(1)
 
-
     class SharingBehav(OneShotBehaviour):
         async def run(self):
             print("SharingBehav running")
-            msg = Message(to="receiver@your_xmpp_server")     # Instantiate the message
-            msg.set_metadata("performative", "inform")  # Set the "inform" FIPA performative
-            msg.set_metadata("ontology", "myOntology")  # Set the ontology of the message content
-            msg.set_metadata("language", "OWL-S")       # Set the language of the message content
-            msg.body = "data"                    # Set the message content
+            msg = Message(to="receiver@your_xmpp_server")  # Instantiate the message
+            msg.set_metadata(
+                "performative", "inform"
+            )  # Set the "inform" FIPA performative
+            msg.set_metadata(
+                "ontology", "myOntology"
+            )  # Set the ontology of the message content
+            msg.set_metadata(
+                "language", "OWL-S"
+            )  # Set the language of the message content
+            msg.body = "data"  # Set the message content
 
             await self.send(msg)
             print("Message sent!")
@@ -36,7 +41,6 @@ class CorrelationEngine(Agent):
 
             # stop agent from behaviour
             # await self.agent.stop()
-
 
     async def setup(self):
         print("Agent starting . . .")
@@ -48,7 +52,6 @@ class CorrelationEngine(Agent):
 
         self.presence.set_available()
         self.presence.subscribe("probe2@localhost")
-
 
 
 if __name__ == "__main__":
