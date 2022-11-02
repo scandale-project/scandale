@@ -21,5 +21,7 @@ venv
 build
 .python-version
 
+docs/_build
+
 instance/development.py
 .coverage
