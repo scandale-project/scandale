@@ -31,6 +31,13 @@ To create a new XMPP account you can follow the steps
 [here](https://xmpp.org/getting-started/).
 Create an XMPP account for each demon.  
 
+### Install the correlation agent
+
+
+```shell
+$ poetry install
+```
+
 
 ## License
 

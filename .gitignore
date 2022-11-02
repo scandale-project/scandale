@@ -19,6 +19,7 @@ eproject.cfg
 # Virtualenv
 venv
 build
+.python-version
 
 instance/development.py
 .coverage
