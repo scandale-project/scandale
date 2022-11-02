@@ -20,6 +20,8 @@ C -->|Send| E[Ad hoc module]
 F[External source] -->|HTTP POST| C
 ```
 
+You can see some screen shots [here](docs/_static/).
+
 
 ## Installation
 
