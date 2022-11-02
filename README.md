@@ -30,6 +30,7 @@ such as MISP or other database systems.
 
 The correlation agent also provides a PubSub mechanism.
 
+
 ## Installation
 
 ### Install an XMPP server
