@@ -32,7 +32,7 @@ You can see some screen shots [here](docs/_static/).
 such as MISP or other database systems.
 
 The correlation agent also provides a PubSub mechanism.
-More information in the [documentation](https://spade-mas.readthedocs.io).
+More information in the [documentation](https://pumpkin-project.readthedocs.io).
 
 
 ## Installation
@@ -56,7 +56,7 @@ $ poetry install
 
 ## Documentation
 
-A documentation is available [here](https://spade-mas.readthedocs.io).
+A documentation is available [here](https://pumpkin-project.readthedocs.io).
 
 A list of references articles is provided [here](https://pumpkin-project.readthedocs.io/en/latest/references.html).
 
