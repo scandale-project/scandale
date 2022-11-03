@@ -3,8 +3,15 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Pumpkin's documentation!
-===================================
+Presentation
+============
+
+Pumpkin, the MAS Demonic Surveillance Platform, is a libre
+software which is providing a backend architecture for
+executing tests on an infrastructure, collecting results and
+storing proof of checks.  
+It also provides different mechanisms of extensions and connections.
+
 
 .. toctree::
    :caption: Conceptual considerations
@@ -14,6 +21,12 @@ Welcome to Pumpkin's documentation!
    architecture
    references
 
+
+License
+=======
+
+MONARC Stats Service is licensed under
+`GNU Affero General Public License version 3 <https://www.gnu.org/licenses/agpl-3.0.html>`_.
 
 
 Indices and tables

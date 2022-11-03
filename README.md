@@ -32,6 +32,7 @@ You can see some screen shots [here](docs/_static/).
 such as MISP or other database systems.
 
 The correlation agent also provides a PubSub mechanism.
+More information in the [documentation](https://spade-mas.readthedocs.io).
 
 
 ## Installation
