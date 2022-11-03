@@ -12,6 +12,7 @@ Welcome to Pumpkin's documentation!
    :hidden:
 
    architecture
+   references
 
 
 

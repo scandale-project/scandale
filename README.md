@@ -23,6 +23,9 @@ C -->|Send| E[Ad hoc module]
 F[External source] -->|HTTP POST| C
 ```
 
+Each agent is authenticated, registered and declare its availability
+(for the presence notification system).
+
 You can see some screen shots [here](docs/_static/).
 
 ``Ad hoc module``: a module in order to share data with external platforms,
@@ -48,6 +51,12 @@ Each demon will have a different JID and a different password.
 ```shell
 $ poetry install
 ```
+
+
+## Documentation
+
+A documentation is available [here](https://spade-mas.readthedocs.io).
+
 
 ## License
 

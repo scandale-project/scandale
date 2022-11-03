@@ -34,8 +34,11 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx_autodoc_typehints",
     "sphinx_multiversion",
-    "sphinxcontrib.mermaid"
+    "sphinxcontrib.mermaid",
+    "sphinxcontrib.bibtex"
 ]
+
+bibtex_bibfiles = ['refs.bib']
 
 # Patterns
 # smv_tag_whitelist = r"^refs/tags/v\d+\.\d+\.\d+$|latest"
@@ -80,7 +83,6 @@ html_sidebars = {
 }
 
 html_theme_options = {
-    "theme_dev_mode": True,
     "path_to_docs": "docs",
     "repository_url": "https://github.com/cedricbonhomme/pumpkin",
     # "repository_branch": "gh-pages",  # For testing
