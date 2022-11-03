@@ -8,6 +8,10 @@
 - [Installation](#installation)
 - [License](#license)
 
+Pumpkin, the MAS Demonic Surveillance Platform, is a libre software which is providing
+a __backend architecture__ for executing tests on an infrastructure, collecting
+results and storing proof of checks.
+It also provides different mechanisms of extensions and connections.
 
 ## Conceptual architecture
 
@@ -23,8 +27,13 @@ C -->|Send| E[Ad hoc module]
 F[External source] -->|HTTP POST| C
 ```
 
+The purpose of this rather complex example is to show what it would currently
+be possible to do.
+
 Each agent is authenticated, registered and declare its availability
-(for the presence notification system).
+(for the presence notification system). The OMEMO protocol can be used for
+communications between agents.
+
 
 You can see some screen shots [here](docs/_static/).
 
