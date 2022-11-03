@@ -6,6 +6,8 @@
 Presentation
 ============
 
+Pumpkin - Let's make it fun.
+
 Pumpkin, the MAS Demonic Surveillance Platform, is a libre
 software which is providing a backend architecture for
 executing tests on an infrastructure, collecting results and
@@ -25,7 +27,7 @@ It also provides different mechanisms of extensions and connections.
 License
 =======
 
-MONARC Stats Service is licensed under
+Pumpkin is licensed under
 `GNU Affero General Public License version 3 <https://www.gnu.org/licenses/agpl-3.0.html>`_.
 
 
