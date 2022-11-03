@@ -20,7 +20,8 @@ Each agent is authenticated, registered and declare its availability
 (for the presence notification system).
 
 ``Ad hoc module``: a module in order to share data with external platforms,
-such as MISP or other database systems.
+such as MISP :footcite:p:`10.1145/2994539.2994542` or other database systems.
+
 
 The correlation agent also provides a PubSub mechanism.
 
@@ -55,3 +56,6 @@ Screen shots
    :alt: Some details about a contact of the Correlation Engine.
 
    Some details about a contact of the Correlation Engine.
+
+
+.. footbibliography::
