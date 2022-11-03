@@ -82,6 +82,7 @@ html_sidebars = {
     ],
 }
 
+html_title = "The MAS Demonic Surveillance Platform"
 html_theme_options = {
     "path_to_docs": "docs",
     "repository_url": "https://github.com/cedricbonhomme/pumpkin",
@@ -93,9 +94,9 @@ html_theme_options = {
     "use_issues_button": True,
     "use_repository_button": True,
     "use_download_button": True,
+    "home_page_in_toc": True,
     # For testing
     # "use_fullscreen_button": False,
-    # "home_page_in_toc": True,
     # "single_page": True,
     # "extra_footer": "<a href='https://google.com'>Test</a>",  # DEPRECATED KEY
     # "extra_navbar": "<a href='https://google.com'>Test</a>",
