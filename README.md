@@ -57,6 +57,8 @@ $ poetry install
 
 A documentation is available [here](https://spade-mas.readthedocs.io).
 
+A list of references articles is provided [here](https://pumpkin-project.readthedocs.io/en/latest/references.html).
+
 
 ## License
 
