@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Pumpkin'
-copyright = "Luxembourg House of Cybersecurity <opensource@nc3.lu>"
+copyright = "CIRCL <info@circl.lu>"
 author = "Cédric Bonhomme <cedric@cedricbonhomme.org>"
 
 # The full version, including alpha/beta/rc tags
@@ -85,10 +85,10 @@ html_sidebars = {
 html_title = "The MAS Demonic Surveillance Platform"
 html_theme_options = {
     "path_to_docs": "docs",
-    "repository_url": "https://github.com/cedricbonhomme/pumpkin",
+    "repository_url": "https://github.com/scandale-project/pumpkin",
     # "repository_branch": "gh-pages",  # For testing
     "launch_buttons": {
-        "binderhub_url": "https://github.com/cedricbonhomme/pumpkin",
+        "binderhub_url": "https://github.com/scandale-project/pumpkin",
     },
     "use_edit_page_button": True,
     "use_issues_button": True,
