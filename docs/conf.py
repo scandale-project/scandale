@@ -17,12 +17,12 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Pumpkin'
+project = "Pumpkin"
 copyright = "CIRCL <info@circl.lu>"
 author = "Cédric Bonhomme <cedric@cedricbonhomme.org>"
 
 # The full version, including alpha/beta/rc tags
-release = '0.1.0'
+release = "0.1.0"
 
 
 # -- General configuration ---------------------------------------------------
@@ -35,10 +35,10 @@ extensions = [
     "sphinx_autodoc_typehints",
     "sphinx_multiversion",
     "sphinxcontrib.mermaid",
-    "sphinxcontrib.bibtex"
+    "sphinxcontrib.bibtex",
 ]
 
-bibtex_bibfiles = ['refs.bib']
+bibtex_bibfiles = ["refs.bib"]
 
 # Patterns
 # smv_tag_whitelist = r"^refs/tags/v\d+\.\d+\.\d+$|latest"
@@ -49,16 +49,16 @@ smv_remote_whitelist = None
 
 mermaid_version = ""
 html_js_files = [
-   'js/mermaid.min.js',
+    "js/mermaid.min.js",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ["_templates"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 numfig = True
 
@@ -73,7 +73,7 @@ html_theme = "sphinx_book_theme"
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ["_static"]
 
 html_sidebars = {
     "**": [
