@@ -1,4 +1,4 @@
-# Pumpkin - The MAS Demonic Surveillance Platform 🎃
+# The MAS Demonic Surveillance Platform
 
 -----
 

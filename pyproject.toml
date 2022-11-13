@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "pumpkin"
 version = "0.1.0"
-description = "The MAS Demonic Surveillance Platform. 🎃"
+description = "The MAS Demonic Surveillance Platform."
 authors = [
     "Cédric Bonhomme <cedric@cedricbonhomme.org>"
 ]
