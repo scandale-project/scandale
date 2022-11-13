@@ -4,19 +4,20 @@
    contain the root `toctree` directive.
 
 
-The MAS Demonic Surveillance Platform 🎃
-========================================
+The MAS Demonic Monitoring Platform
+===================================
 
 Presentation
 ------------
 
-Pumpkin - Let's make it fun.
+Pumpkin, the MAS Demonic Monitoring Platform, is a libre
+software which is providing a **backend architecture** for:
+- executing tests on a distributed infrastructure;
+- collecting the results;
+- storing proof of checks.
 
-Pumpkin, the MAS Demonic Surveillance Platform, is a libre
-software which is providing a **backend architecture** for
-executing tests on an infrastructure, collecting results and
-storing proof of checks.  
-It also provides different mechanisms of extensions and connections.
+It also provides different mechanisms of extensions and connections to
+other tools.
 
 
 .. toctree::
