@@ -46,6 +46,22 @@ Pub/Sub mechanism
 Probe agent
 -----------
 
+Configuration file of a probe agent
+
+
+.. code-block:: json
+
+   {
+      "uuid": "",
+      "period": 3600,
+      "target": "",
+      "command": "",
+      "result_parser": "",
+      "args": []
+   }
+
+
+
 One shot
 ````````
 

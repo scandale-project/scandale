@@ -48,7 +48,7 @@ class CorrelationEngine(Agent):
             msg.set_metadata(
                 "language", "OWL-S"
             )  # Set the language of the message content
-            msg.body = "Y21WemRXeDBJRzltSUc1dFlYQWdUbE5GSUdadmNpQk5hV05vY205emIyWjBJRVY0WTJoaGJtZGxJRk5sY25abGNpQjJkV3h1WlhKaFltbHNhWFI1"  # Set the message content
+            msg.body = "Y21WemRXeDBJRzltSUUbE5GSUdadmNpQk"  # Set the message content
 
             await self.send(msg)
             print("Message sent!")
