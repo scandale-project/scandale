@@ -46,8 +46,7 @@ Pub/Sub mechanism
 Probe agent
 -----------
 
-Configuration file of a probe agent
-
+Configuration file of a probe agent:
 
 .. code-block:: json
 
@@ -56,8 +55,9 @@ Configuration file of a probe agent
       "period": 3600,
       "target": "",
       "command": "",
+      "args": [],
       "result_parser": "",
-      "args": []
+      "up_agent": ""
    }
 
 
