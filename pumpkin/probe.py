@@ -1,10 +1,25 @@
 import time
 import getpass
 import asyncio
+import json
 from spade import quit_spade
 from spade.agent import Agent
 from spade.behaviour import CyclicBehaviour, OneShotBehaviour
 from spade.message import Message
+
+
+def exec_cmd(cmd: str) -> str:
+    """Execute a command in a sub process and wait for the result."""
+    bash_string = r"""#!/bin/bash
+    set -e
+    {}
+    """.format(
+        cmd
+    )
+    result = subprocess.check_output(
+        bash_string, shell=True, executable="/bin/bash", text=True, cwd=BASE_DIR
+    )
+    return result.strip()
 
 
 class CorrelationEngine(Agent):
@@ -19,6 +34,10 @@ class CorrelationEngine(Agent):
     class InformBehav(OneShotBehaviour):
         async def run(self):
             print("InformBehav running")
+            try:
+                result = exec_cmd(self.config["command"])
+            except Exception:
+                pass
             msg = Message(to="CE@localhost")  # Instantiate the message
             msg.set_metadata(
                 "performative", "inform"
@@ -42,6 +61,9 @@ class CorrelationEngine(Agent):
 
     async def setup(self):
         print("Agent starting . . .")
+        with open('fccprobe-agent.config.json', 'r') as json_file:
+                self.config =  json.load(fcc_file)
+
         probe_behav = self.ProbeBehav()
         self.add_behaviour(probe_behav)
 
