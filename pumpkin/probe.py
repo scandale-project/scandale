@@ -61,7 +61,7 @@ class CorrelationEngine(Agent):
 
     async def setup(self):
         print("Agent starting . . .")
-        with open('fccprobe-agent.config.json', 'r') as json_file:
+        with open('probe-agent.config.json', 'r') as json_file:
                 self.config =  json.load(fcc_file)
 
         probe_behav = self.ProbeBehav()
