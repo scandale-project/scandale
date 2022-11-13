@@ -12,6 +12,7 @@ Presentation
 
 Pumpkin, the MAS Demonic Monitoring Platform, is a libre
 software which is providing a **backend architecture** for:
+
 - executing tests on a distributed infrastructure;
 - collecting the results;
 - storing proof of checks.
