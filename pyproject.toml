@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "scandale"
+version = "0.1.0"
+description = "Web interface of SCANDALE."
+authors = ["Cédric Bonhomme <cedric@cedricbonhomme.org>"]
+license = "AGPL-3.0-or-later"
+readme = "README.md"
+homepage = "https://github.com/scandale-project"
+repository = "https://github.com/scandale-project"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^0.982"
+flake8 = "^5.0.4"
+reorder-python-imports = "^3.9.0"
+pre-commit = "^2.20.0"
+black = "^22.10.0"
+pyupgrade = "^3.2.0"
+autoflake = "^1.7.7"
+sphinx-book-theme = "^0.3.2"
+sphinx-multiversion = "^0.2.4"
+sphinx-autodoc-typehints = "^1.18.3"
+sphinxcontrib-mermaid = "^0.7.1"
+sphinxcontrib-bibtex = "^2.5.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
