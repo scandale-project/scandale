@@ -55,7 +55,7 @@ class CorrelationEngine(Agent):
 
 
 if __name__ == "__main__":
-    jid = "CE@localhost"
+    jid = "correlation-engine@localhost"
     passwd = getpass.getpass("Password for {}:\n".format(jid))
     agent = CorrelationEngine(jid, passwd)
     future = agent.start()

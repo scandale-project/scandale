@@ -1,4 +1,5 @@
 import time
+import argparse
 import getpass
 import asyncio
 import json
@@ -61,8 +62,6 @@ class CorrelationEngine(Agent):
 
     async def setup(self):
         print("Agent starting . . .")
-        with open('probe-agent.config.json', 'r') as json_file:
-                self.config =  json.load(fcc_file)
 
         probe_behav = self.ProbeBehav()
         self.add_behaviour(probe_behav)
@@ -72,8 +71,26 @@ class CorrelationEngine(Agent):
 
 
 if __name__ == "__main__":
-    probe_jid = input("Probe JID> ")
-    passwd = getpass.getpass("Password for {}:\n".format(jid))
+    parser = argparse.ArgumentParser(prog="probe-agent")
+    parser.add_argument(
+        "-c",
+        "--configuration",
+        dest="configuration_file",
+        required=True,
+        help="Configuration file.",
+    )
+
+    arguments = parser.parse_args()
+
+    if not arguments.configuration_file:
+        probe_jid = input("Probe JID> ")
+        passwd = getpass.getpass("Password for {}:\n".format(probe_jid))
+    else:
+        with open(arguments.configuration_file, 'r') as json_file:
+            config =  json.load(json_file)
+        probe_jid = config["jid"]
+        passwd = config["passwd"]
+
     agent = CorrelationEngine(probe_jid, passwd)
     future = agent.start()
     future.result()

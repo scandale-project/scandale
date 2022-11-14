@@ -3,5 +3,8 @@
   "period": 3600,
   "target": "",
   "command": "",
-  "args": []
+  "args": [],
+
+  "jid": "probe-agent-1@localhost",
+  "passwd": "passwordProbeAgent1"
 }
