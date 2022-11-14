@@ -48,6 +48,8 @@ smv_branch_whitelist = r"^(?!internationalization).*$"
 smv_remote_whitelist = None
 
 mermaid_version = ""
+# mermaid_cmd = "/home/cedric/git/pumpkin/docs/node_modules/@mermaid-js/mermaid-cli/src/cli.js"
+# mermaid_output_format = "png"
 html_js_files = [
     "js/mermaid.min.js",
 ]
