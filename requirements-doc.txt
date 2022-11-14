@@ -1,0 +1,6 @@
+sphinx
+sphinx_book_theme
+sphinx_multiversion
+sphinx-autodoc-typehints
+sphinxcontrib.mermaid
+sphinxcontrib.bibtex
