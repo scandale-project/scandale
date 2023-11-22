@@ -11,8 +11,8 @@ homepage = "https://sr.ht/~cedric/pumpkin"
 repository = "https://git.sr.ht/~cedric/pumpkin"
 
 [tool.poetry.dependencies]
-python = "^3.8"
-spade = "^3.2.2"
+python = "^3.11"
+spade = "^3.3.2"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^0.982"
