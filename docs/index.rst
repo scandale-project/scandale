@@ -27,6 +27,8 @@ other tools.
    :hidden:
 
    architecture
+   installation
+   deployment
 
 .. toctree::
    :caption: Bibliography
