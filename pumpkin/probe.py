@@ -13,7 +13,7 @@ from spade.behaviour import OneShotBehaviour
 from spade.message import Message
 
 
-def exec_cmd(cmd: str) -> str:
+def exec_cmd(cmd: str, working_dir: str = "") -> str:
     """Execute a command in a sub process and wait for the result."""
     bash_string = r"""#!/bin/bash
     set -e
@@ -21,9 +21,10 @@ def exec_cmd(cmd: str) -> str:
     """.format(
         cmd
     )
-    base_dir = "."
+    if not working_dir:
+        working_dir = "."
     result = subprocess.check_output(
-        bash_string, shell=True, executable="/bin/bash", text=True, cwd=base_dir
+        bash_string, shell=True, executable="/bin/bash", text=True, cwd=working_dir
     )
     m = hashlib.sha256()
     m.update(result.strip().encode("utf-8"))
