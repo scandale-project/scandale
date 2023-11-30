@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = "Pumpkin"
-copyright = "LHC <info@nc3.lu>"
+copyright = "Computer Incident Response Center Luxembourg (CIRCL) <info@circl.lu>"
 author = "Cédric Bonhomme <cedric@cedricbonhomme.org>"
 
 # The full version, including alpha/beta/rc tags

@@ -7,8 +7,8 @@ authors = [
 ]
 license = "AGPL-3.0-or-later"
 readme = "README.md"
-homepage = "https://sr.ht/~cedric/pumpkin"
-repository = "https://git.sr.ht/~cedric/pumpkin"
+homepage = "https://github.com/scandale-project/pumpkin"
+repository = "https://github.com/scandale-project/pumpkin"
 
 [tool.poetry.dependencies]
 python = "^3.11"

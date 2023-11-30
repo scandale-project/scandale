@@ -8,7 +8,8 @@
 - [Installation](#installation)
 - [License](#license)
 
-Pumpkin, the MAS Demonic Surveillance Platform, is a libre software which is providing
+[Pumpkin](https://github.com/scandale-project/pumpkin),
+the MAS Demonic Surveillance Platform, is a libre software which is providing
 a __backend architecture__ for executing tests on an infrastructure, collecting
 results and storing proof of checks.
 It also provides different mechanisms of extensions and connections.
@@ -84,4 +85,4 @@ A list of references articles is provided [here](https://pumpkin-project.readthe
 `pumpkin` is distributed under the terms of the
 [GNU Affero General Public License version 3](https://www.gnu.org/licenses/agpl-3.0.html).
 
-Copyright (C) 2022 [Cédric Bonhomme](https://www.cedricbonhomme.org)
+Copyright (C) 2022-2023 [Cédric Bonhomme](https://www.cedricbonhomme.org)
