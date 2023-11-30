@@ -1,9 +1,11 @@
-import time
-import getpass
 import asyncio
+import getpass
+import time
+
 from spade import quit_spade
 from spade.agent import Agent
-from spade.behaviour import CyclicBehaviour, OneShotBehaviour
+from spade.behaviour import CyclicBehaviour
+from spade.behaviour import OneShotBehaviour
 from spade.message import Message
 
 
@@ -14,7 +16,7 @@ class CorrelationEngine(Agent):
             self.counter = 0
 
         async def run(self):
-            print("Counter: {}".format(self.counter))
+            print(f"Counter: {self.counter}")
             self.counter += 1
             await asyncio.sleep(1)
 
@@ -56,7 +58,7 @@ class CorrelationEngine(Agent):
 
 if __name__ == "__main__":
     jid = "correlation-engine@localhost"
-    passwd = getpass.getpass("Password for {}:\n".format(jid))
+    passwd = getpass.getpass(f"Password for {jid}:\n")
     agent = CorrelationEngine(jid, passwd)
     future = agent.start()
     future.result()

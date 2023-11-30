@@ -1,11 +1,15 @@
-import time
 import argparse
-import getpass
 import asyncio
+import getpass
+import hashlib
 import json
+import subprocess
+import time
+
 from spade import quit_spade
 from spade.agent import Agent
-from spade.behaviour import CyclicBehaviour, OneShotBehaviour
+from spade.behaviour import CyclicBehaviour
+from spade.behaviour import OneShotBehaviour
 from spade.message import Message
 
 
@@ -17,10 +21,13 @@ def exec_cmd(cmd: str) -> str:
     """.format(
         cmd
     )
+    base_dir = "."
     result = subprocess.check_output(
-        bash_string, shell=True, executable="/bin/bash", text=True, cwd=BASE_DIR
+        bash_string, shell=True, executable="/bin/bash", text=True, cwd=base_dir
     )
-    return result.strip()
+    m = hashlib.sha256()
+    m.update(result.strip().encode("utf-8"))
+    return m.hexdigest()
 
 
 class CorrelationEngine(Agent):
@@ -49,7 +56,7 @@ class CorrelationEngine(Agent):
             msg.set_metadata(
                 "language", "OWL-S"
             )  # Set the language of the message content
-            msg.body = "Y21WemRXeDBJRzltSUUbE5GSUdadmNpQk"  # Set the message content
+            msg.body = result  # Set the message content
 
             await self.send(msg)
             print("Message sent!")
@@ -84,10 +91,10 @@ if __name__ == "__main__":
 
     if not arguments.configuration_file:
         probe_jid = input("Probe JID> ")
-        passwd = getpass.getpass("Password for {}:\n".format(probe_jid))
+        passwd = getpass.getpass(f"Password for {probe_jid}:\n")
     else:
-        with open(arguments.configuration_file, 'r') as json_file:
-            config =  json.load(json_file)
+        with open(arguments.configuration_file) as json_file:
+            config = json.load(json_file)
         probe_jid = config["jid"]
         passwd = config["passwd"]
 

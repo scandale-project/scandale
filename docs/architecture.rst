@@ -67,7 +67,7 @@ One shot
 
 A one shot probe agent can be launched for a ponctual task.
 For example a task triggered by an action of a user via a
-graphical user interface.  
+graphical user interface.
 A agent is able to manage a list of jobs. For an important
 number of jobs it is possible to launch several agents in parallel.
 
