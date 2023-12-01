@@ -46,6 +46,7 @@ class CorrelationEngine(Agent):
             try:
                 result = exec_cmd(self.config["command"])
             except Exception:
+                print("error with the command")
                 result = "error with the command"
             msg = Message(to="correlation-engine@localhost")  # Instantiate the message
             msg.set_metadata(
@@ -84,7 +85,7 @@ async def main(probe_jid, passwd):
     await agent.start()
 
     # wait until user interrupts with ctrl+C
-    while not agent.ProbeBehav.is_killed():
+    while True: # not agent.CollectingBehav.is_killed():
         try:
             await asyncio.sleep(1)
         except KeyboardInterrupt:

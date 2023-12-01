@@ -23,7 +23,7 @@ class CorrelationEngine(Agent):
     class SharingBehav(OneShotBehaviour):
         async def run(self):
             print("SharingBehav running")
-            msg = Message(to="receiver@your_xmpp_server")  # Instantiate the message
+            msg = Message(to="probe1@localhost")  # Instantiate the message
             msg.set_metadata(
                 "performative", "inform"
             )  # Set the "inform" FIPA performative
@@ -53,12 +53,12 @@ class CorrelationEngine(Agent):
         self.add_behaviour(self.sharing_behav)
 
         self.presence.set_available()
-        self.presence.subscribe("probe2@localhost")
+        self.presence.subscribe("probe1@localhost")
 
 
 async def main():
     jid = "correlation-engine@localhost"
-    passwd = getpass.getpass(f"Password for {jid}:\n")
+    passwd = "securePasswordforCE" # getpass.getpass(f"Password for {jid}:\n")
     agent = CorrelationEngine(jid, passwd)
     await agent.start()
 
@@ -68,7 +68,7 @@ async def main():
     print("Wait until user interrupts with ctrl+C")
 
     # wait until user interrupts with ctrl+C
-    while not agent.CollectingBehav.is_killed():
+    while True: # not agent.CollectingBehav.is_killed():
         try:
             await asyncio.sleep(1)
         except KeyboardInterrupt:
