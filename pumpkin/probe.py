@@ -6,7 +6,7 @@ import json
 import subprocess
 import time
 
-from spade import quit_spade
+# from spade import quit_spade
 from spade.agent import Agent
 from spade.behaviour import CyclicBehaviour
 from spade.behaviour import OneShotBehaviour
@@ -115,4 +115,4 @@ if __name__ == "__main__":
         print("Stopping...")
     agent.stop()
 
-    quit_spade()
+    # quit_spade()

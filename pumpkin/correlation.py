@@ -2,7 +2,8 @@ import asyncio
 import getpass
 import time
 
-from spade import quit_spade
+# from spade import quit_spade
+import spade
 from spade.agent import Agent
 from spade.behaviour import CyclicBehaviour
 from spade.behaviour import OneShotBehaviour
@@ -56,22 +57,29 @@ class CorrelationEngine(Agent):
         self.presence.subscribe("probe2@localhost")
 
 
-if __name__ == "__main__":
+async def main():
     jid = "correlation-engine@localhost"
     passwd = getpass.getpass(f"Password for {jid}:\n")
-    agent = CorrelationEngine(jid, passwd)
-    future = agent.start()
-    future.result()
-    agent.web.start(hostname="127.0.0.1", port="10000")
+    agent = CorrelationEngine(jid, passwd, verify_security=False)
+    await agent.start()
+
+    # await agent.web.start(hostname="127.0.0.1", port="10000")
 
     print("Web Graphical Interface available at:")
     print("http://127.0.0.1:10000/spade")
     print("Wait until user interrupts with ctrl+C")
-    try:
-        while True:
-            time.sleep(1)
-    except KeyboardInterrupt:
-        print("Stopping...")
-    agent.stop()
 
-    quit_spade()
+    # wait until user interrupts with ctrl+C
+    while not agent.CollectingBehav.is_killed():
+        try:
+            await asyncio.sleep(1)
+        except KeyboardInterrupt:
+            break
+
+    assert agent.CollectingBehav.exit_code == 10
+
+    await agent.stop()
+
+
+if __name__ == "__main__":
+    spade.run(main())
