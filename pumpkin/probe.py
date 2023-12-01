@@ -6,7 +6,7 @@ import json
 import subprocess
 import time
 
-# from spade import quit_spade
+import spade
 from spade.agent import Agent
 from spade.behaviour import CyclicBehaviour
 from spade.behaviour import OneShotBehaviour
@@ -46,8 +46,8 @@ class CorrelationEngine(Agent):
             try:
                 result = exec_cmd(self.config["command"])
             except Exception:
-                pass
-            msg = Message(to="CE@localhost")  # Instantiate the message
+                result = "error with the command"
+            msg = Message(to="correlation-engine@localhost")  # Instantiate the message
             msg.set_metadata(
                 "performative", "inform"
             )  # Set the "inform" FIPA performative
@@ -78,6 +78,24 @@ class CorrelationEngine(Agent):
         self.add_behaviour(self.InformBehav)
 
 
+
+async def main(probe_jid, passwd):
+    agent = CorrelationEngine(probe_jid, passwd)
+    await agent.start()
+
+    # wait until user interrupts with ctrl+C
+    while not agent.ProbeBehav.is_killed():
+        try:
+            await asyncio.sleep(1)
+        except KeyboardInterrupt:
+            break
+
+    assert agent.ProbeBehav.exit_code == 10
+
+    await agent.stop()
+
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog="probe-agent")
     parser.add_argument(
@@ -99,20 +117,5 @@ if __name__ == "__main__":
         probe_jid = config["jid"]
         passwd = config["passwd"]
 
-    agent = CorrelationEngine(probe_jid, passwd)
-    future = agent.start()
-    future.result()
+    spade.run(main(probe_jid, passwd))
 
-    # agent.web.start(hostname="127.0.0.1", port="10001")
-    # print("Web Graphical Interface available at:")
-    # print("http://127.0.0.1:10000/spade")
-
-    print("Wait until user interrupts with ctrl+C")
-    try:
-        while True:
-            time.sleep(1)
-    except KeyboardInterrupt:
-        print("Stopping...")
-    agent.stop()
-
-    # quit_spade()

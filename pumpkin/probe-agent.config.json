@@ -5,6 +5,6 @@
   "command": "",
   "args": [],
 
-  "jid": "probe-agent-1@localhost",
-  "passwd": "passwordProbeAgent1"
+  "jid": "probe1@localhost",
+  "passwd": "securePasswordforProbe1"
 }

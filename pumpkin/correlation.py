@@ -2,7 +2,6 @@ import asyncio
 import getpass
 import time
 
-# from spade import quit_spade
 import spade
 from spade.agent import Agent
 from spade.behaviour import CyclicBehaviour
@@ -60,11 +59,10 @@ class CorrelationEngine(Agent):
 async def main():
     jid = "correlation-engine@localhost"
     passwd = getpass.getpass(f"Password for {jid}:\n")
-    agent = CorrelationEngine(jid, passwd, verify_security=False)
+    agent = CorrelationEngine(jid, passwd)
     await agent.start()
 
-    # await agent.web.start(hostname="127.0.0.1", port="10000")
-
+    await agent.web.start(hostname="127.0.0.1", port="10000")
     print("Web Graphical Interface available at:")
     print("http://127.0.0.1:10000/spade")
     print("Wait until user interrupts with ctrl+C")
