@@ -1,6 +1,5 @@
 import asyncio
 import getpass
-import time
 
 import spade
 from spade.agent import Agent
@@ -13,11 +12,11 @@ class CorrelationEngine(Agent):
     class CollectingBehav(CyclicBehaviour):
         async def on_start(self):
             print("Starting behaviour . . .")
-            self.counter = 0
+            # self.counter = 0
 
         async def run(self):
-            print(f"Counter: {self.counter}")
-            self.counter += 1
+            # print(f"Counter: {self.counter}")
+            # self.counter += 1
             await asyncio.sleep(1)
 
     class SharingBehav(OneShotBehaviour):
