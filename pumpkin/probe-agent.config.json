@@ -2,7 +2,7 @@
   "uuid": "",
   "period": 3600,
   "target": "",
-  "command": "",
+  "command": "fortune",
   "args": [],
 
   "jid": "probe1@localhost",

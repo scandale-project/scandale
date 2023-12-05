@@ -13,7 +13,7 @@ from spade.behaviour import OneShotBehaviour
 from spade.message import Message
 
 
-def exec_cmd(cmd: str, working_dir: str = "") -> str:
+def exec_cmd(cmd: str="fortune", working_dir: str = "") -> str:
     """Execute a command in a sub process and wait for the result."""
     bash_string = r"""#!/bin/bash
     set -e
@@ -44,10 +44,10 @@ class CorrelationEngine(Agent):
         async def run(self):
             print("InformBehav running")
             try:
-                result = exec_cmd(self.config["command"])
-            except Exception:
-                print("error with the command")
-                result = "error with the command"
+                result = exec_cmd()
+            except Exception as e:
+                print(e)
+                result = "Error with the command: "
             msg = Message(to="correlation-engine@localhost")  # Instantiate the message
             msg.set_metadata(
                 "performative", "inform"
