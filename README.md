@@ -15,6 +15,9 @@ results and storing proof of checks.
 It also provides different mechanisms of extensions and connections.
 
 
+![Behabiour page](docs/_static/01-behaviour-page.png "Behabiour page")
+
+
 ## Presentation
 
 ```mermaid
