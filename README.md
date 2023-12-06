@@ -1,4 +1,4 @@
-# The MAS Demonic Surveillance Platform
+# Pumpkin
 
 -----
 
@@ -9,7 +9,7 @@
 - [License](#license)
 
 [Pumpkin](https://github.com/scandale-project/pumpkin),
-the MAS Demonic Surveillance Platform, is a libre software which is providing
+is a libre software which is providing
 a __backend architecture__ for collecting data from probes and storing proof
 of checks.
 It also provides different mechanisms of extensions and connections.
@@ -50,10 +50,11 @@ communications between agents.
 
 TODO:
 
+- HTTP API connected to the correlation engine;
+- connection with the Kvrocks database;
 - ``Ad hoc module``: a module in order to share data with external platforms,
   such as MISP or other database systems;
-- HTTP API connected to the correlation engine;
-- connection with a database such as RocksDB;
+
 
 The correlation agent also provides a PubSub mechanism.
 

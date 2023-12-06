@@ -80,7 +80,7 @@ html_sidebars = {
     ],
 }
 
-html_title = "The MAS Demonic Surveillance Platform"
+html_title = "A Demonic Platform"
 html_theme_options = {
     "path_to_docs": "docs",
     "repository_url": "https://github.com/scandale-project/pumpkin",

@@ -5,7 +5,7 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-r = redis.Redis(host='localhost', port=6379, db=0)
+r = redis.Redis(host='localhost', port=6666, db=0)
 
 @app.get("/items/{base64_payload}")
 def read_item(base64_payload: str, q: Union[str, None] = None):
