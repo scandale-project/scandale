@@ -22,3 +22,15 @@ Format of the data
             "row": "<base64-encoded-string>"
         }
     }
+
+
+
+HTTP API
+--------
+
+POST operation
+``````````````
+
+/api/v1/data
+
+Returns the checksum of the newly created data and timestamp.
