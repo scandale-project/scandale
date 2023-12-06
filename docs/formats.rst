@@ -4,7 +4,7 @@ Formats
 Kvrocks
 -------
 
-Format of the data
+Format of the data:
 
 
 .. code-block:: json
@@ -58,3 +58,24 @@ GET operation
 `````````````
 
 /api/v1/items/payload_checksum
+
+
+
+Agent configuration
+-------------------
+
+.. code-block:: json
+
+    {
+        "uuid": "",
+        "period": 3600,
+        "target": "",
+        "command": "",
+        "args": [],
+        "up_agent": ""
+        "jid": "",
+        "passwd": ""
+    }
+
+
+
