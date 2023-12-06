@@ -26,9 +26,17 @@ other tools.
    :hidden:
 
    architecture
+   formats
+
+
+.. toctree::
+   :caption: Technical considerations
+   :maxdepth: 3
+   :hidden:
+
    installation
    deployment
-   formats
+
 
 .. toctree::
    :caption: Bibliography
