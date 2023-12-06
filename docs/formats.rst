@@ -41,8 +41,9 @@ Documentation is OpenAPI Specification v3.1.0 compliant.
     INFO:     Waiting for application startup.
     INFO:     Application startup complete.
 
-[FastAPI](https://fastapi.tiangolo.com/) is used.  
-For production you can use [Uvicorn](https://www.uvicorn.org/). It's up to you.
+`FastAPI <https://fastapi.tiangolo.com>`_ is used.  
+For production you can use `Uvicorn <https://www.uvicorn.org>`_. It's up to you.
+
 
 
 POST operation
