@@ -10,8 +10,8 @@
 
 [Pumpkin](https://github.com/scandale-project/pumpkin),
 the MAS Demonic Surveillance Platform, is a libre software which is providing
-a __backend architecture__ for executing tests on an infrastructure, collecting
-results and storing proof of checks.
+a __backend architecture__ for collecting data from probes and storing proof
+of checks.
 It also provides different mechanisms of extensions and connections.
 
 
@@ -47,8 +47,13 @@ Each probe agent is authenticated, registered and declare its availability
 (for the presence notification system). The OMEMO protocol can be used for
 communications between agents.
 
-``Ad hoc module``: a module in order to share data with external platforms,
-such as MISP or other database systems.
+
+TODO:
+
+- ``Ad hoc module``: a module in order to share data with external platforms,
+  such as MISP or other database systems;
+- HTTP API connected to the correlation engine;
+- connection with a database such as RocksDB;
 
 The correlation agent also provides a PubSub mechanism.
 
@@ -62,6 +67,7 @@ You can see some screen shots [here](docs/_static/).
 ### Install an XMPP server
 
 To choose an XMPP server, visit this [page](https://xmpp.org/software/servers.html).
+We mainly tested with [Prosody](https://prosody.im).
 
 To create a new XMPP account you can follow the steps
 [here](https://xmpp.org/getting-started/).
