@@ -1,8 +1,16 @@
 Deployment
 ==========
 
-Installation of a XMPP communication server.
-We will use Prosody.
+Deployment of the Agent platform
+--------------------------------
+
+Choose an XMPP server. Visit this [page](https://xmpp.org/software/servers.html).
+We mainly tested with [Prosody](https://prosody.im).
+
+To create a new XMPP account you can follow the steps
+[here](https://xmpp.org/getting-started/).  
+Create an XMPP account for each demon.
+Each demon will have a different JID and a different password.
 
 Main steps:
 

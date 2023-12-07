@@ -80,8 +80,8 @@ An agent capable of executing a specific task at a scheduled ``period``.
 
 
 
-Screen shots
-============
+Screenshots
+===========
 
 .. figure:: _static/01-behaviour-page.png
    :alt: List behaviours of the Correlation Engine
