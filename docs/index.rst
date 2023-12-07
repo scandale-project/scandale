@@ -10,19 +10,19 @@ Pumpkin
 Presentation
 ------------
 
-Pumpkin, is a libre software which is providing a **backend architecture** for:
+Pumpkin, is a libre software which is providing a
+**backend architecture** for collecting data from probes and storing proof
+of checks.
 
-- collecting and storing (with kvrocks) data from probes;
-- storing proof of checks.
+The platform is providing:
 
-It also provides different mechanisms of extensions and connections to
-other tools. For example:
-
-- HTTP API connected to the correlation engine;
+- a documenteted HTTP API connected to an aggregation engine;
+- connection with a Kvrocks database;
+- the aggregation engine also provides a PubSub mechanism;
+- a backend to deploy and monitor a network of probes with the
+  `Smart Python Agent Development Environment <https://github.com/javipalanca/spade>`_;
 - ``Ad hoc module``: a module in order to share data with external platforms,
-  such as MISP or other database systems;
-
-The correlation engine also provides a PubSub mechanism.
+  such as MISP or other database systems.
 
 
 .. toctree::
