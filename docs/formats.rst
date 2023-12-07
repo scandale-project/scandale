@@ -15,8 +15,7 @@ Format of the data:
         "meta": {
             "uuid": "<UUID>",
             "ts": "date",
-            "type": "nmap-scan",
-            "",
+            "type": "nmap-scan"
         },
         "payload": {
             "row": "<base64-encoded-string>"

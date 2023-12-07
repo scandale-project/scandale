@@ -12,15 +12,20 @@ r = redis.Redis(host='localhost', port=6666, db=0)
 class Payload(BaseModel):
     row: str
 
+class Meta(BaseModel):
+    uuid: str
+    ts: str
+    type: str
+
 class Item(BaseModel):
     version: str
     format: str
-    meta: Union[Dict, None] = None
+    meta: Meta
     payload: Payload
 
 
 @app.get("/items/{base64_payload}")
-async def read_item(base64_payload: str, q: Union[str, None] = None) -> Item:
+async def read_item(base64_payload: str, q: Union[str, None] = None): # -> Item:
     if q:
         for key in r.scan_iter(f"{q}:*"):
             print(key)
