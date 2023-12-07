@@ -65,34 +65,13 @@ You can see some screen shots [here](docs/_static/).
 
 ## Installation
 
-### Install an XMPP server
-
-To choose an XMPP server, visit this [page](https://xmpp.org/software/servers.html).
-We mainly tested with [Prosody](https://prosody.im).
-
-To create a new XMPP account you can follow the steps
-[here](https://xmpp.org/getting-started/).
-Create an XMPP account for each demon.
-Each demon will have a different JID and a different password.
-
-### Install the correlation agent
-
-
-```shell
-$ poetry install
-```
-
-
-## Documentation
-
 A documentation is available [here](https://pumpkin-project.readthedocs.io).
-
-A list of references articles is provided [here](https://pumpkin-project.readthedocs.io/en/latest/references.html).
 
 
 ## License
 
-`pumpkin` is distributed under the terms of the
+`Pumpkin` is distributed under the terms of the
 [GNU Affero General Public License version 3](https://www.gnu.org/licenses/agpl-3.0.html).
 
 Copyright (C) 2022-2023 [Cédric Bonhomme](https://www.cedricbonhomme.org)
+Copyright (C) 2022-2023 CIRCL - Computer Incident Response Center Luxembourg

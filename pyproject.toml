@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "pumpkin"
 version = "0.1.0"
-description = "The MAS Demonic Surveillance Platform."
+description = "A data collection platform."
 authors = [
     "Cédric Bonhomme <cedric@cedricbonhomme.org>"
 ]
@@ -9,6 +9,9 @@ license = "AGPL-3.0-or-later"
 readme = "README.md"
 homepage = "https://github.com/scandale-project/pumpkin"
 repository = "https://github.com/scandale-project/pumpkin"
+documentation = "https://pumpkin-project.readthedocs.io"
+
+keywords = ["kvrocks", "spade", "multiagent-systems", "xmpp"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
