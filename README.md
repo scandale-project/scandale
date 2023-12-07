@@ -38,8 +38,8 @@ C -->|Send| E[Ad hoc module]
 F[External source] -->|HTTP POST| C
 ```
 
-The purpose of this rather complex example is to show what it is currently
-be possible to do. You can install an aggregation engine with only one probe
+The aim of this rather complex example is to show what is currently possible
+to do. You can install an aggregation engine with only one probe
 on the same server. But probes can be deployed on a large scale and use a
 behavioral mechanism to accomplish their duty.
 
