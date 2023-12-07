@@ -24,6 +24,17 @@ Format of the data:
     }
 
 
+.. code-block:: python
+
+    class Item(pydantic.BaseModel):
+        version: str
+        format: str
+        meta: Union[Dict, None] = None
+        payload: Union[Dict, None] = None
+
+
+As defined `here <https://github.com/scandale-project/pumpkin/blob/main/api/main.py#L12>`_.
+
 
 HTTP API
 --------
