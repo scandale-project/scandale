@@ -9,23 +9,37 @@ app = FastAPI()
 r = redis.Redis(host='localhost', port=6666, db=0)
 
 
+class Payload(BaseModel):
+    row: str
+
 class Item(BaseModel):
     version: str
     format: str
     meta: Union[Dict, None] = None
-    payload: Union[Dict, None] = None
+    payload: Payload
 
 
 @app.get("/items/{base64_payload}")
-def read_item(base64_payload: str, q: Union[str, None] = None):
+async def read_item(base64_payload: str, q: Union[str, None] = None) -> Item:
     if q:
-        item = r.ft().search(q)
+        item: r.ft().search(q)
     else:
         item = r.get(base64_payload)
-    return {"item": item, "q": q}
+    return item
 
 
-@app.post("/items/")
-def insert_item(item: Item):
+@app.post("/items/", response_model=Item)
+async def create_item(item: Item):
     """Insert a new item."""
-    return {"item_payload": item.payload}
+    # res = r.set(item.payload.row, item.model_dump_json())
+    res = r.sadd("items", item.model_dump_json())
+    # print(item.payload.row)
+    # print(item.model_dump_json())
+    print(res)
+    return item
+
+
+@app.get("/stats/")
+async def stats():
+    """Provides stats about the database."""
+    return {"dbsize": r.scard("items")}
