@@ -22,17 +22,20 @@ class Item(BaseModel):
 @app.get("/items/{base64_payload}")
 async def read_item(base64_payload: str, q: Union[str, None] = None) -> Item:
     if q:
-        item: r.ft().search(q)
+        for key in r.scan_iter(f"{q}:*"):
+            print(key)
+            item = key
     else:
         item = r.get(base64_payload)
+    print(item)
     return item
 
 
 @app.post("/items/", response_model=Item)
 async def create_item(item: Item):
     """Insert a new item."""
-    # res = r.set(item.payload.row, item.model_dump_json())
-    res = r.sadd("items", item.model_dump_json())
+    res = r.set(item.payload.row, item.model_dump_json())
+    # res = r.sadd("items", item.model_dump_json())
     # print(item.payload.row)
     # print(item.model_dump_json())
     print(res)
