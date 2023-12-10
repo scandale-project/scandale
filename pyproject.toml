@@ -17,8 +17,8 @@ keywords = ["kvrocks", "spade", "multiagent-systems", "xmpp"]
 python = "^3.10"
 spade = "^3.3.2"
 fastapi = "^0.104.1"
-redis = {extras = ["hiredis"], version = "^5.0.1"}
 pydantic = "^2.5.2"
+psycopg2 = "^2.9.9"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^0.982"
