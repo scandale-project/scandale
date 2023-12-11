@@ -1,5 +1,5 @@
 from typing import List
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
 
 from . import crud, models, schemas
@@ -19,9 +19,17 @@ def get_db():
 
 
 @app.get("/items/", response_model=list[schemas.ItemBase])
-async def read_item(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)) -> List[schemas.ItemBase]:
+async def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)) -> List[schemas.ItemBase]:
     items = crud.get_items(db, skip=skip, limit=limit)
     return items
+
+
+@app.get("/items/{item_id}", response_model=schemas.ItemBase)
+def read_item(item_id: int, db: Session = Depends(get_db)) -> schemas.ItemBase:
+    db_item = crud.get_item(db, item_id=item_id)
+    if db_item is None:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return db_item
 
 
 @app.post("/items/", response_model=schemas.ItemBase)
@@ -31,6 +39,6 @@ async def create_item(item: schemas.ItemCreate, db: Session = Depends(get_db)):
 
 
 @app.get("/stats/")
-async def stats():
+async def stats(db: Session = Depends(get_db)):
     """Provides stats about the database."""
-    return {"dbsize": 0}
+    return {"dbsize": crud.db_stats(db=db)}
