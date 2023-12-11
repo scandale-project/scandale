@@ -57,7 +57,7 @@ class CorrelationEngine(Agent):
 
 async def main():
     jid = "correlation-engine@localhost"
-    passwd = "securePasswordforCE" # getpass.getpass(f"Password for {jid}:\n")
+    passwd = "securePasswordforCE"  # getpass.getpass(f"Password for {jid}:\n")
     agent = CorrelationEngine(jid, passwd)
     await agent.start()
 
@@ -67,7 +67,7 @@ async def main():
     print("Wait until user interrupts with ctrl+C")
 
     # wait until user interrupts with ctrl+C
-    while True: # not agent.CollectingBehav.is_killed():
+    while True:  # not agent.CollectingBehav.is_killed():
         try:
             await asyncio.sleep(1)
         except KeyboardInterrupt:

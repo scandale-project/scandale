@@ -13,7 +13,7 @@ from spade.behaviour import OneShotBehaviour
 from spade.message import Message
 
 
-def exec_cmd(cmd: str="fortune", working_dir: str = "") -> str:
+def exec_cmd(cmd: str = "fortune", working_dir: str = "") -> str:
     """Execute a command in a sub process and wait for the result."""
     bash_string = r"""#!/bin/bash
     set -e
@@ -79,13 +79,12 @@ class CorrelationEngine(Agent):
         self.add_behaviour(self.InformBehav)
 
 
-
 async def main(probe_jid, passwd):
     agent = CorrelationEngine(probe_jid, passwd)
     await agent.start()
 
     # wait until user interrupts with ctrl+C
-    while True: # not agent.CollectingBehav.is_killed():
+    while True:  # not agent.CollectingBehav.is_killed():
         try:
             await asyncio.sleep(1)
         except KeyboardInterrupt:
@@ -94,7 +93,6 @@ async def main(probe_jid, passwd):
     assert agent.ProbeBehav.exit_code == 10
 
     await agent.stop()
-
 
 
 if __name__ == "__main__":
@@ -119,4 +117,3 @@ if __name__ == "__main__":
         passwd = config["passwd"]
 
     spade.run(main(probe_jid, passwd))
-
