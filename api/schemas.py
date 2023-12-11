@@ -23,7 +23,7 @@ class ItemBase(BaseModel):
     class Config:
         orm_mode = True
 
-class ItemCreate(BaseModel):
+class ItemCreate(ItemBase):
     pass
 
 
