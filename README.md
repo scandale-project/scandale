@@ -16,7 +16,7 @@ of checks.
 The platform is providing:
 
 - a documenteted HTTP API connected to an aggregation engine;
-- connection with a Kvrocks database;
+- connection with a PostgreSQL database;
 - the aggregation engine also provides a PubSub mechanism;
 - a backend to deploy and monitor a network of probes with the
   [Smart Python Agent Development Environment](https://github.com/javipalanca/spade);

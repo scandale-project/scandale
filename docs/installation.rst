@@ -1,19 +1,12 @@
 Installation
 ============
 
-Install kvrocks
----------------
-
-Follow the steps here:  
-https://github.com/apache/kvrocks
-
-
-Configure your connection and database for pumpkin.  
-Launch kvrocks:
+Install PostgreSQL
+------------------
 
 .. code-block:: bash
 
-    $ ./build/kvrocks -c pumpkin.conf
+    $ sudo apt install postgresql
 
 
 FastAPI
@@ -23,7 +16,7 @@ FastAPI
 
     $ poetry install
 
-This will install FastAPI, the Redis client and SPADE.
+This will install FastAPI with its dependencies and SPADE.
 
 
 .. code-block:: json

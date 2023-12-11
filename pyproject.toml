@@ -11,7 +11,7 @@ homepage = "https://github.com/scandale-project/pumpkin"
 repository = "https://github.com/scandale-project/pumpkin"
 documentation = "https://pumpkin-project.readthedocs.io"
 
-keywords = ["kvrocks", "spade", "multiagent-systems", "xmpp"]
+keywords = ["spade", "multiagent-systems", "xmpp"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
