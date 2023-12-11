@@ -72,3 +72,7 @@ show_error_context = true
 pretty = true
 
 exclude = "build|dist|docs"
+
+
+[tool.isort]
+profile = "black"

@@ -67,5 +67,5 @@ A documentation is available [here](https://pumpkin-project.readthedocs.io).
 `Pumpkin` is distributed under the terms of the
 [GNU Affero General Public License version 3](https://www.gnu.org/licenses/agpl-3.0.html).
 
-Copyright (C) 2022-2023 [Cédric Bonhomme](https://www.cedricbonhomme.org)  
+Copyright (C) 2022-2023 [Cédric Bonhomme](https://www.cedricbonhomme.org)
 Copyright (C) 2022-2023 CIRCL - Computer Incident Response Center Luxembourg

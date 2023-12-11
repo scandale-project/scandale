@@ -31,7 +31,7 @@ HTTP API
 
 Documentation is OpenAPI Specification v3.1.0 compliant.
 
-`FastAPI <https://fastapi.tiangolo.com>`_ is used.  
+`FastAPI <https://fastapi.tiangolo.com>`_ is used.
 For production you can use `Uvicorn <https://www.uvicorn.org>`_. It's up to you.
 
 
@@ -66,6 +66,3 @@ Agent configuration
         "jid": "",
         "passwd": ""
     }
-
-
-

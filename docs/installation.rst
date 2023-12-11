@@ -28,5 +28,3 @@ This will install FastAPI with its dependencies and SPADE.
     INFO:     Started server process [19752]
     INFO:     Waiting for application startup.
     INFO:     Application startup complete.
-
-

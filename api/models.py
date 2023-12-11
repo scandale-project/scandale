@@ -1,4 +1,6 @@
-from sqlalchemy import Boolean, Column, Integer
+from sqlalchemy import Boolean
+from sqlalchemy import Column
+from sqlalchemy import Integer
 from sqlalchemy.dialects.postgresql import JSONB
 
 from .database import Base

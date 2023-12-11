@@ -8,7 +8,7 @@ Choose an XMPP server. Visit this [page](https://xmpp.org/software/servers.html)
 We mainly tested with [Prosody](https://prosody.im).
 
 To create a new XMPP account you can follow the steps
-[here](https://xmpp.org/getting-started/).  
+[here](https://xmpp.org/getting-started/).
 Create an XMPP account for each demon.
 Each demon will have a different JID and a different password.
 
@@ -18,7 +18,7 @@ Main steps:
 - configuration of the server (OMEMO, etc.);
 - creation of the required accounts for the correlation engine and the probes;
 - configuration of Pumpkin;
-- 
+-
 
 Description of the steps:
 
@@ -69,7 +69,7 @@ Luanching the correlation engine:
 
 .. code-block:: bash
 
-    $ python pumpkin/correlation.py 
+    $ python pumpkin/correlation.py
     Password for correlation-engine@localhost:
 
     Agent starting . . .

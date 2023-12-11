@@ -1,13 +1,20 @@
 from typing import List
-from fastapi import Depends, FastAPI, HTTPException
+
+from fastapi import Depends
+from fastapi import FastAPI
+from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
-from . import crud, models, schemas
-from .database import SessionLocal, engine
+from . import crud
+from . import models
+from . import schemas
+from .database import engine
+from .database import SessionLocal
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
 
 # Dependency
 def get_db():
