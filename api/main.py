@@ -1,4 +1,4 @@
-import json
+from typing import List
 from fastapi import Depends, FastAPI
 from sqlalchemy.orm import Session
 
@@ -19,7 +19,7 @@ def get_db():
 
 
 @app.get("/items/", response_model=list[schemas.ItemBase])
-async def read_item(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+async def read_item(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)) -> List[schemas.ItemBase]:
     items = crud.get_items(db, skip=skip, limit=limit)
     return items
 
