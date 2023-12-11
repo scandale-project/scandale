@@ -19,6 +19,7 @@ spade = "^3.3.2"
 fastapi = "^0.104.1"
 pydantic = "^2.5.2"
 psycopg2 = "^2.9.9"
+sqlalchemy = "^2.0.23"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^0.982"
