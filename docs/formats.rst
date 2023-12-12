@@ -32,8 +32,8 @@ Validation of the format is made with `Pydantic <https://pydantic.dev>`_.
 HTTP API
 --------
 
-`FastAPI <https://fastapi.tiangolo.com>`_ is used.
-For production you can use `Uvicorn <https://www.uvicorn.org>`_. It's up to you.
+The API is based on the `FastAPI <https://fastapi.tiangolo.com>`_ framework.
+
 
 OpenAPI documentation
 `````````````````````

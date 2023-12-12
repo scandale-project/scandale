@@ -28,6 +28,9 @@ This will install FastAPI with its dependencies and SPADE.
     INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 
 
+For production you can use `Uvicorn <https://www.uvicorn.org>`_. It's up to you.
+
+
 You can visit the pages:
 
 - http://127.0.0.1:8000/docs

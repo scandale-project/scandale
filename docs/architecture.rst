@@ -25,6 +25,9 @@ verifying the format of the data (with `Pydantic <https://pydantic.dev>`_)
 and to provide different ways to access the results from the various
 scanning tools.
 
+The API is based on the `FastAPI <https://fastapi.tiangolo.com>`_ framework
+well known for its excellent performance.
+
 The OpenAPI documentation is available in :ref:`this section <http-api>`.
 
 
@@ -47,10 +50,6 @@ Correlation Engine
 
 Pub/Sub mechanism
 `````````````````
-
-
-
-
 
 Probe agent
 -----------
