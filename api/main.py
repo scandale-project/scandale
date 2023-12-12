@@ -58,10 +58,8 @@ async def read_items(
 
 
 @app.get("/items/{item_id}", response_model=schemas.ItemBase)
-def read_item(
-    item_id: int = 0, q: str = "", db: Session = db_session
-) -> schemas.ItemBase:
-    db_item = crud.get_item(db, item_id=item_id, query=q)
+def read_item(item_id: int = 0, db: Session = db_session) -> schemas.ItemBase:
+    db_item = crud.get_item(db, item_id=item_id)
     if db_item is None:
         raise HTTPException(status_code=404, detail="Item not found")
     return db_item
