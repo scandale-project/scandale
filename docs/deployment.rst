@@ -4,11 +4,11 @@ Deployment
 Deployment of the Agent platform
 --------------------------------
 
-Choose an XMPP server. Visit this [page](https://xmpp.org/software/servers.html).
-We mainly tested with [Prosody](https://prosody.im).
+Choose an XMPP server. Visit this `page <https://xmpp.org/software/servers.html>`_.
+We mainly tested with `Prosody <https://prosody.im>`_.
 
 To create a new XMPP account you can follow the steps
-[here](https://xmpp.org/getting-started/).
+`here <https://xmpp.org/getting-started/>`_.
 Create an XMPP account for each demon.
 Each demon will have a different JID and a different password.
 
@@ -17,8 +17,7 @@ Main steps:
 - installation of the server;
 - configuration of the server (OMEMO, etc.);
 - creation of the required accounts for the correlation engine and the probes;
-- configuration of Pumpkin;
--
+- configuration of Pumpkin.
 
 Description of the steps:
 

@@ -1,10 +1,6 @@
 # Pumpkin
 
-**Table of Contents**
-
-- [Presentation](#presentation)
-- [Installation](#installation)
-- [License](#license)
+## Presentation
 
 [Pumpkin](https://github.com/scandale-project/pumpkin),
 is a libre software which is providing
@@ -21,8 +17,9 @@ The platform is providing:
 - ``Ad hoc module``: a module in order to share data with external platforms,
   such as MISP or other database systems.
 
+The API is based on the [FastAPI](https://fastapi.tiangolo.com) framework
+well known for its excellent performance.
 
-## Presentation
 
 ```mermaid
 flowchart LR
@@ -55,8 +52,7 @@ communications between agents.
 ![Behabiour page](docs/_static/01-behaviour-page.png "Behabiour page")
 
 
-
-## Installation
+## Documentation
 
 A documentation is available [here](https://pumpkin-project.readthedocs.io).
 
