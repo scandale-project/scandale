@@ -26,3 +26,9 @@ This will install FastAPI with its dependencies and SPADE.
     INFO:     Waiting for application startup.
     INFO:     Application startup complete.
     INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+
+
+You can visit the pages:
+
+- http://127.0.0.1:8000/docs
+- http://127.0.0.1:8000/redoc
