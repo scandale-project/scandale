@@ -32,6 +32,7 @@ extensions = [
     "sphinx_multiversion",
     "sphinxcontrib.mermaid",
     "sphinxcontrib.bibtex",
+    "sphinxcontrib.openapi",
 ]
 
 bibtex_bibfiles = ["refs.bib"]

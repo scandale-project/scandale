@@ -1,10 +1,10 @@
 Formats
 =======
 
-Database
---------
+Data from the scans
+-------------------
 
-Format of the data:
+Data from the various scanning tools is stored to the following format.
 
 
 .. code-block:: json
@@ -24,30 +24,22 @@ Format of the data:
 
 
 As defined `here <https://github.com/scandale-project/pumpkin/blob/main/api/schemas.py>`_.
+Validation of the format is made with `Pydantic <https://pydantic.dev>`_.
 
 
 HTTP API
 --------
 
-Documentation is OpenAPI Specification v3.1.0 compliant.
-
 `FastAPI <https://fastapi.tiangolo.com>`_ is used.
 For production you can use `Uvicorn <https://www.uvicorn.org>`_. It's up to you.
 
+OpenAPI documentation
+`````````````````````
 
+Documentation is OpenAPI Specification v3.1.0 compliant.
 
-POST operation
-``````````````
+.. openapi:: _static/openapi.json
 
-/api/v1/items
-
-Returns the checksum of the newly created data and timestamp.
-
-
-GET operation
-`````````````
-
-/api/v1/items/payload_checksum
 
 
 
