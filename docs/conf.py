@@ -29,7 +29,7 @@ release = "0.1.0"
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx_autodoc_typehints",
-    "sphinx_multiversion",
+    # "sphinx_multiversion",
     "sphinxcontrib.mermaid",
     "sphinxcontrib.bibtex",
     "sphinxcontrib.openapi",
@@ -37,12 +37,12 @@ extensions = [
 
 bibtex_bibfiles = ["refs.bib"]
 
-# Patterns
+# Patterns for sphinx_multiversion
 # smv_tag_whitelist = r"^refs/tags/v\d+\.\d+\.\d+$|latest"
-smv_released_pattern = r"^refs/tags/v\d+\.\d+\.\d+$"
+# smv_released_pattern = r"^refs/tags/v\d+\.\d+\.\d+$"
 # smv_branch_whitelist = r'main$'
-smv_branch_whitelist = r"^(?!internationalization).*$"
-smv_remote_whitelist = None
+# smv_branch_whitelist = r"^(?!internationalization).*$"
+# smv_remote_whitelist = None
 
 mermaid_version = ""
 # mermaid_cmd = "/home/cedric/git/pumpkin/docs/node_modules/@mermaid-js/mermaid-cli/src/cli.js"
@@ -77,7 +77,7 @@ html_static_path = ["_static"]
 html_sidebars = {
     "**": [
         "sbt-sidebar-nav.html",
-        "versioning.html",
+        # "versioning.html",
     ],
 }
 

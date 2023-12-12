@@ -4,9 +4,8 @@ Pumpkin
 Presentation
 ------------
 
-Pumpkin, is a libre software which is providing a
-**backend architecture** for collecting data from probes and storing proof
-of checks.
+Pumpkin, is a libre software which is providing a backend architecture
+for collecting data from probes and storing proof of checks.
 
 The platform is providing:
 
