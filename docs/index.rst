@@ -10,7 +10,7 @@ of checks.
 
 The platform is providing:
 
-- a documenteted HTTP API connected to an aggregation engine;
+- a documented HTTP API connected to an aggregation engine;
 - connection with a database (PostgreSQL);
 - the aggregation engine also provides a PubSub mechanism;
 - a backend to deploy and monitor a network of probes with the
