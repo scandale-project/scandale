@@ -4,7 +4,6 @@ import getpass
 import hashlib
 import json
 import subprocess
-import time
 
 import spade
 from spade.agent import Agent

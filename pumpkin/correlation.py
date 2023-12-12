@@ -1,11 +1,12 @@
 import asyncio
-import getpass
 
 import spade
 from spade.agent import Agent
 from spade.behaviour import CyclicBehaviour
 from spade.behaviour import OneShotBehaviour
 from spade.message import Message
+
+# import getpass
 
 
 class CorrelationEngine(Agent):
