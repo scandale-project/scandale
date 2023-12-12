@@ -18,11 +18,11 @@ clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
 
-doc:
+doc: openapi
 	rm -Rf docs/_build
 	sphinx-build docs/ docs/_build/html
 
-multidoc:
+multidoc: openapi
 	rm -Rf docs/_build
 	sphinx-multiversion docs/ docs/_build/html
 
