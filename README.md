@@ -3,9 +3,8 @@
 ## Presentation
 
 [Pumpkin](https://github.com/scandale-project/pumpkin),
-is a libre software which is providing
-a __backend architecture__ for collecting data from probes and storing proof
-of checks.
+is a libre software which is providing a backend architecture
+for collecting data from probes and storing proof of checks.
 
 The platform is providing:
 
