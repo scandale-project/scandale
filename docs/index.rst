@@ -17,12 +17,10 @@ of checks.
 The platform is providing:
 
 - a documenteted HTTP API connected to an aggregation engine;
-- connection with a PostgreSQL database;
+- connection with a database (PostgreSQL);
 - the aggregation engine also provides a PubSub mechanism;
 - a backend to deploy and monitor a network of probes with the
-  `Smart Python Agent Development Environment <https://github.com/javipalanca/spade>`_;
-- ``Ad hoc module``: a module in order to share data with external platforms,
-  such as MISP or other database systems.
+  `Smart Python Agent Development Environment <https://github.com/javipalanca/spade>`_.
 
 
 .. toctree::

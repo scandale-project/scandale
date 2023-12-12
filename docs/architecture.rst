@@ -10,11 +10,26 @@ Architecture
     AA[Probe with cyclic behaviour] -->|JSON formatted result| B
     AAA[Probe with one shot behaviour] -->|JSON formatted result| B
     B --> C(Correlation Engine with cyclic behaviour)
-    C -->|Write| D[Database]
+    C -->|HTTP POST| D[FastAPI]
     C -->|Send| E[Ad hoc module]
     F[External source] -->|HTTP POST| C
+    D -->|Write| G[Database]
 
 |
+
+API
+===
+
+The core part of the API is responsible of collecting,
+verifying the format of the data (with `Pydantic <https://pydantic.dev>`_)
+and to provide different ways to access the results from the various
+scanning tools.
+
+The OpenAPI documentation is available in :ref:`this section <http-api>`.
+
+
+Type of agents
+==============
 
 Each agent is authenticated, registered and declare its availability
 (for the presence notification system).
@@ -22,15 +37,9 @@ Each agent is authenticated, registered and declare its availability
 ``Ad hoc module``: a module in order to share data with external platforms,
 such as MISP :footcite:p:`10.1145/2994539.2994542` or other database systems.
 
-
 The correlation agent also provides a PubSub mechanism.
 
-
-Type of agents
-==============
-
-Each agent has the possibility to provide a HTML view
-and different services.
+Each agent has the possibility to provide a HTML view and different services.
 
 
 Correlation Engine

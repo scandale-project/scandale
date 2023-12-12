@@ -27,6 +27,8 @@ As defined `here <https://github.com/scandale-project/pumpkin/blob/main/api/sche
 Validation of the format is made with `Pydantic <https://pydantic.dev>`_.
 
 
+.. _http-api:
+
 HTTP API
 --------
 

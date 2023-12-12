@@ -30,10 +30,11 @@ flowchart LR
 A[Probe with periodic behaviour] -->|JSON formatted result| B(Aggregation)
 AA[Probe with cyclic behaviour] -->|JSON formatted result| B
 AAA[Probe with one shot behaviour] -->|JSON formatted result| B
-B --> C(Aggregation Engine with cyclic behaviour)
-C -->|Write| D[Database]
+B --> C(Correlation Engine with cyclic behaviour)
+C -->|HTTP POST| D[FastAPI]
 C -->|Send| E[Ad hoc module]
 F[External source] -->|HTTP POST| C
+D -->|Write| G[DatabasC
 ```
 
 The aim of this rather complex example is to show what is currently possible
