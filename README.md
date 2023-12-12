@@ -34,7 +34,7 @@ B --> C(Correlation Engine with cyclic behaviour)
 C -->|HTTP POST| D[FastAPI]
 C -->|Send| E[Ad hoc module]
 F[External source] -->|HTTP POST| C
-D -->|Write| G[DatabasC
+D -->|Write| G[Database]
 ```
 
 The aim of this rather complex example is to show what is currently possible
