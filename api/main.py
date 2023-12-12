@@ -3,6 +3,7 @@ from typing import List
 from fastapi import Depends
 from fastapi import FastAPI
 from fastapi import HTTPException
+from fastapi.openapi.utils import get_openapi
 from sqlalchemy.orm import Session
 
 from . import crud
@@ -12,6 +13,26 @@ from .database import engine
 from .database import SessionLocal
 
 app = FastAPI()
+
+
+def custom_openapi():
+    if app.openapi_schema:
+        return app.openapi_schema
+    openapi_schema = get_openapi(
+        title="SCANDALE - Pumpkin",
+        version="0.1.0",
+        summary="API of the Pumpkin project.",
+        description="Backend API for collecting data from probes and storing proof of checks from various scans.",
+        routes=app.routes,
+    )
+    openapi_schema["info"]["x-logo"] = {
+        "url": "https://www.circl.lu/assets/images/circl-logo.png"
+    }
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
+
+
+app.openapi = custom_openapi
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -30,9 +51,9 @@ db_session: Session = Depends(get_db)
 
 @app.get("/items/", response_model=list[schemas.ItemBase])
 async def read_items(
-    skip: int = 0, limit: int = 100, db: Session = db_session
+    skip: int = 0, limit: int = 100, q: str = "", db: Session = db_session
 ) -> List[schemas.ItemBase]:
-    items = crud.get_items(db, skip=skip, limit=limit)
+    items = crud.get_items(db, skip=skip, limit=limit, query=q)
     return items
 
 
