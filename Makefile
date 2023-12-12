@@ -25,3 +25,6 @@ doc:
 multidoc:
 	rm -Rf docs/_build
 	sphinx-multiversion docs/ docs/_build/html
+
+openapi:
+	python contrib/openapi.py
