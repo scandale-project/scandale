@@ -32,7 +32,7 @@ security vulnerability. See our
 [security policy](https://github.com/scandale-project/pumpkin/security/policy)
 page.
 
-[FastAPI](https://flask.palletsprojects.com) is used for the backend API.
+[FastAPI](https://fastapi.tiangolo.com/) is used for the backend API.
 Please use [black](https://github.com/psf/black) for the syntax of your Python code.
 
 

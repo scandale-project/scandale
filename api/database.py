@@ -2,14 +2,18 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
+try:
+    from instance import config
+except Exception:
+    from instance import example as config
 
 DB_CONFIG_DICT = {
-    "user": "cedric",
-    "password": "password",
-    "host": "localhost",
-    "port": 5432,
+    "user": config.DB_USERNAME,
+    "password": config.DB_PASSWORD,
+    "host": config.DB_HOST,
+    "port": config.DB_PORT,
 }
-DATABASE_NAME = "pumpkin"
+DATABASE_NAME = config.DB_NAME
 SQLALCHEMY_DATABASE_URI = "postgresql://{user}:{password}@{host}:{port}/{name}".format(
     name=DATABASE_NAME, **DB_CONFIG_DICT
 )
