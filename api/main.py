@@ -1,3 +1,4 @@
+import sys
 from typing import Any
 from typing import Dict
 from typing import List
@@ -13,6 +14,7 @@ from . import models
 from . import schemas
 from .database import engine
 from .database import SessionLocal
+from pumpkin import __version__
 
 app = FastAPI()
 
@@ -83,7 +85,26 @@ async def create_item(item: schemas.ItemCreate, db: Session = db_session):
     return crud.create_item(db=db, item=item)
 
 
-@app.get("/stats/")
+@app.get("/system/stats/")
 async def stats(db: Session = db_session):
     """Provides stats about the database."""
     return {"dbsize": crud.db_stats(db=db)}
+
+
+@app.get("/system/info/")
+async def system_info():
+    """Provides stats and information about the instance."""
+    version = __version__.split("-")
+    if len(version) == 1:
+        software_version = version[0]
+        version_url = f"https://github.com/scandale-project/pumpkin/tags/{version[0]}"
+    else:
+        software_version = f"{version[0]} - {version[2][1:]}"
+        version_url = "https://github.com/scandale-project/pumpkin/commit/{}".format(
+            version[2][1:]
+        )
+    return {
+        "python_version": "{}.{}.{}".format(*sys.version_info[:3]),
+        "version": software_version,
+        "version_url": version_url,
+    }
