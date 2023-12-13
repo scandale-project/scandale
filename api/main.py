@@ -1,3 +1,5 @@
+from typing import Any
+from typing import Dict
 from typing import List
 
 from fastapi import Depends
@@ -15,7 +17,7 @@ from .database import SessionLocal
 app = FastAPI()
 
 
-def custom_openapi():
+def custom_openapi() -> Dict[str, Any]:
     if app.openapi_schema:
         return app.openapi_schema
     openapi_schema = get_openapi(
@@ -23,6 +25,16 @@ def custom_openapi():
         version="0.1.0",
         summary="API of the Pumpkin project.",
         description="Backend API for collecting data from probes and storing proof of checks from various scans.",
+        contact={
+            "name": "Computer Incident Response Center Luxembourg",
+            "url": "https://www.circl.lu",
+            "email": "info@circl.lu",
+        },
+        license_info={
+            "name": "GNU Affero General Public License v3.0 or later",
+            "identifier": "AGPL-3.0-or-later",
+            "url": "https://www.gnu.org/licenses/agpl-3.0.en.html",
+        },
         routes=app.routes,
     )
     openapi_schema["info"]["x-logo"] = {
