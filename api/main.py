@@ -93,7 +93,7 @@ async def stats(db: Session = db_session):
 
 @app.get("/system/info/")
 async def system_info():
-    """Provides stats and information about the instance."""
+    """Provides information about the instance."""
     version = __version__.split("-")
     if len(version) == 1:
         software_version = version[0]

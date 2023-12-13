@@ -15,12 +15,14 @@ FastAPI
 .. code-block:: bash
 
     $ poetry install
+    $ cp instance/example.py instance/config.py
 
 This will install FastAPI with its dependencies and SPADE.
 
 
 .. code-block:: json
 
+    $ poetry shell
     $ uvicorn api.main:app
     INFO:     Started server process [18716]
     INFO:     Waiting for application startup.
