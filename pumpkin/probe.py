@@ -1,7 +1,7 @@
 import argparse
 import asyncio
+import base64
 import getpass
-import hashlib
 import json
 import subprocess
 
@@ -10,6 +10,8 @@ from spade.agent import Agent
 from spade.behaviour import CyclicBehaviour
 from spade.behaviour import OneShotBehaviour
 from spade.message import Message
+
+# import hashlib
 
 
 def exec_cmd(cmd: str = "fortune", working_dir: str = "") -> str:
@@ -25,12 +27,12 @@ def exec_cmd(cmd: str = "fortune", working_dir: str = "") -> str:
     result = subprocess.check_output(
         bash_string, shell=True, executable="/bin/bash", text=True, cwd=working_dir
     )
-    m = hashlib.sha256()
-    m.update(result.strip().encode("utf-8"))
-    return m.hexdigest()
+    result = result.strip().encode("utf-8")
+    base64_result = base64.b64encode(result)
+    return base64_result
 
 
-class CorrelationEngine(Agent):
+class ProbeEngine(Agent):
     class ProbeBehav(CyclicBehaviour):
         async def on_start(self):
             print("Starting behaviour . . .")
@@ -79,7 +81,7 @@ class CorrelationEngine(Agent):
 
 
 async def main(probe_jid, passwd):
-    agent = CorrelationEngine(probe_jid, passwd)
+    agent = ProbeEngine(probe_jid, passwd)
     await agent.start()
 
     # wait until user interrupts with ctrl+C

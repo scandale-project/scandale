@@ -1,5 +1,6 @@
 import asyncio
 
+import rfc3161ng
 import spade
 from spade.agent import Agent
 from spade.behaviour import CyclicBehaviour
@@ -9,16 +10,35 @@ from spade.message import Message
 # import getpass
 
 
+CERTIFICATE = open("data/freetsa.crt", "rb").read()
+RT = rfc3161ng.RemoteTimestamper("http://freetsa.org/tsr", certificate=CERTIFICATE)
+
+
 class CorrelationEngine(Agent):
     class CollectingBehav(CyclicBehaviour):
         async def on_start(self):
-            print("Starting behaviour . . .")
-            # self.counter = 0
+            print("Starting behaviour...")
+            self.counter = 0
 
         async def run(self):
-            # print(f"Counter: {self.counter}")
-            # self.counter += 1
-            await asyncio.sleep(1)
+            print(f"Counter: {self.counter}")
+            self.counter += 1
+            await asyncio.sleep(1)  # check if not useless
+
+            msg = await self.receive(timeout=10)  # wait for a message for 10 seconds
+            if msg:
+                print(f"Message received with content: {msg.body}")
+                # m = hashlib.sha256()
+                # m.update(result)
+                # base64_result = m.hexdigest()
+                tst = RT.timestamp(data=msg.body)
+                # TODO: validate the format with pydantic before storing in database
+                item = {
+                    "tst": tst,
+                    "scan_result": msg.body,
+                }
+            else:
+                print("Did not received any message after 10 seconds")
 
     class SharingBehav(OneShotBehaviour):
         async def run(self):
@@ -49,8 +69,8 @@ class CorrelationEngine(Agent):
         collecting_behav = self.CollectingBehav()
         self.add_behaviour(collecting_behav)
 
-        self.sharing_behav = self.SharingBehav()
-        self.add_behaviour(self.sharing_behav)
+        # self.sharing_behav = self.SharingBehav()
+        # self.add_behaviour(self.sharing_behav)
 
         self.presence.set_available()
         self.presence.subscribe("probe1@localhost")
