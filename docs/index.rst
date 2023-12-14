@@ -4,7 +4,7 @@ SCANDALE / Pumpkin
 Presentation
 ------------
 
-Pumpkin, is a libre software which is providing a backend architecture
+`Pumpkin <https://github.com/scandale-project/pumpkin>`_, is a libre software which is providing a backend architecture
 for collecting data from probes and storing proof of checks.
 
 The platform is providing:
