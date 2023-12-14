@@ -59,7 +59,7 @@ class ProbeEngine(Agent):
             msg.set_metadata(
                 "language", "OWL-S"
             )  # Set the language of the message content
-            msg.body = result  # Set the message content
+            msg.body = str(result)  # Set the message content
 
             await self.send(msg)
             print("Message sent!")

@@ -37,6 +37,7 @@ class CorrelationEngine(Agent):
                     "tst": tst,
                     "scan_result": msg.body,
                 }
+                print(item)
             else:
                 print("Did not received any message after 10 seconds")
 

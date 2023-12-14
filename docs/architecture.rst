@@ -9,7 +9,7 @@ Architecture
     A[Probe with periodic behaviour] -->|JSON formatted result| B(Aggregation)
     AA[Probe with cyclic behaviour] -->|JSON formatted result| B
     AAA[Probe with one shot behaviour] -->|JSON formatted result| B
-    B --> C(Correlation Engine with cyclic behaviour)
+    B --> C(Aggregation Engine with cyclic behaviour)
     C -->|HTTP POST| D[FastAPI]
     C -->|Send| E[Ad hoc module]
     F[External source] -->|HTTP POST| C
@@ -40,19 +40,37 @@ Each agent is authenticated, registered and declare its availability
 ``Ad hoc module``: a module in order to share data with external platforms,
 such as MISP :footcite:p:`10.1145/2994539.2994542` or other database systems.
 
-The correlation agent also provides a PubSub mechanism.
 
 Each agent has the possibility to provide a HTML view and different services.
 
 
-Correlation Engine
+Aggregation Engine
 ------------------
+
+Time-Stamp Protocol (TSP) RFC 3161
+``````````````````````````````````
+
+This main responsibility of this agent is to collect data from the
+different scanning tools.
+This agent is as well responsible of timestamping the collected data
+by using a third party provider.
+
 
 Pub/Sub mechanism
 `````````````````
 
+The aggregation agent also provides a PubSub mechanism.
+
+
 Probe agent
 -----------
+
+The probe agent is responsible of:
+
+- embedding different scanning tools (probes);
+- normalizing and verifying the format of analysis tools output;
+- transferring the standardized data to the aggregation engine.
+
 
 Configuration file of a probe agent:
 
@@ -62,7 +80,7 @@ Configuration file of a probe agent:
       "uuid": "",
       "period": 3600,
       "target": "",
-      "command": "",
+      "command": "<-how-to-launch-the-scanning-tool>",
       "args": [],
       "result_parser": "",
       "up_agent": ""
