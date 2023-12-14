@@ -24,11 +24,11 @@ class AggregationEngine(Agent):
     class CollectingBehav(CyclicBehaviour):
         async def on_start(self):
             print("Starting behaviour...")
-            self.counter = 0
+            # self.counter = 0
 
         async def run(self):
-            print(f"Counter: {self.counter}")
-            self.counter += 1
+            # print(f"Counter: {self.counter}")
+            # self.counter += 1
 
             msg = await self.receive(timeout=10)  # wait for a message for 10 seconds
             if msg:

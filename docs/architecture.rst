@@ -18,8 +18,6 @@ Architecture
     B -.->|Ask for a timestamp| RTS
     B -->|Write| G[Database]
 
-
-
     P -.-> H[Agents registry]
     P1 -.-> H
     P2 -.-> H
