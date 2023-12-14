@@ -1,4 +1,5 @@
 import asyncio
+import base64
 
 import rfc3161ng
 import spade
@@ -14,7 +15,7 @@ CERTIFICATE = open("data/freetsa.crt", "rb").read()
 RT = rfc3161ng.RemoteTimestamper("http://freetsa.org/tsr", certificate=CERTIFICATE)
 
 
-class CorrelationEngine(Agent):
+class AggregationEngine(Agent):
     class CollectingBehav(CyclicBehaviour):
         async def on_start(self):
             print("Starting behaviour...")
@@ -23,11 +24,11 @@ class CorrelationEngine(Agent):
         async def run(self):
             print(f"Counter: {self.counter}")
             self.counter += 1
-            await asyncio.sleep(1)  # check if not useless
 
             msg = await self.receive(timeout=10)  # wait for a message for 10 seconds
             if msg:
                 print(f"Message received with content: {msg.body}")
+                print(base64.b64decode(msg.body))
                 # m = hashlib.sha256()
                 # m.update(result)
                 # base64_result = m.hexdigest()
@@ -38,6 +39,7 @@ class CorrelationEngine(Agent):
                     "scan_result": msg.body,
                 }
                 print(item)
+                print()
             else:
                 print("Did not received any message after 10 seconds")
 
@@ -78,9 +80,10 @@ class CorrelationEngine(Agent):
 
 
 async def main():
+    # do not forget to configure OMEMO
     jid = "correlation-engine@localhost"
     passwd = "securePasswordforCE"  # getpass.getpass(f"Password for {jid}:\n")
-    agent = CorrelationEngine(jid, passwd)
+    agent = AggregationEngine(jid, passwd)
     await agent.start()
 
     await agent.web.start(hostname="127.0.0.1", port="10000")

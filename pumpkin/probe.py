@@ -27,7 +27,7 @@ def exec_cmd(cmd: str = "fortune", working_dir: str = "") -> str:
     result = subprocess.check_output(
         bash_string, shell=True, executable="/bin/bash", text=True, cwd=working_dir
     )
-    result = result.strip().encode("utf-8")
+    result = result.encode("utf-8")
     base64_result = base64.b64encode(result)
     return base64_result
 
@@ -59,7 +59,7 @@ class ProbeEngine(Agent):
             msg.set_metadata(
                 "language", "OWL-S"
             )  # Set the language of the message content
-            msg.body = str(result)  # Set the message content
+            msg.body = result.decode()  # Set the message content
 
             await self.send(msg)
             print("Message sent!")
