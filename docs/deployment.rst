@@ -16,7 +16,7 @@ Main steps:
 
 - installation of the server;
 - configuration of the server (OMEMO, etc.);
-- creation of the required accounts for the correlation engine and the probes;
+- creation of the required accounts for the aggregation engine and the probes;
 - configuration of Pumpkin.
 
 Description of the steps:
@@ -56,7 +56,7 @@ Creation of accounts:
 
 .. code-block:: bash
 
-    $ sudo prosodyctl adduser correlation-engine@localhost
+    $ sudo prosodyctl adduser aggregation-engine@localhost
     Password: securePasswordforCE
 
     $ sudo prosodyctl adduser probe1@localhost
@@ -64,12 +64,12 @@ Creation of accounts:
 
 
 
-Luanching the correlation engine:
+Launching the aggregation engine:
 
 .. code-block:: bash
 
-    $ python pumpkin/correlation.py
-    Password for correlation-engine@localhost:
+    $ python pumpkin/aggregation.py
+    Password for aggregation-engine@localhost:
 
     Agent starting . . .
     Web Graphical Interface available at:

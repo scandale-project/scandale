@@ -10,9 +10,14 @@ from spade.message import Message
 
 # import getpass
 
+try:
+    from instance import config
+except Exception:
+    from instance import example as config
 
-CERTIFICATE = open("data/freetsa.crt", "rb").read()
-RT = rfc3161ng.RemoteTimestamper("http://freetsa.org/tsr", certificate=CERTIFICATE)
+
+CERTIFICATE = open(config.CERTIFICATE_FILE, "rb").read()
+RT = rfc3161ng.RemoteTimestamper(config.REMOTE_TIMESTAMPER, certificate=CERTIFICATE)
 
 
 class AggregationEngine(Agent):

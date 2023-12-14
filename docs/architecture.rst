@@ -53,7 +53,7 @@ Time-Stamp Protocol (TSP) RFC 3161
 This main responsibility of this agent is to collect data from the
 different scanning tools.
 This agent is as well responsible of timestamping the collected data
-by using a third party provider.
+by using a third party provider (see `RFC 3161 <https://www.ietf.org/rfc/rfc3161.txt>`_).
 
 
 Pub/Sub mechanism
