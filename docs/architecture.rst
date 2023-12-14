@@ -6,14 +6,26 @@ Architecture
 
     flowchart LR
 
-    A[Probe with periodic behaviour] -->|JSON formatted result| B(Aggregation)
-    AA[Probe with cyclic behaviour] -->|JSON formatted result| B
-    AAA[Probe with one shot behaviour] -->|JSON formatted result| B
-    B --> C(Aggregation Engine with cyclic behaviour)
-    C -->|HTTP POST| D[FastAPI]
-    C -->|Send| E[Ad hoc module]
-    F[External source] -->|HTTP POST| C
-    D -->|Write| G[Database]
+    P[Probe with periodic behaviour] -->|Standardized result| A(Aggregation Engine with cyclic behaviour)
+    P1[Probe with cyclic behaviour] -->|Standardized result| A
+    P2[Probe with one shot behaviour] -->|Standardized result| A
+    E[External source] -->|HTTP POST| A
+
+    A -.->|Ask for a timestamp| RTS(Remote timestamper *for example: freetsa.org*)
+
+    A -->|HTTP POST| B[FastAPI]
+    A -->|Send| M[Ad hoc module]
+    B -.->|Ask for a timestamp| RTS
+    B -->|Write| G[Database]
+
+
+
+    P -.-> H[Agents registry]
+    P1 -.-> H
+    P2 -.-> H
+    A -.-> H
+
+
 
 |
 

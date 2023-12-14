@@ -13,7 +13,7 @@
 # sys.path.insert(0, os.path.abspath('.'))
 # -- Project information -----------------------------------------------------
 
-project = "Pumpkin"
+project = "SCANDALE"
 copyright = "Computer Incident Response Center Luxembourg (CIRCL) <info@circl.lu>"
 author = "Cédric Bonhomme <cedric@cedricbonhomme.org>"
 
@@ -81,7 +81,7 @@ html_sidebars = {
     ],
 }
 
-html_title = "A Demonic Platform"
+html_title = "Pumpkin"
 html_theme_options = {
     "path_to_docs": "docs",
     "repository_url": "https://github.com/scandale-project/pumpkin",
