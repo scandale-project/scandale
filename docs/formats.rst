@@ -57,6 +57,7 @@ Agent configuration
         "target": "",
         "command": "",
         "args": [],
+        "expected_value": "",
         "up_agent": ""
         "jid": "",
         "passwd": ""
