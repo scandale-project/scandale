@@ -14,7 +14,7 @@ from . import models
 from . import schemas
 from .database import engine
 from .database import SessionLocal
-from pumpkin import __version__
+from scandale import __version__
 
 app = FastAPI()
 
@@ -23,9 +23,9 @@ def custom_openapi() -> Dict[str, Any]:
     if app.openapi_schema:
         return app.openapi_schema
     openapi_schema = get_openapi(
-        title="SCANDALE - Pumpkin",
+        title="SCANDALE",
         version="0.1.0",
-        summary="API of the Pumpkin project.",
+        summary="API of the SCANDALE project.",
         description="Backend API for collecting data from probes and storing proof of checks from various scans.",
         contact={
             "name": "Computer Incident Response Center Luxembourg",
@@ -97,10 +97,10 @@ async def system_info():
     version = __version__.split("-")
     if len(version) == 1:
         software_version = version[0]
-        version_url = f"https://github.com/scandale-project/pumpkin/tags/{version[0]}"
+        version_url = f"https://github.com/scandale-project/scandale/tags/{version[0]}"
     else:
         software_version = f"{version[0]} - {version[2][1:]}"
-        version_url = "https://github.com/scandale-project/pumpkin/commit/{}".format(
+        version_url = "https://github.com/scandale-project/scandale/commit/{}".format(
             version[2][1:]
         )
     return {

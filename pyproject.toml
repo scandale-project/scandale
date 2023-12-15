@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "pumpkin"
+name = "scandale"
 version = "0.1.0"
 description = "A data collection platform."
 authors = [
@@ -7,8 +7,8 @@ authors = [
 ]
 license = "AGPL-3.0-or-later"
 readme = "README.md"
-homepage = "https://github.com/scandale-project/pumpkin"
-repository = "https://github.com/scandale-project/pumpkin"
+homepage = "https://github.com/scandale-project/scandale"
+repository = "https://github.com/scandale-project/scandale"
 documentation = "https://pumpkin-project.readthedocs.io"
 
 keywords = ["spade", "multiagent-systems", "xmpp"]

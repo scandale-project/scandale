@@ -45,7 +45,7 @@ bibtex_bibfiles = ["refs.bib"]
 # smv_remote_whitelist = None
 
 mermaid_version = ""
-# mermaid_cmd = "/home/cedric/git/pumpkin/docs/node_modules/@mermaid-js/mermaid-cli/src/cli.js"
+# mermaid_cmd = "/home/cedric/git/scandale/docs/node_modules/@mermaid-js/mermaid-cli/src/cli.js"
 # mermaid_output_format = "png"
 html_js_files = [
     "js/mermaid.min.js",
@@ -81,13 +81,13 @@ html_sidebars = {
     ],
 }
 
-html_title = "Pumpkin"
+html_title = "SCANDALE"
 html_theme_options = {
     "path_to_docs": "docs",
-    "repository_url": "https://github.com/scandale-project/pumpkin",
+    "repository_url": "https://github.com/scandale-project/scandale",
     # "repository_branch": "gh-pages",  # For testing
     "launch_buttons": {
-        "binderhub_url": "https://github.com/scandale-project/pumpkin",
+        "binderhub_url": "https://github.com/scandale-project/scandale",
     },
     "use_edit_page_button": True,
     "use_issues_button": True,

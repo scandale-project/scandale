@@ -4,8 +4,8 @@ project.
 Before starting to contribute please install the Git hook scripts:
 
 ```bash
-$ git clone https://github.com/scandale-project/pumpkin
-$ cd pumpkin/
+$ git clone https://github.com/scandale-project/scandale
+$ cd scandale/
 $ poetry install
 $ pre-commit install
 ```
@@ -29,7 +29,7 @@ to update the documentation is strongly recommended.
 
 Please, do not open directly a GitHub issue if you think you have found a
 security vulnerability. See our
-[security policy](https://github.com/scandale-project/pumpkin/security/policy)
+[security policy](https://github.com/scandale-project/scandale/security/policy)
 page.
 
 [FastAPI](https://fastapi.tiangolo.com/) is used for the backend API.

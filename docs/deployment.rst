@@ -17,7 +17,7 @@ Main steps:
 - installation of the server;
 - configuration of the server (OMEMO, etc.);
 - creation of the required accounts for the aggregation engine and the probes;
-- configuration of Pumpkin.
+- configuration of SCANDALE.
 
 Description of the steps:
 
@@ -68,7 +68,7 @@ Launching the aggregation engine:
 
 .. code-block:: bash
 
-    $ python pumpkin/aggregation.py
+    $ python scandale/aggregation.py
     Password for aggregation-engine@localhost:
 
     Agent starting . . .

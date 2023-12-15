@@ -20,8 +20,8 @@ jobs:
     # - name: Setup PostgreSQL
     #   uses: Harmon758/postgresql-action@v1.0.0
     #   with:
-    #     postgresql db: 'pumpkin'
-    #     postgresql user: 'pumpkin'
+    #     postgresql db: 'scandale'
+    #     postgresql user: 'scandale'
     #     postgresql password: 'password'
 
     - name: Set up Python ${{ matrix.python-version }}
