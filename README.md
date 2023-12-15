@@ -1,12 +1,12 @@
-# Pumpkin
+# SCANDALE
 
 ## Presentation
 
-[Pumpkin](https://github.com/scandale-project/pumpkin),
+[SCANDALE](https://github.com/scandale-project/scandale),
 is a libre software which is providing a backend architecture
 for collecting data from probes and storing proof of checks.
 
-The platform is providing:
+This platform is providing:
 
 - a documenteted HTTP API connected to an aggregation engine;
 - connection with a database (PostgreSQL);
@@ -66,7 +66,7 @@ A documentation is available [here](https://pumpkin-project.readthedocs.io).
 
 ## License
 
-`Pumpkin` is distributed under the terms of the
+`SCANDALE` is distributed under the terms of the
 [GNU Affero General Public License version 3](https://www.gnu.org/licenses/agpl-3.0.html).
 
 - Copyright (C) 2022-2023 [Cédric Bonhomme](https://www.cedricbonhomme.org)
