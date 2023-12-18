@@ -1,5 +1,5 @@
 import asyncio
-import base64
+import json
 
 import rfc3161ng
 import spade
@@ -8,8 +8,9 @@ from spade.behaviour import CyclicBehaviour
 from spade.behaviour import OneShotBehaviour
 from spade.message import Message
 
-# import getpass
 from api.schemas import ScanDataCreate
+
+# import getpass
 
 try:
     from instance import config
@@ -25,35 +26,21 @@ class AggregationEngine(Agent):
     class CollectingBehav(CyclicBehaviour):
         async def on_start(self):
             print("Starting behaviour...")
-            # self.counter = 0
 
         async def run(self):
-            # print(f"Counter: {self.counter}")
-            # self.counter += 1
-
             msg = await self.receive(timeout=10)  # wait for a message for 10 seconds
             if msg:
                 print(f"Message received with content: {msg.body}")
-                print(base64.b64decode(msg.body))
-                # m = hashlib.sha256()
-                # m.update(result)
-                # base64_result = m.hexdigest()
+                try:
+                    # Validate the format with pydantic
+                    dict_msg = json.loads(msg.body)
+                    item = ScanDataCreate(**dict_msg)
+                except Exception:
+                    pass
+                # cryptographic timestamping (RFC 3161)
                 tst = RT.timestamp(data=msg.body)
-                # Validate the format with pydantic
-                item = ScanDataCreate(**dict({
-                    "version": "1.0",
-                    "format": "nmap",
-                    "meta": {
-                        "uuid": "",
-                        "ts": "",
-                        "type": "",
-                    },
-                    "payload": {
-                        "row": msg.body
-                    }
-                }))
                 print(item)
-                print()
+                print(tst)
             else:
                 print("Did not received any message after 10 seconds")
 

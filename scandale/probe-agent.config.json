@@ -1,10 +1,15 @@
 {
-  "uuid": "",
+  "uuid": "56163b3b-c563-4c03-b30a-3ae2549e98c3",
+  "version": "1.0",
+  "type": "scan",
   "period": 3600,
   "target": "",
   "command": "fortune",
+  "format": "nmap",
   "args": [],
 
   "jid": "probe1@localhost",
-  "passwd": "securePasswordforProbe1"
+  "passwd": "securePasswordforProbe1",
+
+  "up_agent": "correlation-engine@localhost"
 }
