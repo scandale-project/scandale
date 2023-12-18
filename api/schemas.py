@@ -34,3 +34,7 @@ class ItemCreate(ItemBase):
 
 class ScanDataCreate(ScanData):
     pass
+
+
+class TimeStampToken(BaseModel):
+    tst: bytes

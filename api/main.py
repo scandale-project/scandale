@@ -64,6 +64,11 @@ def get_db():
 db_session: Session = Depends(get_db)
 
 
+#
+# Item
+#
+
+
 @app.get("/items/", response_model=list[schemas.ItemBase])
 async def read_items(
     skip: int = 0, limit: int = 100, q: str = "", db: Session = db_session
@@ -86,11 +91,29 @@ async def create_item(item: schemas.ScanDataCreate, db: Session = db_session):
     return crud.create_item(db=db, item=item)
 
 
+#
+# TimeStampToken
+#
+
+
 @app.post("/tst/")
-async def create_tst(request: Request):
-    """Insert a tst."""
+async def create_tst(request: Request, db: Session = db_session):
+    """Insert a TimeStampToken."""
     data: bytes = await request.body()
-    print(data)
+    new_tst = crud.create_tst(db=db, data=data)
+    return {"message": new_tst.id}
+
+
+@app.get("/tsts/", response_model=str)
+async def read_tst(skip: int = 0, limit: int = 100, db: Session = db_session) -> str:
+    tsts = crud.get_tst(db, skip=skip, limit=limit)
+    tst_list = [elem.tst for elem in tsts]
+    return str(tst_list)
+
+
+#
+# System
+#
 
 
 @app.get("/system/stats/")

@@ -31,5 +31,20 @@ def create_item(db: Session, item: schemas.ItemCreate):
     return db_item
 
 
+def create_tst(db: Session, data: schemas.ItemCreate):
+    """Create a TimeStampToken."""
+    print(data)
+    db_tst = models.TimeStampToken(tst=data)
+    db.add(db_tst)
+    db.commit()
+    db.refresh(db_tst)
+    return db_tst
+
+
+def get_tst(db: Session, skip: int = 0, limit: int = 100):
+    """Filter TimeStampToken with a query."""
+    return db.query(models.TimeStampToken).offset(skip).limit(limit).all()
+
+
 def db_stats(db: Session):
     return db.query(models.Item).count()
