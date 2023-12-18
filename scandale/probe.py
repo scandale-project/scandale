@@ -1,14 +1,12 @@
 import argparse
 import asyncio
 import base64
-import getpass
 import json
 import subprocess
 import time
 
 import spade
 from spade.agent import Agent
-from spade.behaviour import CyclicBehaviour
 from spade.behaviour import OneShotBehaviour
 from spade.message import Message
 

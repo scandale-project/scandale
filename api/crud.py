@@ -24,7 +24,7 @@ def get_item(db: Session, item_id: int):
 
 def create_item(db: Session, item: schemas.ItemCreate):
     """Create an item."""
-    db_item = models.Item(**item.model_dump())
+    db_item = models.Item(scan_data=item.model_dump())
     db.add(db_item)
     db.commit()
     db.refresh(db_item)

@@ -1,8 +1,11 @@
 import asyncio
 import json
+import urllib.parse
 
+import requests
 import rfc3161ng
 import spade
+from pydantic import ValidationError
 from spade.agent import Agent
 from spade.behaviour import CyclicBehaviour
 from spade.behaviour import OneShotBehaviour
@@ -27,20 +30,40 @@ class AggregationEngine(Agent):
         async def on_start(self):
             print("Starting behaviour...")
 
+            self.headers_json = {
+                "Content-Type": "application/json",
+                "accept": "application/json",
+            }
+            self.headers_octet_stream = {
+                "Content-Type": "application/octet-stream",
+            }
+
         async def run(self):
             msg = await self.receive(timeout=10)  # wait for a message for 10 seconds
             if msg:
                 print(f"Message received with content: {msg.body}")
                 try:
-                    # Validate the format with pydantic
+                    # Convert the JSON message message to a JSON object
                     dict_msg = json.loads(msg.body)
-                    item = ScanDataCreate(**dict_msg)
-                except Exception:
-                    pass
-                # cryptographic timestamping (RFC 3161)
+                    # Validate the format with pydantic
+                    ScanDataCreate(**dict_msg)
+                except json.decoder.JSONDecodeError:
+                    return
+                except ValidationError:
+                    return
+                # Cryptographic timestamping (RFC 3161)
                 tst = RT.timestamp(data=msg.body)
-                print(item)
-                print(tst)
+
+                requests.post(
+                    urllib.parse.urljoin(config.API_URL, "items/"),
+                    json=dict_msg,
+                    headers=self.headers_json,
+                )
+                requests.post(
+                    urllib.parse.urljoin(config.API_URL, "tst/"),
+                    data=tst,
+                    headers=self.headers_octet_stream,
+                )
             else:
                 print("Did not received any message after 10 seconds")
 

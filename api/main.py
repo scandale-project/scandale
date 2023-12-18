@@ -6,6 +6,7 @@ from typing import List
 from fastapi import Depends
 from fastapi import FastAPI
 from fastapi import HTTPException
+from fastapi import Request
 from fastapi.openapi.utils import get_openapi
 from sqlalchemy.orm import Session
 
@@ -80,9 +81,16 @@ def read_item(item_id: int = 0, db: Session = db_session) -> schemas.ItemBase:
 
 
 @app.post("/items/", response_model=schemas.ItemBase)
-async def create_item(item: schemas.ItemCreate, db: Session = db_session):
+async def create_item(item: schemas.ScanDataCreate, db: Session = db_session):
     """Insert a new item."""
     return crud.create_item(db=db, item=item)
+
+
+@app.post("/tst/")
+async def create_tst(request: Request):
+    """Insert a tst."""
+    data: bytes = await request.body()
+    print(data)
 
 
 @app.get("/system/stats/")
