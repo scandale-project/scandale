@@ -19,7 +19,6 @@ class ScanData(BaseModel):
 
 
 class ItemBase(BaseModel):
-    id: int
     scan_data: ScanData
 
     class Config:
