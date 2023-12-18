@@ -7,7 +7,7 @@ class Payload(BaseModel):
 
 class Meta(BaseModel):
     uuid: str
-    ts: str
+    ts: int
     type: str
 
 
