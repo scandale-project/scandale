@@ -51,7 +51,7 @@ class AggregationEngine(Agent):
                     return
                 except ValidationError:
                     return
-                # Cryptographic timestamping (RFC 3161)
+                # TimeStampToken (TST, see RFC 3161)
                 tst = RT.timestamp(data=msg.body)
 
                 requests.post(
