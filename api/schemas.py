@@ -17,6 +17,9 @@ class ScanData(BaseModel):
     meta: Meta
     payload: Payload
 
+    class Config:
+        from_attributes = True
+
 
 class ItemBase(BaseModel):
     scan_data: ScanData
@@ -26,4 +29,8 @@ class ItemBase(BaseModel):
 
 
 class ItemCreate(ItemBase):
+    pass
+
+
+class ScanDataCreate(ScanData):
     pass

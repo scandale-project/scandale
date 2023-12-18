@@ -9,6 +9,7 @@ from spade.behaviour import OneShotBehaviour
 from spade.message import Message
 
 # import getpass
+from api.schemas import ScanDataCreate
 
 try:
     from instance import config
@@ -38,11 +39,19 @@ class AggregationEngine(Agent):
                 # m.update(result)
                 # base64_result = m.hexdigest()
                 tst = RT.timestamp(data=msg.body)
-                # TODO: validate the format with pydantic before storing in database
-                item = {
-                    "tst": tst,
-                    "scan_result": msg.body,
-                }
+                # Validate the format with pydantic
+                item = ScanDataCreate(**dict({
+                    "version": "1.0",
+                    "format": "nmap",
+                    "meta": {
+                        "uuid": "",
+                        "ts": "",
+                        "type": "",
+                    },
+                    "payload": {
+                        "row": msg.body
+                    }
+                }))
                 print(item)
                 print()
             else:
