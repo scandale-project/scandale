@@ -100,10 +100,7 @@ async def create_tst(
     data: schemas.TimeStampTokenCreate, db: Session = db_session
 ) -> schemas.TimeStampToken:
     """Insert a TimeStampToken."""
-    dict_data = {
-        "scan_uuid": data.scan_uuid,
-        "tst": data.tst
-    }
+    dict_data = {"scan_uuid": data.scan_uuid, "tst": data.tst}
     new_tst = crud.create_tst(db=db, data=dict_data)
     return new_tst
 
@@ -117,7 +114,7 @@ async def read_tsts(
 
 
 @app.get("/tsts/{scan_uuid}", response_model=schemas.TimeStampToken)
-def get_tst(scan_uuid = "", db: Session = db_session) -> schemas.TimeStampToken:
+def get_tst(scan_uuid="", db: Session = db_session) -> schemas.TimeStampToken:
     db_tst = crud.get_tst(db, scan_uuid=scan_uuid)
     if db_tst is None:
         raise HTTPException(status_code=404, detail="TimeStampToken not found")
