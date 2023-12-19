@@ -6,20 +6,21 @@
 is a libre software which is providing a backend architecture
 for collecting data from probes and storing proof of checks.
 
-This platform is providing:
+This platform is composed of:
 
-- a documenteted HTTP API which is providing a PubSub mechansim and a;
-  connection to a database (PostgreSQL);
+- a documented HTTP API with a PubSub mechansim and a connection to a
+  database;
 - a backend to deploy and monitor a network of probes.
-  This architecture is relying on the
+  The architecture is relying on the
   [Smart Python Agent Development Environment](https://github.com/javipalanca/spade);
 - a service to timestamp the collected data with a third party
-  (`RFC 3161 <https://www.ietf.org/rfc/rfc3161.txt>`_) for the proof of checks;
-- possibility to extend the platform in order to share data with external system,
-  such as MISP.
+  ([RFC 3161](https://www.ietf.org/rfc/rfc3161.txt)) for the proof of checks;
 
 The API is based on the [FastAPI](https://fastapi.tiangolo.com) framework
 well known for its excellent performance.
+
+It is possibility to extend the platform in order to share data with external
+system, such as MISP.
 
 
 ```mermaid
