@@ -53,6 +53,10 @@ class AggregationEngine(Agent):
                     return
                 # TimeStampToken (TST, see RFC 3161)
                 tst = RT.timestamp(data=msg.body)
+                dict_tst = {
+                    "tst": str(tst),
+                    "scan_uuid": dict_msg["meta"]["uuid"],
+                }
 
                 requests.post(
                     urllib.parse.urljoin(config.API_URL, "items/"),
@@ -61,8 +65,8 @@ class AggregationEngine(Agent):
                 )
                 requests.post(
                     urllib.parse.urljoin(config.API_URL, "tst/"),
-                    data=tst,
-                    headers=self.headers_octet_stream,
+                    json=dict_tst,
+                    headers=self.headers_json,
                 )
             else:
                 print("Did not received any message after 10 seconds")
