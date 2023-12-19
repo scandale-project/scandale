@@ -109,11 +109,19 @@ async def create_tst(
 
 
 @app.get("/tsts/", response_model=list[schemas.TimeStampToken])
-async def read_tst(
+async def read_tsts(
     skip: int = 0, limit: int = 100, db: Session = db_session
 ) -> list[schemas.TimeStampToken]:
     tsts = crud.get_tst(db, skip=skip, limit=limit)
     return tsts
+
+
+@app.get("/tsts/{scan_uuid}", response_model=schemas.TimeStampToken)
+def get_tst(scan_uuid = "", db: Session = db_session) -> schemas.TimeStampToken:
+    db_tst = crud.get_tst(db, scan_uuid=scan_uuid)
+    if db_tst is None:
+        raise HTTPException(status_code=404, detail="TimeStampToken not found")
+    return db_tst
 
 
 #

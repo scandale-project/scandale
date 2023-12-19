@@ -40,8 +40,11 @@ def create_tst(db: Session, data: schemas.TimeStampTokenCreate):
     return db_tst
 
 
-def get_tst(db: Session, skip: int = 0, limit: int = 100):
-    """Filter TimeStampToken with a query."""
+def get_tst(db: Session, skip: int = 0, limit: int = 100, scan_uuid = ""):
+    """Returns a list of TimeStampToken or filter TimeStampToken with the
+    UUID of a scan."""
+    if scan_uuid:
+        return db.query(models.TimeStampToken).filter(models.TimeStampToken.scan_uuid == scan_uuid).first()
     return db.query(models.TimeStampToken).offset(skip).limit(limit).all()
 
 
