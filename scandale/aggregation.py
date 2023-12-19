@@ -34,18 +34,15 @@ class AggregationEngine(Agent):
                 "Content-Type": "application/json",
                 "accept": "application/json",
             }
-            self.headers_octet_stream = {
-                "Content-Type": "application/octet-stream",
-            }
 
         async def run(self):
-            msg = await self.receive(timeout=10)  # wait for a message for 10 seconds
+            msg = await self.receive(timeout=10)  # Wait for a message for 10 seconds
             if msg:
                 print(f"Message received with content: {msg.body}")
                 try:
-                    # Convert the JSON message message to a JSON object
+                    # Convert the JSON string to a JSON object
                     dict_msg = json.loads(msg.body)
-                    # Validate the format with pydantic
+                    # Validate the format with Pydantic
                     ScanDataCreate(**dict_msg)
                 except json.decoder.JSONDecodeError:
                     return
