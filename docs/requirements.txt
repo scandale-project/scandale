@@ -4,4 +4,4 @@ sphinx_multiversion
 sphinx-autodoc-typehints
 sphinxcontrib-mermaid
 sphinxcontrib-bibtex
-sphinxcontrib-openapi
+sphinxcontrib-openapi==0.8.3
