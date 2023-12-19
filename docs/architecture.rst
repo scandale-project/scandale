@@ -40,6 +40,8 @@ well known for its excellent performance.
 
 The OpenAPI documentation is available in :ref:`this section <http-api>`.
 
+The API also provides a PubSub mechanism.
+
 
 Type of agents
 ==============
@@ -64,12 +66,6 @@ This main responsibility of this agent is to collect data from the
 different scanning tools.
 This agent is as well responsible of timestamping the collected data
 by using a third party provider (see `RFC 3161 <https://www.ietf.org/rfc/rfc3161.txt>`_).
-
-
-Pub/Sub mechanism
-`````````````````
-
-The aggregation agent also provides a PubSub mechanism.
 
 
 Probe agent
