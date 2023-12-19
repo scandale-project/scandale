@@ -1,4 +1,5 @@
 import uuid
+
 from sqlalchemy import Column
 from sqlalchemy import Integer
 from sqlalchemy import LargeBinary

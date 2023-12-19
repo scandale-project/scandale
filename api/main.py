@@ -6,7 +6,6 @@ from typing import List
 from fastapi import Depends
 from fastapi import FastAPI
 from fastapi import HTTPException
-from fastapi import Request
 from fastapi.openapi.utils import get_openapi
 from sqlalchemy.orm import Session
 
@@ -96,19 +95,25 @@ async def create_item(item: schemas.ScanDataCreate, db: Session = db_session):
 #
 
 
-@app.post("/tst/")
-async def create_tst(request: Request, db: Session = db_session):
+@app.post("/tst/", response_model=schemas.TimeStampTokenCreate)
+async def create_tst(
+    data: schemas.TimeStampTokenCreate, db: Session = db_session
+) -> schemas.TimeStampToken:
     """Insert a TimeStampToken."""
-    data: bytes = await request.body()
-    new_tst = crud.create_tst(db=db, data=data)
-    return {"message": new_tst.id}
+    dict_data = {
+        "scan_uuid": data.scan_uuid,
+        "tst": data.tst
+    }
+    new_tst = crud.create_tst(db=db, data=dict_data)
+    return new_tst
 
 
-@app.get("/tsts/", response_model=str)
-async def read_tst(skip: int = 0, limit: int = 100, db: Session = db_session) -> str:
+@app.get("/tsts/", response_model=list[schemas.TimeStampToken])
+async def read_tst(
+    skip: int = 0, limit: int = 100, db: Session = db_session
+) -> list[schemas.TimeStampToken]:
     tsts = crud.get_tst(db, skip=skip, limit=limit)
-    tst_list = [elem.tst for elem in tsts]
-    return str(tst_list)
+    return tsts
 
 
 #

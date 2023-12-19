@@ -31,9 +31,9 @@ def create_item(db: Session, item: schemas.ItemCreate):
     return db_item
 
 
-def create_tst(db: Session, data: schemas.ItemCreate):
+def create_tst(db: Session, data: schemas.TimeStampTokenCreate):
     """Create a TimeStampToken."""
-    db_tst = models.TimeStampToken(tst=data)
+    db_tst = models.TimeStampToken(**data)
     db.add(db_tst)
     db.commit()
     db.refresh(db_tst)

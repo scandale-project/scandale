@@ -1,3 +1,5 @@
+import uuid
+
 from pydantic import BaseModel
 
 
@@ -36,5 +38,15 @@ class ScanDataCreate(ScanData):
     pass
 
 
+#
+# Timestamp
+#
+
+
 class TimeStampToken(BaseModel):
+    scan_uuid: uuid.UUID
     tst: bytes
+
+
+class TimeStampTokenCreate(TimeStampToken):
+    pass

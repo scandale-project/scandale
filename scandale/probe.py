@@ -4,6 +4,7 @@ import base64
 import json
 import subprocess
 import time
+import uuid
 
 import spade
 from spade.agent import Agent
@@ -51,12 +52,13 @@ class ProbeEngine(Agent):
             )  # Set the language of the message content
 
             # Set the message content
+            scan_uuid = str(uuid.uuid4())
             msg.body = json.dumps(
                 {
                     "version": self.config["version"],
                     "format": self.config["format"],
                     "meta": {
-                        "uuid": self.config["uuid"],
+                        "uuid": scan_uuid,
                         "ts": int(time.time()),
                         "type": self.config["type"],
                     },
