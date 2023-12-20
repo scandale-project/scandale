@@ -9,6 +9,7 @@ from fastapi import Depends
 from fastapi import FastAPI
 from fastapi import HTTPException
 from fastapi import Request
+from fastapi import Response
 from fastapi.openapi.utils import get_openapi
 from sqlalchemy.orm import Session
 
@@ -25,6 +26,13 @@ except Exception:
     from instance import example as config
 
 app = FastAPI()
+
+
+class RawResponse(Response):
+    media_type = "binary/octet-stream"
+
+    def render(self, content: bytes) -> bytes:
+        return bytes([b ^ 0x54 for b in content])
 
 
 def custom_openapi() -> Dict[str, Any]:
@@ -125,19 +133,28 @@ async def read_tsts(skip: int = 0, limit: int = 100, db: Session = db_session):
 
 @app.get("/TimeStampTokens/{scan_uuid}", response_model=bytes)
 def get_tst(scan_uuid="", db: Session = db_session):
+    """Returns a TimeStampToken object corresponding to the scan UUID given as parameter."""
     db_tst = crud.get_tst(db, scan_uuid=scan_uuid)
     if db_tst is None:
         raise HTTPException(status_code=404, detail="TimeStampToken not found")
-    dict_tst = {
+    return str({
         "tst": db_tst.tst,
         "scan_uuid": db_tst.scan_uuid,
-    }
-    dict_tst = str(dict_tst)
-    return dict_tst
+    })
+
+
+@app.get("/TimeStampTokens/token/{scan_uuid}", response_model=bytes)
+def get_tst_token(scan_uuid="", db: Session = db_session):
+    """Returns directly the TST as a raw binary stream corresponding to the scan UUID given as parameter."""
+    db_tst = crud.get_tst(db, scan_uuid=scan_uuid)
+    if db_tst is None:
+        raise HTTPException(status_code=404, detail="TimeStampToken not found")
+    return RawResponse(content=db_tst.tst)
 
 
 @app.get("/TimeStampTokens/check/{scan_uuid}")
 def check_tst(scan_uuid="", db: Session = db_session):
+    """Performs an offline check of a TimeStampToken."""
     db_tst = crud.get_tst(db, scan_uuid=scan_uuid)
     if db_tst is None:
         raise HTTPException(status_code=404, detail="TimeStampToken not found")
@@ -155,6 +172,7 @@ def check_tst(scan_uuid="", db: Session = db_session):
 
 @app.get("/TimeStampTokens/get_timestamp/{scan_uuid}")
 def get_timestamp(scan_uuid="", db: Session = db_session):
+    """Get the timestamp of a check based on the corresponding TimeStampToken object."""
     db_tst = crud.get_tst(db, scan_uuid=scan_uuid)
     if db_tst is None:
         raise HTTPException(status_code=404, detail="TimeStampToken not found")
