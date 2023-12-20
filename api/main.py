@@ -154,6 +154,14 @@ def check_tst(scan_uuid="", db: Session = db_session):
     return {"message": result}
 
 
+@app.get("/TimeStampTokens/get_timestamp/{scan_uuid}")
+def get_timestamp(scan_uuid="", db: Session = db_session):
+    db_tst = crud.get_tst(db, scan_uuid=scan_uuid)
+    if db_tst is None:
+        raise HTTPException(status_code=404, detail="TimeStampToken not found")
+    return {"message": rfc3161ng.get_timestamp(db_tst.tst)}
+
+
 #
 # System
 #
