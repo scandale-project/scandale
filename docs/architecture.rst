@@ -29,7 +29,7 @@ Probes efficiently gather data through localized scans conducted at diverse loca
 The aggregation engine is tasked with consolidating data from these probes and generating cryptographic timestamps in adherence to RFC 3161 standards.
 Powered by FastAPI, the API offers a range of services for the storage and retrieval of checks (scans, etc.), and the proof of checks.
 
-A early demonstation is available on Youtube:
+An early demonstation is available on Youtube:
 https://www.youtube.com/watch?v=eW9y5KWcXhE
 
 
