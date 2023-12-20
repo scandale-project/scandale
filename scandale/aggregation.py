@@ -34,6 +34,10 @@ class AggregationEngine(Agent):
                 "Content-Type": "application/json",
                 "accept": "application/json",
             }
+            self.headers_octet_stream = {
+                "Content-Type": "application/octet-stream",
+                "accept": "application/json",
+            }
 
         async def run(self):
             msg = await self.receive(timeout=10)  # Wait for a message for 10 seconds
@@ -49,11 +53,13 @@ class AggregationEngine(Agent):
                 except ValidationError:
                     return
                 # TimeStampToken (TST, see RFC 3161)
-                tst = RT.timestamp(data=msg.body)
-                dict_tst = {
-                    "tst": str(tst),
-                    "scan_uuid": dict_msg["meta"]["uuid"],
-                }
+                tst = RT.timestamp(data=dict_msg["payload"]["row"])
+                dict_tst = str(
+                    {
+                        "tst": tst,
+                        "scan_uuid": dict_msg["meta"]["uuid"],
+                    }
+                )
 
                 requests.post(
                     urllib.parse.urljoin(config.API_URL, "items/"),
@@ -61,9 +67,9 @@ class AggregationEngine(Agent):
                     headers=self.headers_json,
                 )
                 requests.post(
-                    urllib.parse.urljoin(config.API_URL, "tst/"),
-                    json=dict_tst,
-                    headers=self.headers_json,
+                    urllib.parse.urljoin(config.API_URL, "TimeStampTokens/"),
+                    data=dict_tst,
+                    headers=self.headers_octet_stream,
                 )
             else:
                 print("Did not received any message after 10 seconds")

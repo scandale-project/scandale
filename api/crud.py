@@ -4,12 +4,22 @@ from . import models
 from . import schemas
 
 
-def get_items(db: Session, skip: int = 0, limit: int = 100, query: str = ""):
+def get_items(
+    db: Session, skip: int = 0, limit: int = 100, query: str = "", scan_uuid: str = ""
+):
     """Filter items with a query."""
     if query:
         return (
             db.query(models.Item)
             .filter(models.Item.scan_data["payload"]["row"].astext == query)
+            .offset(skip)
+            .limit(limit)
+            .all()
+        )
+    elif scan_uuid:
+        return (
+            db.query(models.Item)
+            .filter(models.Item.scan_data["meta"]["uuid"].astext == scan_uuid)
             .offset(skip)
             .limit(limit)
             .all()

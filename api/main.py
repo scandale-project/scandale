@@ -1,11 +1,14 @@
 import sys
+from ast import literal_eval
 from typing import Any
 from typing import Dict
 from typing import List
 
+import rfc3161ng
 from fastapi import Depends
 from fastapi import FastAPI
 from fastapi import HTTPException
+from fastapi import Request
 from fastapi.openapi.utils import get_openapi
 from sqlalchemy.orm import Session
 
@@ -15,6 +18,11 @@ from . import schemas
 from .database import engine
 from .database import SessionLocal
 from scandale import __version__
+
+try:
+    from instance import config
+except Exception:
+    from instance import example as config
 
 app = FastAPI()
 
@@ -95,30 +103,55 @@ async def create_item(item: schemas.ScanDataCreate, db: Session = db_session):
 #
 
 
-@app.post("/tst/", response_model=schemas.TimeStampTokenCreate)
-async def create_tst(
-    data: schemas.TimeStampTokenCreate, db: Session = db_session
-) -> schemas.TimeStampToken:
+@app.post("/TimeStampTokens/")
+async def create_tst(request: Request, db: Session = db_session):
     """Insert a TimeStampToken."""
-    dict_data = {"scan_uuid": data.scan_uuid, "tst": data.tst}
+    data: bytes = await request.body()
+    dict_data = literal_eval(data.decode("utf-8"))
     new_tst = crud.create_tst(db=db, data=dict_data)
-    return new_tst
+    dict_tst = {
+        "tst": new_tst.tst,
+        "scan_uuid": new_tst.scan_uuid,
+    }
+    dict_tst = str(dict_tst)
+    return dict_tst
 
 
-@app.get("/tsts/", response_model=list[schemas.TimeStampToken])
-async def read_tsts(
-    skip: int = 0, limit: int = 100, db: Session = db_session
-) -> list[schemas.TimeStampToken]:
+@app.get("/TimeStampTokens/")
+async def read_tsts(skip: int = 0, limit: int = 100, db: Session = db_session):
     tsts = crud.get_tst(db, skip=skip, limit=limit)
-    return tsts
+    return str([{"tst": elem.tst, "scan_uuid": elem.scan_uuid} for elem in tsts])
 
 
-@app.get("/tsts/{scan_uuid}", response_model=schemas.TimeStampToken)
-def get_tst(scan_uuid="", db: Session = db_session) -> schemas.TimeStampToken:
+@app.get("/TimeStampTokens/{scan_uuid}", response_model=bytes)
+def get_tst(scan_uuid="", db: Session = db_session):
     db_tst = crud.get_tst(db, scan_uuid=scan_uuid)
     if db_tst is None:
         raise HTTPException(status_code=404, detail="TimeStampToken not found")
-    return db_tst
+    dict_tst = {
+        "tst": db_tst.tst,
+        "scan_uuid": db_tst.scan_uuid,
+    }
+    dict_tst = str(dict_tst)
+    return dict_tst
+
+
+@app.get("/TimeStampTokens/check/{scan_uuid}")
+def check_tst(scan_uuid="", db: Session = db_session):
+    db_tst = crud.get_tst(db, scan_uuid=scan_uuid)
+    if db_tst is None:
+        raise HTTPException(status_code=404, detail="TimeStampToken not found")
+    db_item = crud.get_items(db, scan_uuid=scan_uuid)
+    if db_item is None:
+        raise HTTPException(status_code=404, detail="Item not found")
+
+    certificate = open(config.CERTIFICATE_FILE, "rb").read()
+    rt = rfc3161ng.RemoteTimestamper(config.REMOTE_TIMESTAMPER, certificate=certificate)
+    # print(rfc3161ng.get_timestamp(db_tst.tst))
+    result = rt.check(
+        db_tst.tst, data=db_item[0].scan_data["payload"]["row"].encode("utf-8")
+    )
+    return {"message": result}
 
 
 #
