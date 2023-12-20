@@ -147,11 +147,10 @@ def check_tst(scan_uuid="", db: Session = db_session):
 
     certificate = open(config.CERTIFICATE_FILE, "rb").read()
     rt = rfc3161ng.RemoteTimestamper(config.REMOTE_TIMESTAMPER, certificate=certificate)
-    # print(rfc3161ng.get_timestamp(db_tst.tst))
     result = rt.check(
         db_tst.tst, data=db_item[0].scan_data["payload"]["row"].encode("utf-8")
     )
-    return {"message": result}
+    return {"validity": result}
 
 
 @app.get("/TimeStampTokens/get_timestamp/{scan_uuid}")
@@ -159,7 +158,7 @@ def get_timestamp(scan_uuid="", db: Session = db_session):
     db_tst = crud.get_tst(db, scan_uuid=scan_uuid)
     if db_tst is None:
         raise HTTPException(status_code=404, detail="TimeStampToken not found")
-    return {"message": rfc3161ng.get_timestamp(db_tst.tst)}
+    return {"timestamp": rfc3161ng.get_timestamp(db_tst.tst)}
 
 
 #

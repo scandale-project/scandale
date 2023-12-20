@@ -35,7 +35,7 @@ class ProbeEngine(Agent):
         async def run(self):
             print("InformBehav running")
             try:
-                result = exec_cmd()
+                result = exec_cmd(self.config["command"])
             except Exception as e:
                 print(e)
                 result = "Error with the command: "
