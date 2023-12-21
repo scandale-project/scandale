@@ -35,6 +35,9 @@ https://www.youtube.com/watch?v=eW9y5KWcXhE
 
 The responsibility of the different components is explained in detail below.
 
+The project's changelog, detailing its updates, can be accessed
+`here <https://github.com/scandale-project/scandale/blob/main/CHANGELOG.md>`_.
+
 
 API
 ===
