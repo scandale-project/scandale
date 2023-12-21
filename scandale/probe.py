@@ -1,5 +1,4 @@
 import argparse
-import asyncio
 import base64
 import json
 import subprocess
@@ -73,7 +72,7 @@ class ProbeEngine(Agent):
             self.exit_code = "Job Finished!"
 
             # stop agent from behaviour
-            # await self.agent.stop()
+            await self.agent.stop()
 
     async def setup(self):
         print("Agent starting . . .")
@@ -91,17 +90,20 @@ async def main(config):
     agent = ProbeEngine(config["jid"], config["passwd"])
     agent.config = config
     await agent.start()
+    await agent.InformBehav.join()
+    print("Stopping agent.")
+    await agent.stop()
 
     # wait until user interrupts with ctrl+C
-    while True:  # not agent.CollectingBehav.is_killed():
-        try:
-            await asyncio.sleep(1)
-        except KeyboardInterrupt:
-            break
+    # while True:  # not agent.CollectingBehav.is_killed():
+    #     try:
+    #         await asyncio.sleep(1)
+    #     except KeyboardInterrupt:
+    #         break
 
-    assert agent.InformBehav.exit_code == 10
+    # assert agent.InformBehav.exit_code == 10
 
-    await agent.stop()
+
 
 
 if __name__ == "__main__":
