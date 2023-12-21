@@ -1,6 +1,7 @@
 import base64
 import subprocess
 
+
 def exec_cmd(cmd: str = "fortune", working_dir: str = "") -> str:
     """Execute a command in a sub process and wait for the result."""
     bash_string = r"""#!/bin/bash
