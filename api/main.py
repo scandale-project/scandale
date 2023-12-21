@@ -85,7 +85,7 @@ db_session: Session = Depends(get_db)
 
 
 @app.get("/items/", response_model=list[schemas.ItemBase])
-async def read_items(
+def read_items(
     skip: int = 0, limit: int = 100, q: str = "", db: Session = db_session
 ) -> List[schemas.ItemBase]:
     items = crud.get_items(db, skip=skip, limit=limit, query=q)
@@ -101,7 +101,7 @@ def read_item(item_id: int = 0, db: Session = db_session) -> schemas.ItemBase:
 
 
 @app.post("/items/", response_model=schemas.ItemBase)
-async def create_item(item: schemas.ScanDataCreate, db: Session = db_session):
+def create_item(item: schemas.ScanDataCreate, db: Session = db_session):
     """Insert a new item."""
     return crud.create_item(db=db, item=item)
 
@@ -126,7 +126,7 @@ async def create_tst(request: Request, db: Session = db_session):
 
 
 @app.get("/TimeStampTokens/")
-async def read_tsts(skip: int = 0, limit: int = 100, db: Session = db_session):
+def read_tsts(skip: int = 0, limit: int = 100, db: Session = db_session):
     tsts = crud.get_tst(db, skip=skip, limit=limit)
     return str([{"tst": elem.tst, "scan_uuid": elem.scan_uuid} for elem in tsts])
 
@@ -191,7 +191,7 @@ async def stats(db: Session = db_session):
 
 
 @app.get("/system/info/")
-async def system_info():
+def system_info():
     """Provides information about the instance."""
     version = __version__.split("-")
     if len(version) == 1:
