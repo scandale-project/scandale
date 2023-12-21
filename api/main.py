@@ -137,10 +137,12 @@ def get_tst(scan_uuid="", db: Session = db_session):
     db_tst = crud.get_tst(db, scan_uuid=scan_uuid)
     if db_tst is None:
         raise HTTPException(status_code=404, detail="TimeStampToken not found")
-    return str({
-        "tst": db_tst.tst,
-        "scan_uuid": db_tst.scan_uuid,
-    })
+    return str(
+        {
+            "tst": db_tst.tst,
+            "scan_uuid": db_tst.scan_uuid,
+        }
+    )
 
 
 @app.get("/TimeStampTokens/token/{scan_uuid}", response_model=bytes)
