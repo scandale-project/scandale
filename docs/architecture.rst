@@ -12,16 +12,16 @@ Architecture
 
     A -.->|Ask for a timestamp| RTS(Remote timestamper *for example: freetsa.org*)
 
+    P -.-> H[Agents registry]
+    P1 -.-> H
+    P2 -.-> H
+    A -.-> H
+
     A -->|HTTP POST| B[FastAPI]
     A -->|Send| M[Ad hoc module]
     B -.->|Ask for a timestamp| RTS
     B -->|Write| G[Database]
     E[External source] -->|HTTP POST| B
-
-    P -.-> H[Agents registry]
-    P1 -.-> H
-    P2 -.-> H
-    A -.-> H
 
 
 In summary, the outlined architecture operates as follows:
