@@ -55,7 +55,7 @@ The OpenAPI documentation is available in :ref:`this section <http-api>`.
 
 The API also provides a PubSub mechanism. Below is a simple client example.
 
-.. python::
+.. code-block:: python
 
     import asyncio
     import os
