@@ -26,10 +26,9 @@ system, such as MISP.
 ```mermaid
 flowchart LR
 
-P[Probe with periodic behaviour] -->|Standardized result| A(Aggregation Engine with cyclic behaviour)
-P1[Probe with cyclic behaviour] -->|Standardized result| A
-P2[Probe with one shot behaviour] -->|Standardized result| A
-E[External source] -->|HTTP POST| A
+P[Probe] -->|Standardized result| A(Aggregation Engine with cyclic behaviour)
+P1[Probe] -->|Standardized result| A
+P2[Probe] -->|Standardized result| A
 
 A -.->|Ask for a timestamp| RTS(Remote timestamper *for example: freetsa.org*)
 
@@ -37,6 +36,7 @@ A -->|HTTP POST| B[FastAPI]
 A -->|Send| M[Ad hoc module]
 B -.->|Ask for a timestamp| RTS
 B -->|Write| G[Database]
+E[External source] -->|HTTP POST| B
 
 P -.-> H[Agents registry]
 P1 -.-> H
