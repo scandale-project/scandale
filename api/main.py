@@ -11,6 +11,7 @@ from fastapi import HTTPException
 from fastapi import Request
 from fastapi import Response
 from fastapi.openapi.utils import get_openapi
+from fastapi_websocket_pubsub import PubSubEndpoint
 from sqlalchemy.orm import Session
 
 from . import crud
@@ -26,6 +27,12 @@ except Exception:
     from instance import example as config
 
 app = FastAPI()
+
+
+# Registers the WebSocket endpoint.
+# New scans sent to the HTTP API /items/ endpoint are published via the WebSocket.
+pubsub_endpoint = PubSubEndpoint()
+pubsub_endpoint.register_route(app, path="/pubsub")
 
 
 class RawResponse(Response):
@@ -101,9 +108,11 @@ def read_item(item_id: int = 0, db: Session = db_session) -> schemas.ItemBase:
 
 
 @app.post("/items/", response_model=schemas.ItemBase)
-def create_item(item: schemas.ScanDataCreate, db: Session = db_session):
-    """Insert a new item."""
-    return crud.create_item(db=db, item=item)
+async def create_item(item: schemas.ScanDataCreate, db: Session = db_session):
+    """Insert a new item and publish it through the WebSocket."""
+    new_item = crud.create_item(db=db, item=item)
+    await pubsub_endpoint.publish(["scan"], data=item)
+    return new_item
 
 
 #
@@ -113,7 +122,7 @@ def create_item(item: schemas.ScanDataCreate, db: Session = db_session):
 
 @app.post("/TimeStampTokens/")
 async def create_tst(request: Request, db: Session = db_session):
-    """Insert a TimeStampToken."""
+    """Insert a TimeStampToken and publish it through the WebSocket."""
     data: bytes = await request.body()
     dict_data = literal_eval(data.decode("utf-8"))
     new_tst = crud.create_tst(db=db, data=dict_data)
@@ -122,6 +131,7 @@ async def create_tst(request: Request, db: Session = db_session):
         "scan_uuid": new_tst.scan_uuid,
     }
     dict_tst = str(dict_tst)
+    await pubsub_endpoint.publish(["tst"], data=dict_tst)
     return dict_tst
 
 
