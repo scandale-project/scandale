@@ -6,11 +6,11 @@ Architecture
 
     flowchart LR
 
-    P[Probe] -->|Standardized result| A(Aggregation Engine with cyclic behaviour)
+    P[Probe] -->|Standardized result| A(Aggregation Engine)
     P1[Probe] -->|Standardized result| A
     P2[Probe] -->|Standardized result| A
 
-    A -.->|Ask for a timestamp| RTS(Remote timestamper *for example: freetsa.org*)
+    A -.->|Ask for a timestamp| RTS(Remote timestamper)
 
     P -.-> H[Agents registry]
     P1 -.-> H
@@ -27,6 +27,8 @@ In summary, the outlined architecture operates as follows:
 Probes efficiently gather data through localized scans conducted at diverse locations.
 The aggregation engine is tasked with consolidating data from these probes and generating cryptographic timestamps in adherence to RFC 3161 standards.
 Powered by FastAPI, the API offers a range of services for the storage and retrieval of checks (scans, etc.), and the proof of checks.
+
+The remote timestamper coud be for example *freetsa.org*.
 
 An early demonstation is available on Youtube:
 https://www.youtube.com/watch?v=eW9y5KWcXhE
@@ -51,7 +53,29 @@ well known for its excellent performance.
 
 The OpenAPI documentation is available in :ref:`this section <http-api>`.
 
-The API also provides a PubSub mechanism.
+The API also provides a PubSub mechanism. Below is a simple client example.
+
+.. python::
+
+    import asyncio
+    import os
+    import sys
+
+    from fastapi_websocket_pubsub import PubSubClient
+
+    PORT = int(os.environ.get("PORT") or "8000")
+
+    async def on_events(data, topic):
+        print(f"running callback for {topic}!")
+        print(data)
+
+    async def main():
+        # Create a client and subscribe to topics 'scan' and 'tst'.
+        client = PubSubClient(["scan", "tst"], callback=on_events)
+        client.start_client(f"ws://localhost:{PORT}/pubsub")
+        await client.wait_until_done()
+
+    asyncio.run(main())
 
 
 Type of agents

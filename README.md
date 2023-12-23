@@ -26,11 +26,11 @@ system, such as MISP.
 ```mermaid
 flowchart LR
 
-P[Probe] -->|Standardized result| A(Aggregation Engine with cyclic behaviour)
+P[Probe] -->|Standardized result| A(Aggregation Engine)
 P1[Probe] -->|Standardized result| A
 P2[Probe] -->|Standardized result| A
 
-A -.->|Ask for a timestamp| RTS(Remote timestamper *for example: freetsa.org*)
+A -.->|Ask for a timestamp| RTS(Remote timestamper)
 
 P -.-> H[Agents registry]
 P1 -.-> H
@@ -58,12 +58,11 @@ Each probe agent is authenticated, registered and declare its availability
 (for the presence notification system). The OMEMO protocol can be used for
 communications between agents.
 
-![Behabiour page](docs/_static/01-behaviour-page.png "Behabiour page")
-
 
 ## Documentation
 
-A documentation is available [here](https://scandale.readthedocs.io).
+A documentation is available [here](https://scandale.readthedocs.io) with more
+information about the architecture and the installation process.
 
 
 ## License
