@@ -30,7 +30,7 @@ P[Probe] -->|Standardized result| A(Aggregation Engine)
 P1[Probe] -->|Standardized result| A
 P2[Probe] -->|Standardized result| A
 
-A -.->|Ask for a timestamp| RTS(Remote timestamper)
+A -.->|Ask for a timestamp| RTS(Third party timestamper)
 
 P -.-> H[Agents registry]
 P1 -.-> H
