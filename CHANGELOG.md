@@ -1,6 +1,14 @@
 # SCANDALE project news
 
 
+## 0.2.0 (2023-12-25)
+
+The christmas release of SCANDALE offers a new Pub/Sub
+mechanism provided by the FastAPI server. It is using
+a WebSocket. Clients have the possibility to subscribe
+to newly created scans or cryptographic timestamp.
+
+
 ## 0.1.0 (2023-12-20)
 
 The HTTP API is now providing several endpoints related
