@@ -43,17 +43,6 @@ B -->|Write| G[Database]
 E[External source] -->|HTTP POST| B
 ```
 
-The aim of this rather complex example is to show what is currently possible
-to do. You can install an aggregation engine with only one probe
-on the same server. But probes can be deployed on a large scale and use a
-behavioral mechanism to accomplish their duty.
-
-A probe can reason locally or globally.
-The selection of the communication channel between probes is automatic,
-based on the probes duties, behaviour and availability. A probe do not
-need to know the IP server of an other component of the architecture
-(database, aggregation engine, etc.).
-
 Each probe agent is authenticated, registered and declare its availability
 (for the presence notification system). The OMEMO protocol can be used for
 communications between agents.
