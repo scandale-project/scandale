@@ -16,7 +16,7 @@ class ProbeEngine(Agent):
         async def run(self):
             print("InformBehav running")
 
-             # Send a subscription request
+            # Send a subscription request
             self.presence.subscribe(self.config["up_agent"])
 
             try:
