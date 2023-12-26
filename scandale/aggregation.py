@@ -13,8 +13,6 @@ from spade.message import Message
 
 from api.schemas import ScanDataCreate
 
-# import getpass
-
 try:
     from instance import config
 except Exception:
@@ -74,37 +72,30 @@ class AggregationEngine(Agent):
             else:
                 print("Did not received any message after 10 seconds")
 
-    class SharingBehav(OneShotBehaviour):
-        async def run(self):
-            print("SharingBehav running")
-            msg = Message(to="probe1@localhost")  # Instantiate the message
-            msg.set_metadata(
-                "performative", "inform"
-            )  # Set the "inform" FIPA performative
-            msg.set_metadata(
-                "ontology", "myOntology"
-            )  # Set the ontology of the message content
-            msg.set_metadata(
-                "language", "OWL-S"
-            )  # Set the language of the message content
-            msg.body = "data"  # Set the message content
+        def on_subscribed(self, jid):
+            print(
+                "[{}] Agent {} has accepted the subscription.".format(
+                    self.agent.name, jid.split("@")[0]
+                )
+            )
+            print(
+                "[{}] Contacts List: {}".format(
+                    self.agent.name, self.agent.presence.get_contacts()
+                )
+            )
 
-            await self.send(msg)
-            print("Message sent!")
-
-            # set exit_code for the behaviour
-            self.exit_code = "Job Finished!"
-
-            # stop agent from behaviour
-            # await self.agent.stop()
+        def on_subscribe(self, jid):
+            print(
+                "[{}] Agent {} asked for subscription. Let's aprove it.".format(
+                    self.agent.name, jid.split("@")[0]
+                )
+            )
+            self.presence.approve(jid)
 
     async def setup(self):
         print("Agent starting . . .")
         collecting_behav = self.CollectingBehav()
         self.add_behaviour(collecting_behav)
-
-        # self.sharing_behav = self.SharingBehav()
-        # self.add_behaviour(self.sharing_behav)
 
         self.presence.set_available()
         self.presence.subscribe("probe1@localhost")
@@ -117,9 +108,14 @@ async def main():
     agent = AggregationEngine(jid, passwd)
     await agent.start()
 
+    print("Contacts:")
+    contacts = agent.presence.get_contacts()
+    for contact in contacts:
+        print(f"  {contact}")
+
     await agent.web.start(hostname="127.0.0.1", port="10000")
     print("Web Graphical Interface available at:")
-    print("http://127.0.0.1:10000/spade")
+    print("  http://127.0.0.1:10000/spade")
     print("Wait until user interrupts with ctrl+C")
 
     # wait until user interrupts with ctrl+C

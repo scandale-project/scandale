@@ -4,7 +4,7 @@
   "type": "scan",
   "period": 3600,
   "target": "",
-  "command": "nmap -p 443 --script /home/cedric/git/nmap-scripts/ms-exchange-version-nse/ms-exchange-version.nse 158.64.126.2",
+  "command": "nmap -p 443 --script /home/cedric/git/nmap-scripts/ms-exchange-version-nse/ms-exchange-version.nse 127.0.0.1",
   "format": "nmap",
   "args": [],
 
