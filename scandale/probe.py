@@ -15,6 +15,10 @@ class ProbeEngine(Agent):
     class InformBehav(OneShotBehaviour):
         async def run(self):
             print("InformBehav running")
+
+             # Send a subscription request
+            self.presence.subscribe(self.config["up_agent"])
+
             try:
                 result = exec_cmd(self.config["command"])
             except Exception as e:
@@ -51,10 +55,7 @@ class ProbeEngine(Agent):
             print("Message sent!")
 
             # set exit_code for the behaviour
-            self.exit_code = "Job Finished!"
-
-            # stop agent from behaviour
-            await self.agent.stop()
+            self.exit_code = 10
 
     async def setup(self):
         print("Agent starting . . .")
