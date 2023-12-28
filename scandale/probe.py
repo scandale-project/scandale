@@ -57,6 +57,26 @@ class ProbeEngine(Agent):
             # set exit_code for the behaviour
             self.exit_code = 10
 
+        def on_subscribed(self, jid):
+            print(
+                "[{}] Agent {} has accepted the subscription.".format(
+                    self.agent.name, jid.split("@")[0]
+                )
+            )
+            print(
+                "[{}] Contacts List: {}".format(
+                    self.agent.name, self.agent.presence.get_contacts()
+                )
+            )
+
+        def on_subscribe(self, jid):
+            print(
+                "[{}] Agent {} asked for subscription. Let's aprove it.".format(
+                    self.agent.name, jid.split("@")[0]
+                )
+            )
+            self.presence.approve(jid)
+
     async def setup(self):
         print("Agent starting . . .")
 
