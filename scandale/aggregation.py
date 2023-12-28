@@ -57,16 +57,26 @@ class AggregationEngine(Agent):
                     }
                 )
 
-                requests.post(
-                    urllib.parse.urljoin(config.API_URL, "items/"),
-                    json=dict_msg,
-                    headers=self.headers_json,
-                )
-                requests.post(
-                    urllib.parse.urljoin(config.API_URL, "TimeStampTokens/"),
-                    data=dict_tst,
-                    headers=self.headers_octet_stream,
-                )
+                try:
+                    requests.post(
+                        urllib.parse.urljoin(config.API_URL, "items/"),
+                        json=dict_msg,
+                        headers=self.headers_json,
+                    )
+                except requests.exceptions.ConnectionError as e:
+                    print(
+                        f"Error when sending POST request to the FastAPI server:\n{e}"
+                    )
+                try:
+                    requests.post(
+                        urllib.parse.urljoin(config.API_URL, "TimeStampTokens/"),
+                        data=dict_tst,
+                        headers=self.headers_octet_stream,
+                    )
+                except requests.exceptions.ConnectionError as e:
+                    print(
+                        f"Error when sending POST request to the FastAPI server:\n{e}"
+                    )
             else:
                 print("Did not received any message after 10 seconds")
 
