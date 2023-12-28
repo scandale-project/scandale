@@ -106,7 +106,7 @@ class AggregationEngine(Agent):
         self.add_behaviour(collecting_behav)
 
         self.presence.set_available()
-        self.presence.subscribe("probe1@localhost")
+        # self.presence.subscribe("probe1@localhost")
 
 
 async def main():
