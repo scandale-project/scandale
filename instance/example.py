@@ -10,9 +10,7 @@ DB_NAME = "scandale"
 
 AUTHENTICATION_REQUIRED = True
 USERS = {
-    "admin": {
-        "password": "Password1234!"
-    },
+    "admin": {"password": "Password1234!"},
 }
 
 CERTIFICATE_FILE = "data/freetsa.crt"
