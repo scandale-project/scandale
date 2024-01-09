@@ -125,7 +125,6 @@ def read_items(
     limit: int = 100,
     q: str = "",
     db: Session = db_session,
-    Verifcation=auth_verification,
 ) -> List[schemas.ItemBase]:
     items = crud.get_items(db, skip=skip, limit=limit, query=q)
     return items
@@ -140,7 +139,11 @@ def read_item(item_id: int = 0, db: Session = db_session) -> schemas.ItemBase:
 
 
 @app.post("/items/", response_model=schemas.ItemBase)
-async def create_item(item: schemas.ScanDataCreate, db: Session = db_session):
+async def create_item(
+    item: schemas.ScanDataCreate,
+    db: Session = db_session,
+    Verifcation=auth_verification,
+):
     """Insert a new item and publish it through the WebSocket."""
     new_item = crud.create_item(db=db, item=item)
     await pubsub_endpoint.publish(["scan"], data=item)
@@ -153,7 +156,9 @@ async def create_item(item: schemas.ScanDataCreate, db: Session = db_session):
 
 
 @app.post("/TimeStampTokens/")
-async def create_tst(request: Request, db: Session = db_session):
+async def create_tst(
+    request: Request, db: Session = db_session, Verifcation=auth_verification
+):
     """Insert a TimeStampToken and publish it through the WebSocket."""
     data: bytes = await request.body()
     dict_data = literal_eval(data.decode("utf-8"))
