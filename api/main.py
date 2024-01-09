@@ -31,7 +31,10 @@ except Exception:
 
 security = HTTPBasic()
 
-app = FastAPI(dependencies=[Depends(security)])
+if config.AUTHENTICATION_REQUIRED:
+    app = FastAPI(dependencies=[Depends(security)])
+else:
+    app = FastAPI()
 
 
 http_security = Depends(security)
@@ -39,10 +42,11 @@ http_security = Depends(security)
 
 def verification(creds: HTTPBasicCredentials = http_security):
     """Verify the credentials via HTTP Basic Authentication method."""
+    if not config.AUTHENTICATION_REQUIRED:
+        return True
     username = creds.username
     password = creds.password
-    if username in config.users and password == config.users[username]["password"]:
-        print("User Validated")
+    if username in config.USERS and password == config.USERS[username]["password"]:
         return True
     else:
         raise HTTPException(

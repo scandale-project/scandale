@@ -8,7 +8,12 @@ DB_HOST = "localhost"
 DB_PORT = 5432
 DB_NAME = "scandale"
 
-users = {"admin": {"password": "Password1234!"}}
+AUTHENTICATION_REQUIRED = True
+USERS = {
+    "admin": {
+        "password": "Password1234!"
+    },
+}
 
 CERTIFICATE_FILE = "data/freetsa.crt"
 REMOTE_TIMESTAMPER = "http://freetsa.org/tsr"
