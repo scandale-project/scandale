@@ -10,7 +10,10 @@ from fastapi import FastAPI
 from fastapi import HTTPException
 from fastapi import Request
 from fastapi import Response
+from fastapi import status
 from fastapi.openapi.utils import get_openapi
+from fastapi.security import HTTPBasic
+from fastapi.security import HTTPBasicCredentials
 from fastapi_websocket_pubsub import PubSubEndpoint
 from sqlalchemy.orm import Session
 
@@ -26,7 +29,27 @@ try:
 except Exception:
     from instance import example as config
 
-app = FastAPI()
+security = HTTPBasic()
+
+app = FastAPI(dependencies=[Depends(security)])
+
+
+http_security = Depends(security)
+
+
+def verification(creds: HTTPBasicCredentials = http_security):
+    """Verify the credentials via HTTP Basic Authentication method."""
+    username = creds.username
+    password = creds.password
+    if username in config.users and password == config.users[username]["password"]:
+        print("User Validated")
+        return True
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect email or password",
+            headers={"WWW-Authenticate": "Basic"},
+        )
 
 
 # Registers the WebSocket endpoint.
@@ -84,6 +107,7 @@ def get_db():
 
 
 db_session: Session = Depends(get_db)
+auth_verification = Depends(verification)
 
 
 #
@@ -93,7 +117,11 @@ db_session: Session = Depends(get_db)
 
 @app.get("/items/", response_model=list[schemas.ItemBase])
 def read_items(
-    skip: int = 0, limit: int = 100, q: str = "", db: Session = db_session
+    skip: int = 0,
+    limit: int = 100,
+    q: str = "",
+    db: Session = db_session,
+    Verifcation=auth_verification,
 ) -> List[schemas.ItemBase]:
     items = crud.get_items(db, skip=skip, limit=limit, query=q)
     return items
