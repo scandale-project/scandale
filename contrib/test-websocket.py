@@ -1,6 +1,5 @@
 import asyncio
 import os
-import sys
 
 from fastapi_websocket_pubsub import PubSubClient
 
