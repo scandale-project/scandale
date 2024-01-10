@@ -31,11 +31,8 @@ except Exception:
 
 security = HTTPBasic()
 
-if config.AUTHENTICATION_REQUIRED:
-    app = FastAPI(dependencies=[Depends(security)])
-else:
-    app = FastAPI()
-
+# app = FastAPI(dependencies=[Depends(security)])
+app = FastAPI()
 
 http_security = Depends(security)
 
