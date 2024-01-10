@@ -62,10 +62,12 @@ class AggregationEngine(Agent):
                         urllib.parse.urljoin(config.API_URL, "items/"),
                         json=dict_msg,
                         headers=self.headers_json,
-                        auth=("admin",  config.USERS["admin"]["password"]),
+                        auth=("admin", config.USERS["admin"]["password"]),
                     )
                     if r.status_code not in (200, 201):
-                        print(f"Error when sending POST request to the FastAPI server: {r.reason}")
+                        print(
+                            f"Error when sending POST request to the FastAPI server: {r.reason}"
+                        )
                 except requests.exceptions.ConnectionError as e:
                     print(
                         f"Error when sending POST request to the FastAPI server:\n{e}"
@@ -75,10 +77,12 @@ class AggregationEngine(Agent):
                         urllib.parse.urljoin(config.API_URL, "TimeStampTokens/"),
                         data=dict_tst,
                         headers=self.headers_octet_stream,
-                        auth=("admin",  config.USERS["admin"]["password"]),
+                        auth=("admin", config.USERS["admin"]["password"]),
                     )
                     if r.status_code not in (200, 201):
-                        print(f"Error when sending POST request to the FastAPI server: {r.reason}")
+                        print(
+                            f"Error when sending POST request to the FastAPI server: {r.reason}"
+                        )
                 except requests.exceptions.ConnectionError as e:
                     print(
                         f"Error when sending POST request to the FastAPI server:\n{e}"
