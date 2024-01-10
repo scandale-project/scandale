@@ -23,6 +23,8 @@ build
 
 docs/_build
 
+.coverage
 instance/development.py
 instance/config.py
-.coverage
+scandale/*.json
+
