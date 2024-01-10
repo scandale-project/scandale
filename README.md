@@ -22,6 +22,7 @@ well known for its excellent performance.
 It is possible to extend the platform in order to share data with external
 system, such as MISP.
 
+
 ### Use-case
 
 - following a notification, an SME ask its provider to patch a system. The
@@ -29,6 +30,8 @@ system, such as MISP.
   then check the certified scan logs to break its contract with the provider;
 - certification of incident timeline.
 
+
+### High-level architecture
 
 ```mermaid
 flowchart LR
