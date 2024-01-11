@@ -9,7 +9,7 @@ license = "AGPL-3.0-or-later"
 readme = "README.md"
 homepage = "https://github.com/scandale-project/scandale"
 repository = "https://github.com/scandale-project/scandale"
-documentation = "https://pumpkin-project.readthedocs.io"
+documentation = "https://scandale.readthedocs.io"
 
 keywords = ["spade", "multiagent-systems", "xmpp"]
 
