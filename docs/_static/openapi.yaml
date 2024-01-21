@@ -1,0 +1,383 @@
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    ItemBase:
+      properties:
+        scan_data:
+          $ref: '#/components/schemas/ScanData'
+      required:
+      - scan_data
+      title: ItemBase
+      type: object
+    Meta:
+      properties:
+        ts:
+          title: Ts
+          type: integer
+        type:
+          title: Type
+          type: string
+        uuid:
+          title: Uuid
+          type: string
+      required:
+      - uuid
+      - ts
+      - type
+      title: Meta
+      type: object
+    Payload:
+      properties:
+        row:
+          title: Row
+          type: string
+      required:
+      - row
+      title: Payload
+      type: object
+    ScanData:
+      properties:
+        format:
+          title: Format
+          type: string
+        meta:
+          $ref: '#/components/schemas/Meta'
+        payload:
+          $ref: '#/components/schemas/Payload'
+        version:
+          title: Version
+          type: string
+      required:
+      - version
+      - format
+      - meta
+      - payload
+      title: ScanData
+      type: object
+    ScanDataCreate:
+      properties:
+        format:
+          title: Format
+          type: string
+        meta:
+          $ref: '#/components/schemas/Meta'
+        payload:
+          $ref: '#/components/schemas/Payload'
+        version:
+          title: Version
+          type: string
+      required:
+      - version
+      - format
+      - meta
+      - payload
+      title: ScanDataCreate
+      type: object
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+  securitySchemes:
+    HTTPBasic:
+      scheme: basic
+      type: http
+info:
+  contact:
+    email: info@circl.lu
+    name: Computer Incident Response Center Luxembourg
+    url: https://www.circl.lu/
+  description: Backend API for collecting data from probes and storing proof of checks
+    from various scans.
+  license:
+    identifier: AGPL-3.0-or-later
+    name: GNU Affero General Public License v3.0 or later
+    url: https://www.gnu.org/licenses/agpl-3.0.en.html
+  summary: API of the SCANDALE project.
+  title: SCANDALE
+  version: 0.1.0
+  x-logo:
+    url: https://www.circl.lu/assets/images/circl-logo.png
+openapi: 3.1.0
+paths:
+  /TimeStampTokens/:
+    get:
+      operationId: read_tsts_TimeStampTokens__get
+      parameters:
+      - in: query
+        name: skip
+        required: false
+        schema:
+          default: 0
+          title: Skip
+          type: integer
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Read Tsts
+    post:
+      description: Insert a TimeStampToken and publish it through the WebSocket.
+      operationId: create_tst_TimeStampTokens__post
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      security:
+      - HTTPBasic: []
+      summary: Create Tst
+  /TimeStampTokens/check/{scan_uuid}:
+    get:
+      description: Performs an offline check of a TimeStampToken.
+      operationId: check_tst_TimeStampTokens_check__scan_uuid__get
+      parameters:
+      - in: path
+        name: scan_uuid
+        required: true
+        schema:
+          title: Scan Uuid
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Check Tst
+  /TimeStampTokens/get_timestamp/{scan_uuid}:
+    get:
+      description: Get the timestamp of a check based on the corresponding TimeStampToken
+        object.
+      operationId: get_timestamp_TimeStampTokens_get_timestamp__scan_uuid__get
+      parameters:
+      - in: path
+        name: scan_uuid
+        required: true
+        schema:
+          title: Scan Uuid
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Timestamp
+  /TimeStampTokens/token/{scan_uuid}:
+    get:
+      description: Returns directly the TST as a raw binary stream corresponding to
+        the scan UUID given as parameter.
+      operationId: get_tst_token_TimeStampTokens_token__scan_uuid__get
+      parameters:
+      - in: path
+        name: scan_uuid
+        required: true
+        schema:
+          title: Scan Uuid
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                format: binary
+                title: Response Get Tst Token Timestamptokens Token  Scan Uuid  Get
+                type: string
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Tst Token
+  /TimeStampTokens/{scan_uuid}:
+    get:
+      description: Returns a TimeStampToken object corresponding to the scan UUID
+        given as parameter.
+      operationId: get_tst_TimeStampTokens__scan_uuid__get
+      parameters:
+      - in: path
+        name: scan_uuid
+        required: true
+        schema:
+          title: Scan Uuid
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                format: binary
+                title: Response Get Tst Timestamptokens  Scan Uuid  Get
+                type: string
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Tst
+  /items/:
+    get:
+      operationId: read_items_items__get
+      parameters:
+      - in: query
+        name: skip
+        required: false
+        schema:
+          default: 0
+          title: Skip
+          type: integer
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      - in: query
+        name: q
+        required: false
+        schema:
+          default: ''
+          title: Q
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ItemBase'
+                title: Response Read Items Items  Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Read Items
+    post:
+      description: Insert a new item and publish it through the WebSocket.
+      operationId: create_item_items__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScanDataCreate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemBase'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - HTTPBasic: []
+      summary: Create Item
+  /items/{item_id}:
+    get:
+      operationId: read_item_items__item_id__get
+      parameters:
+      - in: path
+        name: item_id
+        required: true
+        schema:
+          title: Item Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemBase'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Read Item
+  /system/info/:
+    get:
+      description: Provides information about the instance.
+      operationId: system_info_system_info__get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: System Info
+  /system/stats/:
+    get:
+      description: Provides stats about the database.
+      operationId: stats_system_stats__get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Stats
