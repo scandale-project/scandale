@@ -41,7 +41,7 @@ OpenAPI documentation
 
 Documentation is OpenAPI Specification v3.1.0 compliant.
 
-.. openapi:: _static/openapi.json
+.. openapi:: _static/openapi.yaml
 
 
 
