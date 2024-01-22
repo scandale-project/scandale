@@ -27,4 +27,3 @@ docs/_build
 instance/development.py
 instance/config.py
 scandale/*.json
-

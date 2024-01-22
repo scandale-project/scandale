@@ -36,16 +36,6 @@ app = FastAPI()
 
 http_security = Depends(security)
 
-import yaml, io
-
-
-@app.get('/openapi.yaml', include_in_schema=False)
-def read_openapi_yaml() -> Response:
-    openapi_json= app.openapi()
-    yaml_s = io.StringIO()
-    yaml.dump(openapi_json, yaml_s)
-    return Response(yaml_s.getvalue(), media_type='text/yaml')
-
 
 def verification(creds: HTTPBasicCredentials = http_security):
     """Verify the credentials via HTTP Basic Authentication method."""
