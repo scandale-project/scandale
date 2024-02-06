@@ -16,7 +16,7 @@ keywords = ["spade", "multiagent-systems", "xmpp"]
 [tool.poetry.dependencies]
 python = "^3.10"
 spade = "^3.3.2"
-fastapi = "^0.104.1"
+fastapi = "^0.109.1"
 pydantic = "^2.5.2"
 psycopg2 = "^2.9.9"
 sqlalchemy = "^2.0.23"
