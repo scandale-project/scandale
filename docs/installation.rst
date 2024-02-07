@@ -20,7 +20,7 @@ FastAPI
 This will install FastAPI with its dependencies and SPADE.
 
 
-.. code-block:: json
+.. code-block:: bash
 
     $ poetry shell
     $ uvicorn api.main:app

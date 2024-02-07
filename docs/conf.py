@@ -94,6 +94,7 @@ html_theme_options = {
     "use_repository_button": True,
     "use_download_button": True,
     "home_page_in_toc": True,
+    "navigation_with_keys": False,
     # For testing
     # "use_fullscreen_button": False,
     # "single_page": True,
