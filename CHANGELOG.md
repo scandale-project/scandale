@@ -1,5 +1,10 @@
 # SCANDALE project news
 
+## Future release
+
+Authenticated requests to the Web API;
+New command line client;
+
 
 ## 0.2.0 (2023-12-25)
 
