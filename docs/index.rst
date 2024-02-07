@@ -46,6 +46,7 @@ Use-case
 
    installation
    deployment
+   command-line-interface
 
 
 .. toctree::
