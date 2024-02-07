@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import typer
 
 from contrib.openapi import openapi_to_json
