@@ -9,8 +9,7 @@ for collecting data from probes and storing proof of checks (cryptographic times
 
 The platform is composed of:
 
-- a documented HTTP API with a PubSub mechansim and a connection to a
-  database;
+- a documented HTTP API with a PubSub mechansim and a connection to a database;
 - a backend to deploy and monitor a network of probes.
   The architecture is relying on the
   `Smart Python Agent Development Environment <https://github.com/javipalanca/spade>`_;
