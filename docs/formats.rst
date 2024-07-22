@@ -14,11 +14,12 @@ Data from the various scanning tools is stored to the following format.
         "format": "scanning",
         "meta": {
             "uuid": "<UUID>",
+            "source": "<source>",
             "ts": "date",
             "type": "nmap-scan"
         },
         "payload": {
-            "row": "<base64-encoded-string>"
+            "raw": "<base64-encoded-string>"
         }
     }
 

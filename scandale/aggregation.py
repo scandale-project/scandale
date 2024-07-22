@@ -49,7 +49,7 @@ class AggregationEngine(Agent):
                 except ValidationError:
                     return
                 # TimeStampToken (TST, see RFC 3161)
-                tst = RT.timestamp(data=dict_msg["payload"]["row"])
+                tst = RT.timestamp(data=dict_msg["payload"]["raw"])
                 dict_tst = str(
                     {
                         "tst": tst,

@@ -47,7 +47,7 @@ class ProbeEngine(Agent):
                         "ts": int(time.time()),
                         "type": self.config["type"],
                     },
-                    "payload": {"row": result.decode()},
+                    "payload": {"raw": result.decode()},
                 }
             )
 

@@ -36,11 +36,11 @@ components:
       type: object
     Payload:
       properties:
-        row:
-          title: Row
+        raw:
+          title: Raw
           type: string
       required:
-      - row
+      - raw
       title: Payload
       type: object
     ScanData:
