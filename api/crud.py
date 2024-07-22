@@ -11,7 +11,7 @@ def get_items(
     if query:
         return (
             db.query(models.Item)
-            .filter(models.Item.scan_data["payload"]["row"].astext == query)
+            .filter(models.Item.scan_data["payload"]["raw"].astext == query)
             .offset(skip)
             .limit(limit)
             .all()

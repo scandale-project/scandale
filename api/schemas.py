@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 
 class Payload(BaseModel):
-    row: str
+    raw: str
 
 
 class Meta(BaseModel):

@@ -211,7 +211,7 @@ def check_tst(scan_uuid="", db: Session = db_session):
     certificate = open(config.CERTIFICATE_FILE, "rb").read()
     rt = rfc3161ng.RemoteTimestamper(config.REMOTE_TIMESTAMPER, certificate=certificate)
     result = rt.check(
-        db_tst.tst, data=db_item[0].scan_data["payload"]["row"].encode("utf-8")
+        db_tst.tst, data=db_item[0].scan_data["payload"]["raw"].encode("utf-8")
     )
     return {"validity": result}
 
