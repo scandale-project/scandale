@@ -4,9 +4,9 @@ Command Line Interface
 .. code-block:: bash
 
     $ ./scandale_cli.py --help
-                                                                                                                                                                                                            
-    Usage: scandale_cli.py [OPTIONS] COMMAND [ARGS]...                                                                                                                                                       
-                                                                                                                                                                                                            
+
+    Usage: scandale_cli.py [OPTIONS] COMMAND [ARGS]...
+
     ╭─ Options ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
     │ --install-completion          Install completion for the current shell.                                                                                                                                │
     │ --show-completion             Show completion for the current shell, to copy it or customize the installation.                                                                                         │

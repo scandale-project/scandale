@@ -1,10 +1,10 @@
 #!/usr/bin/env python
+from typing import Optional
+
 import typer
 
 from contrib.openapi import openapi_to_json
 from contrib.openapi import openapi_to_yaml
-from typing import Optional
-from typing_extensions import Annotated
 from scandale import __version__
 
 app = typer.Typer()
@@ -14,6 +14,7 @@ __app_name__ = "scandale"
 # @app.command()
 # def version():
 #     print(__version__)
+
 
 def _version_callback(value: bool):
     print(__version__)
@@ -43,8 +44,6 @@ def main(
 
 
 # def main():
-
-
 
 
 if __name__ == "__main__":
