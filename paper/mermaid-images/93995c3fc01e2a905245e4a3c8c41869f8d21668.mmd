@@ -1,0 +1,17 @@
+sequenceDiagram
+    participant Auditor as Auditor / Client
+    participant API as SCANDALE HTTP API
+    participant DB as Database
+    participant TSA as RFC 3161 Time-Stamping Authority
+
+    Auditor->>API: GET /items/{uuid}
+    API->>DB: Retrieve scan payload
+    DB-->>API: Scan data
+    API-->>Auditor: Scan payload
+
+    Auditor->>API: GET /TimeStampTokens/check/{uuid}
+    API->>DB: Retrieve TimeStampToken
+    DB-->>API: Timestamp token
+    API->>TSA: Verify token signature (using TSA certificate)
+    TSA-->>API: Signature valid
+    API-->>Auditor: Validity result (true/false)

@@ -19,6 +19,7 @@ Install the Mermaid cli and Let Puppeteer install a Chromium:
 ```bash
 sudo npm install -g @mermaid-js/mermaid-cli
 npx puppeteer install
+export MERMAID_BIN=mmdc
 ```
 
 ### Generate the PDF

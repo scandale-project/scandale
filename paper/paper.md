@@ -1,13 +1,13 @@
 ---
 title: "A Libre Architecture for Verifiable Data Collection and Proof-of-Check Timestamping"
-subtitle: "A Libre Architecture for Verifiable Data Collection and Proof-of-Check Timestamping"
-description: "A Libre Architecture for Verifiable Data Collection and Proof-of-Check Timestamping"
+subtitle: "Building Trust and Non-Repudiable Evidence in Distributed Systems"
+description: "A libre architecture enabling cryptographically verifiable data collection and timestamped proof-of-checks across distributed environments."
 author:
   - "**Cédric Bonhomme**"
   - "*Computer Incident Response Center Luxembourg*"
   - "`cedric.bonhomme@circl.lu`"
 date: "2026"
-tags: ["SPADE", "MAS", "Agent", "Monitorin", "Timestamping", "RFC 3161", "Trust model"]
+tags: ["SPADE", "MAS", "Agent", "Monitoring", "Timestamping", "RFC 3161", "Trust model"]
 toc: true
 lang: "en"
 titlepage: true,
@@ -25,6 +25,14 @@ titlepage-author-spacing: 0.5
 Establishing trusted, time-stamped records of system states in distributed environments presents a significant challenge for maintaining accountability and security. Organizations often struggle to produce non-repudiable proof that a specific check was performed or that a system was in a particular state at a precise moment in time. SCANDALE is a libre software solution designed to address this challenge by providing a robust backend architecture for collecting data from distributed probes and storing immutable proofs of those checks. Its core components include a high-performance HTTP API with real-time capabilities, an agent-based backend built on the Smart Python Agent Development Environment (SPADE) for scalable probe management, and a dedicated service for cryptographic timestamping in compliance with RFC 3161. The platform's primary value is its capacity to transform abstract operational data into concrete, non-repudiable evidence, providing a verifiable and cryptographically secured audit trail.
 
 
+# Related Work
+
+Multi-agent systems (MAS) have long been proposed as a suitable paradigm for distributed monitoring and security enforcement. Guemkam et al. [@5931359] describe a trusted MAS architecture for alert detection in financial critical infrastructures, highlighting the benefits of agent autonomy, contextual awareness, and authenticated communications. Their work demonstrates that MAS-based architectures can significantly enhance trust and resilience in distributed environments.
+
+Institution-oriented approaches such as UTOPIA, introduced by Schmitt et al. [@5536694], further emphasize the importance of formal agent organization, norms, and interaction rules. These concepts influenced the design philosophy of SCANDALE, particularly in the separation of agent roles and the explicit modeling of responsibilities within the system.
+
+From a middleware perspective, SPADE 3 represents a major evolution of Python-based MAS platforms. Palanca et al. [@9207929] describe how SPADE 3 addresses scalability, lifecycle management, and asynchronous communication using XMPP. These features are directly leveraged by SCANDALE to manage large fleets of probes reliably and securely.
+
 
 # Introduction: The Imperative for Verifiable System Audits
 
@@ -35,7 +43,7 @@ In modern cybersecurity and IT operations, the ability to produce verifiable dat
 The platform is composed of three primary components:
 
 * A documented HTTP API featuring a Pub/Sub mechanism for real-time data dissemination.
-* A backend based on the Smart Python Agent Development Environment (SPADE[@9207929]) for deploying and monitoring a network of probes.
+* A backend based on the Smart Python Agent Development Environment (SPAD) for deploying and monitoring a network of probes.
 * A service to timestamp collected data with a third party according to RFC 3161 standards[@rfc3161], providing cryptographic proof.
 
 This document provides a detailed examination of the system's architecture, its core mechanisms, and its practical applications in establishing digital trust.
@@ -92,13 +100,13 @@ The entire backend architecture for deploying and managing the probe network rel
 
 Having detailed the architectural components, the following section will explore the specific mechanisms and data formats that enable the system's core functionality.
 
-![alt text](img/01-behaviour-page.png)
+![Bahaviour page](img/01-behaviour-page.png)
 
-![alt text](img/02-list-of-messages.png)
+![List of messages](img/02-list-of-messages.png)
 
-![alt text](img/03-presence-notification.png)
+![Presence notification](img/03-presence-notification.png)
 
-![alt text](img/04-contact-details.png)
+![Contact details](img/04-contact-details.png)
 
 
 # Implementation Details and Key Mechanisms
@@ -182,9 +190,139 @@ Agent configuration:
 
 These technical features provide the foundation for SCANDALE's practical application in real-world scenarios requiring verifiable data.
 
+
+## Data validation
+
+The ultimate objective of SCANDALE is not merely to collect data, but to enable independent and cryptographically verifiable validation of that data.
+To this end, the HTTP API exposes a set of endpoints that allow third parties to retrieve collected artifacts, associated timestamp tokens, and to verify their integrity and temporal validity without relying on implicit trust in the platform itself.
+
+### Retrieval of Timestamped Artifacts
+
+The API provides a query interface to retrieve recently collected and timestamped items. Each item contains the original scan data as it was ingested and stored, preserving the exact payload that was used to generate the timestamp request.
+
+Example: retrieving the most recent timestamped item:
+
+```bash
+$ curl -s -X 'GET' 'http://127.0.0.1:8000/items/?skip=0&limit=1'  -H 'accept: application/json' | jq .
+[
+  {
+    "scan_data": {
+      "version": "1.0",
+      "format": "nmap",
+      "meta": {
+        "uuid": "3f68c6bf-6b35-48bf-9554-b90bb5c99cf5",
+        "ts": 1703064496,
+        "type": "scan"
+      },
+      "payload": {
+        "raw": "U3RhcnRpbmcgT <-SNIP-> luMuMTQgc2Vjb25kcwo="
+      }
+    }
+  }
+]
+```
+
+This endpoint allows auditors or external systems to reconstruct the exact data state that was subject to timestamping, forming the basis for subsequent verification steps.
+
+### Timestamp Retrieval
+
+For a given scan UUID, the API exposes a dedicated endpoint to retrieve the corresponding timestamp metadata derived from the RFC 3161 TimeStampToken:
+
+```bash
+$ curl -X 'GET' \
+  'http://127.0.0.1:8000/TimeStampTokens/get_timestamp/3f68c6bf-6b35-48bf-9554-b90bb5c99cf5' \
+  -H 'accept: application/json' -s | jq .
+{
+  "timestamp": "2023-12-20T09:28:16"
+}
+
+```
+
+This value represents the authoritative time asserted by the external Time-Stamping Authority (TSA), not the local system clock, thereby eliminating a common source of dispute in audit scenarios.
+
+
+### Cryptographic Validation of Timestamp Tokens
+
+Beyond metadata inspection, SCANDALE provides an endpoint to perform a full cryptographic verification of the stored TimeStampToken against the original data payload:
+
+```bash
+$ curl -X 'GET' \
+  'http://127.0.0.1:8000/TimeStampTokens/check/3f68c6bf-6b35-48bf-9554-b90bb5c99cf5' \
+  -H 'accept: application/json' -s | jq .
+{
+  "validity": true
+}
+```
+
+This verification step confirms that:
+
+1. The timestamp token was issued by a trusted TSA.
+
+2. The token’s signature is cryptographically valid.
+
+3. The hash embedded in the token matches the hash of the stored scan payload.
+
+4. The data has not been altered since the timestamp was issued.
+
+The validation process is performed using the original TSA certificate and the RFC 3161 verification workflow, as illustrated in the following implementation excerpt:
+
+```python
+@app.get("/TimeStampTokens/check/{scan_uuid}")
+def check_tst(scan_uuid="", db: Session = db_session):
+    """Performs an offline check of a TimeStampToken."""
+    db_tst = crud.get_tst(db, scan_uuid=scan_uuid)
+    if db_tst is None:
+        raise HTTPException(status_code=404, detail="TimeStampToken not found")
+    db_item = crud.get_items(db, scan_uuid=scan_uuid)
+    if db_item is None:
+        raise HTTPException(status_code=404, detail="Item not found")
+
+    certificate = open(config.CERTIFICATE_FILE, "rb").read()
+    rt = rfc3161ng.RemoteTimestamper(config.REMOTE_TIMESTAMPER, certificate=certificate)
+    result = rt.check(
+        db_tst.tst, data=db_item[0].scan_data["payload"]["raw"].encode("utf-8")
+    )
+    return {"validity": result}
+```
+
+### Trust Model and Verification Scope
+
+Crucially, this validation workflow does not require trust in the SCANDALE database or its operators. Any third party with access to:
+
+- the stored scan payload,
+- the corresponding TimeStampToken,
+- and the TSA’s public certificate,
+
+can independently reproduce the verification process. This property establishes SCANDALE as a trust-minimizing system, where the platform acts as a facilitator of evidence rather than a trusted authority.
+
+As a result, SCANDALE enables verifiable, non-repudiable proof-of-checks that remain valid even if the platform itself is decommissioned.
+
+```mermaid{caption="Figure: Sequence diagram for token validation. The SCANDALE FastAPI server performs the RFC 3161 verification with the TSA and returns a validity result to the client."}
+sequenceDiagram
+    participant Auditor as Auditor / Client
+    participant API as SCANDALE HTTP API
+    participant DB as Database
+    participant TSA as RFC 3161 Time-Stamping Authority
+
+    Auditor->>API: GET /items/{uuid}
+    API->>DB: Retrieve scan payload
+    DB-->>API: Scan data
+    API-->>Auditor: Scan payload
+
+    Auditor->>API: GET /TimeStampTokens/check/{uuid}
+    API->>DB: Retrieve TimeStampToken
+    DB-->>API: Timestamp token
+    API->>TSA: Verify token signature (using TSA certificate)
+    TSA-->>API: Signature valid
+    API-->>Auditor: Validity result (true/false)
+```
+
+Figure: Sequence diagram for token validation. The SCANDALE FastAPI server performs the RFC 3161 verification with the TSA and returns a validity result to the client.
+
+
 # Applications, Use Cases, and Extensibility
 
-The architectural and technical features of SCANDALE translate directly into powerful capabilities for solving real-world trust and verification problems across various operational domains.
+The architectural and technical features of SCANDALE translate directly into capabilities for solving real-world trust and verification problems across various operational domains.
 
 ## Core Use Cases
 
@@ -197,8 +335,6 @@ The platform is designed to address critical needs for accountability and certif
 
 SCANDALE is not a closed system; it is designed for extensibility at both the agent and platform level. At a high level, an Ad hoc module facilitates integration with external systems, such as sharing data with MISP, a popular open-source threat intelligence platform. This allows certified logs to enrich and be enriched by broader threat intelligence ecosystems. At the component level, each agent has the capability to provide its own HTML views and discrete services, enabling custom functionality and reporting directly from the data collection points.
 
-These applications demonstrate SCANDALE's capacity to serve as a foundational tool for building trust in digital operations.
-
 # Conclusion
 
 SCANDALE offers a robust, libre software architecture for addressing the critical need for creating immutable, time-stamped proofs of system checks. By leveraging a distributed agent network, it provides a scalable and flexible solution for data collection in complex IT environments. Its core strengths—the use of the SPADE framework for agent management, a high-performance FastAPI interface for data interaction, and the fundamental guarantee of data integrity through RFC 3161 timestamping—combine to create a powerful platform for digital verification. Ultimately, SCANDALE provides a critical capability for any organization needing to enforce accountability and maintain a verifiable audit trail of its digital operations, transforming abstract operational data into concrete, non-repudiable evidence.
@@ -207,8 +343,8 @@ SCANDALE offers a robust, libre software architecture for addressing the critica
 
 The SCANDALE project is licensed under the GNU Affero General Public License version 3.
 
-* Copyright (C) 2022-2025 Cédric Bonhomme
-* Copyright (C) 2022-2025 CIRCL - Computer Incident Response Center Luxembourg
+* Copyright (C) 2022-2026 Cédric Bonhomme
+* Copyright (C) 2022-2026 CIRCL - Computer Incident Response Center Luxembourg
 
 This paper is licensed under the
 [Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/)
