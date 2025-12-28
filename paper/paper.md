@@ -24,31 +24,34 @@ titlepage-author-spacing: 0.5
 \addcontentsline{toc}{section}{Abstract}
 \section*{Abstract}
 
-Establishing trusted, time-stamped records of system states in distributed environments presents a significant challenge for maintaining accountability and security. Organizations often struggle to produce non-repudiable proof that a specific check was performed or that a system was in a particular state at a precise moment in time. SCANDALE is a libre software solution designed to address this challenge by providing a robust backend architecture for collecting data from distributed probes and storing immutable proofs of those checks. Its core components include a high-performance HTTP API with real-time capabilities, an agent-based backend built on the Smart Python Agent Development Environment (SPADE) for scalable probe management, and a dedicated service for cryptographic timestamping in compliance with RFC 3161. The platform's primary value is its capacity to transform abstract operational data into concrete, non-repudiable evidence, providing a verifiable and cryptographically secured audit trail.
-
-
-# Related Work
-
-Multi-agent systems (MAS) have long been proposed as a suitable paradigm for distributed monitoring and security enforcement. Guemkam et al. [@5931359] describe a trusted MAS architecture for alert detection in financial critical infrastructures, highlighting the benefits of agent autonomy, contextual awareness, and authenticated communications. Their work demonstrates that MAS-based architectures can significantly enhance trust and resilience in distributed environments.
-
-Institution-oriented approaches such as UTOPIA, introduced by Schmitt et al. [@5536694], further emphasize the importance of formal agent organization, norms, and interaction rules. These concepts influenced the design philosophy of SCANDALE, particularly in the separation of agent roles and the explicit modeling of responsibilities within the system.
-
-From a middleware perspective, SPADE 3 represents a major evolution of Python-based MAS platforms. Palanca et al. [@9207929] describe how SPADE 3 addresses scalability, lifecycle management, and asynchronous communication using XMPP. These features are directly leveraged by SCANDALE to manage large fleets of probes reliably and securely.
+Establishing trusted, time-stamped records of system states in distributed environments presents a significant challenge for maintaining accountability and security. Organizations often struggle to produce non-repudiable proof that a specific check was performed or that a system was in a particular state at a precise moment in time. SCANDALE is a libre software solution designed to address this challenge by providing a robust backend architecture for collecting data from distributed probes and storing immutable proofs of those checks. Its core components include a high-performance HTTP API with real-time capabilities, an agent-based backend built on the Smart Python Agent Development Environment (SPADE) for scalable probe management, and a dedicated service for cryptographic timestamping in compliance with RFC 3161. The platform’s primary contribution is its ability to transform operational measurements into cryptographically verifiable evidence, yielding a durable and non-repudiable audit trail.
 
 
 # Introduction: The Imperative for Verifiable System Audits
 
-In modern cybersecurity and IT operations, the ability to produce verifiable data is of strategic importance. Proving that a specific action was taken or that a system was in a particular state at a precise time is critical, especially during incident response, compliance audits, or contractual disputes. Without a mechanism for creating tamper-evident records, organizations are left vulnerable to misrepresentation and lack the concrete evidence needed to enforce accountability.
+In modern cybersecurity and IT operations, the ability to produce verifiable data is of strategic importance. Proving that a specific action was taken or that a system was in a particular state at a precise time is critical during incident response, compliance audits, regulatory oversight, or contractual disputes. In the absence of tamper-evident mechanisms, organizations remain vulnerable to contestation and lack the evidentiary guarantees required to enforce accountability.
 
-[SCANDALE](https://github.com/scandale-project/scandale) is a novel, open-source platform engineered to create a verifiable and non-repudiable audit trail. It provides a comprehensive architecture for collecting data from a network of distributed probes and cryptographically timestamping the results to generate an authoritative "proof of check." This ensures that the existence of a given piece of data at a specific time can be proven without question.
+[SCANDALE](https://github.com/scandale-project/scandale) is an open-source platform engineered to address this gap by enabling the creation of verifiable and non-repudiable audit artifacts. It provides a comprehensive architecture for collecting data from a network of distributed probes and cryptographically timestamping the resulting artifacts to produce authoritative “proofs of check.” These proofs make it possible to demonstrate, without reliance on implicit trust, that a given observation existed at a specific point in time.
 
 The platform is composed of three primary components:
 
-* A documented HTTP API featuring a Pub/Sub mechanism for real-time data dissemination.
-* A backend based on the Smart Python Agent Development Environment (SPAD) for deploying and monitoring a network of probes.
-* A service to timestamp collected data with a third party according to RFC 3161 standards[@rfc3161], providing cryptographic proof.
+* A documented HTTP API featuring a publish–subscribe mechanism for real-time data dissemination.
+* A backend built on the Smart Python Agent Development Environment (SPADE), responsible for deploying, coordinating, and monitoring distributed probes.
+* A cryptographic timestamping service that anchors collected data to an external Time-Stamping Authority (TSA) in accordance with RFC 3161 standards [@rfc3161].
 
-This document provides a detailed examination of the system's architecture, its core mechanisms, and its practical applications in establishing digital trust.
+This paper presents the design principles, architecture, and validation mechanisms of SCANDALE, with a particular focus on how cryptographic timestamping and offline verification enable trust-minimizing, long-term auditability.
+
+
+# Related Work
+
+Multi-agent systems (MAS) have long been proposed as a suitable paradigm for distributed monitoring, coordination, and security enforcement. Guemkam et al. [@5931359] describe a trusted MAS architecture for alert detection in financial critical infrastructures, emphasizing agent autonomy, contextual awareness, and authenticated communication channels. Their work demonstrates that MAS-based approaches can improve resilience and trust in highly distributed environments.
+
+Institution-oriented models further formalize agent interactions by introducing explicit roles, norms, and governance structures. Schmitt et al. present UTOPIA [@5536694], an institutional framework that highlights the importance of structured agent organizations and rule-based coordination. These concepts influenced the design of SCANDALE, particularly in the explicit separation of responsibilities between probes, aggregation components, and verification services.
+
+From a middleware perspective, SPADE 3 represents a significant evolution of Python-based MAS platforms. Palanca et al. [@9207929] describe how SPADE 3 improves scalability, lifecycle management, and asynchronous communication through XMPP. SCANDALE directly leverages these capabilities to orchestrate large fleets of probes while preserving secure and reliable message exchange.
+
+While prior work has addressed distributed monitoring and agent-based coordination, SCANDALE distinguishes itself by integrating cryptographic timestamping as a first-class primitive. By anchoring collected observations to RFC 3161-compliant timestamps and enabling offline verification, the platform extends MAS-based monitoring into the domain of non-repudiable, independently verifiable audit evidence.
+
 
 # System Architecture and Core Components
 
