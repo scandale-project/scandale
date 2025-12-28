@@ -54,26 +54,33 @@ The SCANDALE architecture is designed for scalability and reliability, orchestra
 
 ## Architectural Overview and Data Flow
 
-Reference implementation: https://github.com/scandale-project/scandale
-
 ```mermaid
 flowchart LR
+    %% Probes send data
+    P[Probe] -->|Standardized result| A(Aggregation Engine)
+    P1[Probe] -->|Standardized result| A
+    P2[Probe] -->|Standardized result| A
 
-P[Probe] -->|Standardized result| A(Aggregation Engine)
-P1[Probe] -->|Standardized result| A
-P2[Probe] -->|Standardized result| A
+    %% Aggregation engine requests timestamp from TSA
+    A -.->|Request timestamp RT.timestamp| TSA[Third-party TSA]
 
-A -.->|Ask for a timestamp| RTS(Third party timestamper)
+    %% Aggregation sends data and token to API
+    A -->|HTTP POST scan data + TST| B[FastAPI API]
 
-P -.-> H[Agents registry]
-P1 -.-> H
-P2 -.-> H
-A -.-> H
+    %% API writes to database
+    B -->|Write scan + token| G[Database]
 
-A -->|HTTP POST| B[FastAPI]
-B -.->|Ask for a timestamp| RTS
-B -->|Write| G[Database]
-E[External source] -->|HTTP POST| B
+    %% API offline validation of token
+    B -.->|Verify token signature offline using TSA certificate| B
+
+    %% Agents registry
+    P -.-> H[Agents registry]
+    P1 -.-> H
+    P2 -.-> H
+    A -.-> H
+
+    %% External sources can also post scan data
+    E[External source] -->|HTTP POST| B
 ```
 
 
@@ -82,6 +89,13 @@ The system's data flow provides multiple ingress paths, ensuring flexibility for
 1. Data Collection: A distributed network of Probes conducts localized scans. These agents execute their tasks and transmit normalized, standardized results to the Aggregation Engine.
 2. Aggregation & Timestamping: The Aggregation Engine consolidates data from the probe network. It can then request a cryptographic timestamp from a third-party RFC 3161 service for the consolidated data before forwarding it for storage.
 3. Storage & Retrieval: A high-performance FastAPI-based API serves as the primary data interface. It receives data via HTTP POST from the Aggregation Engine or directly from an External source, writes the information to a database, and provides services for retrieval. This API component can also independently request timestamps from the third-party service for data it receives.
+
+Notes:
+
+- TSA arrow originates from Aggregation Engine only.
+- FastAPI receives data + token, stores it, and can validate offline.
+- External sources can also post scan data directly to the API.
+
 
 ## Analysis of Core Components
 
@@ -191,10 +205,70 @@ Agent configuration:
 These technical features provide the foundation for SCANDALE's practical application in real-world scenarios requiring verifiable data.
 
 
-## Data validation
+## Verifiable Data Validation
 
 The ultimate objective of SCANDALE is not merely to collect data, but to enable independent and cryptographically verifiable validation of that data.
-To this end, the HTTP API exposes a set of endpoints that allow third parties to retrieve collected artifacts, associated timestamp tokens, and to verify their integrity and temporal validity without relying on implicit trust in the platform itself.
+To this end, the platform provides HTTP API endpoints that allow third parties to:
+
+- Retrieve collected scan artifacts,
+- Access the associated TimeStampTokens (TST), and
+- Verify the integrity and temporal validity of data without relying on trust in the SCANDALE platform or its operators.
+
+This trust-minimizing approach ensures that SCANDALE acts as a facilitator of evidence rather than a centralized authority.
+
+
+### Trust Model and Verification Scope
+
+The validation workflow does not require trust in the SCANDALE database or its operators. Any third party with access to:
+
+- the stored scan payload,
+- the corresponding TimeStampToken (TST),
+- and the TSA’s public certificate,
+
+can independently reproduce the verification process. This property establishes SCANDALE as a trust-minimizing system, where the platform acts as a facilitator of evidence rather than a trusted authority.
+
+As a result, SCANDALE enables verifiable, non-repudiable proof-of-checks that remain valid even if the platform itself is decommissioned.
+
+```mermaid
+sequenceDiagram
+    participant Probe
+    participant Aggregation as Aggregation Engine
+    participant TSA as Third-party TSA
+    participant API as FastAPI
+    participant DB as Database
+    participant Client
+
+    %% Data collection
+    Probe->>Aggregation: Send standardized scan result
+    Aggregation->>Aggregation: Validate & normalize scan data
+
+    %% Timestamp acquisition
+    Aggregation->>TSA: Request timestamp (RT.timestamp)
+    TSA-->>Aggregation: Return TimeStampToken (TST)
+
+    %% Store scan + token
+    Aggregation->>API: HTTP POST scan data + TST
+    API->>DB: Store scan data + TST
+    DB-->>API: Confirmation stored
+
+    %% Offline token verification
+    Client->>API: Request token verification (scan_uuid)
+    API->>DB: Retrieve scan data + TST
+    DB-->>API: Return scan + TST
+    API->>API: Verify token signature offline using TSA certificate
+    API-->>Client: Return validity result (true/false)
+```
+
+Figure: Sequence diagram for token validation. The SCANDALE FastAPI server performs the RFC 3161 verification and returns a validity result to the client.
+
+Key points:
+
+- Verification is performed entirely offline using the stored TST and TSA certificate.
+- No TSA call is required during verification; the Aggregation Engine is responsible for the initial timestamp request.
+- This workflow enables trust-independent, non-repudiable proof-of-checks that remain valid even if SCANDALE is decommissioned.
+
+
+
 
 ### Retrieval of Timestamped Artifacts
 
@@ -284,40 +358,6 @@ def check_tst(scan_uuid="", db: Session = db_session):
     )
     return {"validity": result}
 ```
-
-### Trust Model and Verification Scope
-
-Crucially, this validation workflow does not require trust in the SCANDALE database or its operators. Any third party with access to:
-
-- the stored scan payload,
-- the corresponding TimeStampToken,
-- and the TSA’s public certificate,
-
-can independently reproduce the verification process. This property establishes SCANDALE as a trust-minimizing system, where the platform acts as a facilitator of evidence rather than a trusted authority.
-
-As a result, SCANDALE enables verifiable, non-repudiable proof-of-checks that remain valid even if the platform itself is decommissioned.
-
-```mermaid{caption="Figure: Sequence diagram for token validation. The SCANDALE FastAPI server performs the RFC 3161 verification with the TSA and returns a validity result to the client."}
-sequenceDiagram
-    participant Auditor as Auditor / Client
-    participant API as SCANDALE HTTP API
-    participant DB as Database
-    participant TSA as RFC 3161 Time-Stamping Authority
-
-    Auditor->>API: GET /items/{uuid}
-    API->>DB: Retrieve scan payload
-    DB-->>API: Scan data
-    API-->>Auditor: Scan payload
-
-    Auditor->>API: GET /TimeStampTokens/check/{uuid}
-    API->>DB: Retrieve TimeStampToken
-    DB-->>API: Timestamp token
-    API->>TSA: Verify token signature (using TSA certificate)
-    TSA-->>API: Signature valid
-    API-->>Auditor: Validity result (true/false)
-```
-
-Figure: Sequence diagram for token validation. The SCANDALE FastAPI server performs the RFC 3161 verification with the TSA and returns a validity result to the client.
 
 
 # Applications, Use Cases, and Extensibility
