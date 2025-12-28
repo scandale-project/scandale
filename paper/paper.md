@@ -10,15 +10,15 @@ date: "2026"
 tags: ["SPADE", "MAS", "Agent", "Monitoring", "Timestamping", "RFC 3161", "Trust model"]
 toc: true
 lang: "en"
-titlepage: true,
+titlepage: true
 titlepage-text-color: "FFFFFF"
 titlepage-rule-color: "360049"
 titlepage-rule-height: 0
 titlepage-background: "img/background.pdf"
 titlepage-author-spacing: 0.5
+toc-own-page: true
+watermark: "Draft"
 ---
-
-\newpage
 
 \phantomsection
 \addcontentsline{toc}{section}{Abstract}
@@ -141,7 +141,7 @@ The cornerstone of SCANDALE's integrity model is its use of a third-party, RFC 3
 
 The platform's API is built on the FastAPI framework, ensuring high performance and adherence to modern web standards. It is fully compliant with the OpenAPI Specification v3.1.0, making it well-documented and easy to integrate with other tools and services.
 
-A key feature of the API is its Pub/Sub (Publish/Subscribe) mechanism, which allows clients to receive real-time notifications about system events. The following Python code snippet demonstrates a simple client that subscribes to the scan and tst topics to receive event data as it is generated.
+A key feature of the API is its Pub/Sub (Publish/Subscribe) mechanism, which allows clients to receive real-time notifications about system events. The following Python code snippet demonstrates a simple client that subscribes to the *scan* and *tst* topics to receive event data as it is generated.
 
 ```python
 import asyncio
@@ -188,7 +188,9 @@ Data from the scans:
 }
 ```
 
-The configuration for each probe agent is also defined in a standardized format. This allows administrators to define an agent's behavior, including its execution period, target, and the command it should run. The result_parser field specifies the logic for normalizing scan output, while the up_agent field designates the destination for the processed data, typically the Aggregation Engine.
+The configuration for each probe agent is also defined in a standardized format.
+This allows administrators to define an agent's behavior, including its execution period, target, and the command it should run.
+The *result_parser* field specifies the logic for normalizing scan output, while the *up_agent* field designates the destination for the processed data, typically the Aggregation Engine.
 
 Agent configuration:
 
@@ -207,13 +209,12 @@ Agent configuration:
 }
 ```
 
-
 These technical features provide the foundation for SCANDALE's practical application in real-world scenarios requiring verifiable data.
 
 
 ## Verifiable Data Validation
 
-The ultimate objective of SCANDALE is not merely to collect data, but to enable independent and cryptographically verifiable validation of that data.
+The ultimate objective of SCANDALE is not merely to collect data, but to enable **independent and cryptographically verifiable validation** of that data.
 To this end, the platform provides HTTP API endpoints that allow third parties to:
 
 - Retrieve collected scan artifacts,
