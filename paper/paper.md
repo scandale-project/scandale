@@ -280,7 +280,7 @@ The API provides a query interface to retrieve recently collected and timestampe
 Example: retrieving the most recent timestamped item:
 
 ```bash
-$ curl -s -X 'GET' 'http://127.0.0.1:8000/items/?skip=0&limit=1'  -H 'accept: application/json' | jq .
+$ curl -s -X 'GET' 'http://127.0.0.1:8000/items/?skip=0&limit=1' -H 'accept: application/json' | jq .
 [
   {
     "scan_data": {
@@ -306,9 +306,7 @@ This endpoint allows auditors or external systems to reconstruct the exact data 
 For a given scan UUID, the API exposes a dedicated endpoint to retrieve the corresponding timestamp metadata derived from the RFC 3161 TimeStampToken:
 
 ```bash
-$ curl -X 'GET' \
-  'http://127.0.0.1:8000/TimeStampTokens/get_timestamp/3f68c6bf-6b35-48bf-9554-b90bb5c99cf5' \
-  -H 'accept: application/json' -s | jq .
+$ curl -s -X 'GET' 'http://127.0.0.1:8000/TimeStampTokens/get_timestamp/3f68c6bf-6b35-48bf-9554-b90bb5c99cf5' -H 'accept: application/json' | jq .
 {
   "timestamp": "2023-12-20T09:28:16"
 }
@@ -323,9 +321,7 @@ This value represents the authoritative time asserted by the external Time-Stamp
 Beyond metadata inspection, SCANDALE provides an endpoint to perform a full cryptographic verification of the stored TimeStampToken against the original data payload:
 
 ```bash
-$ curl -X 'GET' \
-  'http://127.0.0.1:8000/TimeStampTokens/check/3f68c6bf-6b35-48bf-9554-b90bb5c99cf5' \
-  -H 'accept: application/json' -s | jq .
+$ curl -s -X 'GET' 'http://127.0.0.1:8000/TimeStampTokens/check/3f68c6bf-6b35-48bf-9554-b90bb5c99cf5' -H 'accept: application/json' | jq .
 {
   "validity": true
 }
