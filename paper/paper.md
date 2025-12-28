@@ -20,7 +20,9 @@ titlepage-author-spacing: 0.5
 
 \newpage
 
-# Abstract
+\phantomsection
+\addcontentsline{toc}{section}{Abstract}
+\section*{Abstract}
 
 Establishing trusted, time-stamped records of system states in distributed environments presents a significant challenge for maintaining accountability and security. Organizations often struggle to produce non-repudiable proof that a specific check was performed or that a system was in a particular state at a precise moment in time. SCANDALE is a libre software solution designed to address this challenge by providing a robust backend architecture for collecting data from distributed probes and storing immutable proofs of those checks. Its core components include a high-performance HTTP API with real-time capabilities, an agent-based backend built on the Smart Python Agent Development Environment (SPADE) for scalable probe management, and a dedicated service for cryptographic timestamping in compliance with RFC 3161. The platform's primary value is its capacity to transform abstract operational data into concrete, non-repudiable evidence, providing a verifiable and cryptographically secured audit trail.
 
@@ -90,23 +92,24 @@ The system's data flow provides multiple ingress paths, ensuring flexibility for
 2. Aggregation & Timestamping: The Aggregation Engine consolidates data from the probe network. It can then request a cryptographic timestamp from a third-party RFC 3161 service for the consolidated data before forwarding it for storage.
 3. Storage & Retrieval: A high-performance FastAPI-based API serves as the primary data interface. It receives data via HTTP POST from the Aggregation Engine or directly from an External source, writes the information to a database, and provides services for retrieval. This API component can also independently request timestamps from the third-party service for data it receives.
 
-Notes:
-
-- TSA arrow originates from Aggregation Engine only.
-- FastAPI receives data + token, stores it, and can validate offline.
-- External sources can also post scan data directly to the API.
-
 
 ## Analysis of Core Components
 
-Probe Agents These agents are the primary data collectors distributed across the monitored environment. They are responsible for executing scans and feeding the results back into the system. Their two main responsibilities are embedding various scanning tools (probes) and normalizing the output from these tools into a standardized format before transferring the data. Probe agents operate in two distinct modes:
+### Probe Agents
 
-* One-shot: Designed for punctual tasks that are often triggered by a user action. For large-scale jobs, the system can parallelize multiple one-shot agents to handle an extensive list of tasks efficiently.
-* Periodic: Configured to execute a specific task at scheduled intervals, enabling continuous and automated monitoring of system states.
+These agents are the primary data collectors distributed across the monitored environment. They are responsible for executing scans and feeding the results back into the system. Their two main responsibilities are embedding various scanning tools (probes) and normalizing the output from these tools into a standardized format before transferring the data. Probe agents operate in two distinct modes:
 
-Aggregation Engine The Aggregation Engine acts as the central consolidator of data from the entire probe network. Its main responsibility is to collect and centralize data from the various scanning tools. As an additional critical function, this agent is also responsible for managing the Time-Stamp Protocol (TSP) process as defined by RFC 3161. By interacting with a trusted third-party provider (e.g., freetsa.org), it can obtain a cryptographic timestamp for the collected data.
+- One-shot: Designed for punctual tasks that are often triggered by a user action.
+  For large-scale jobs, the system can parallelize multiple one-shot agents to handle an extensive list of tasks efficiently.
+- Periodic: Configured to execute a specific task at scheduled intervals, enabling continuous and automated monitoring of system states.
 
-HTTP API The API is the central hub for all data interaction within the SCANDALE platform. It is built on the high-performance FastAPI framework, a choice made to support high-throughput data ingestion and provide asynchronous capabilities essential for real-time services like the Pub/Sub mechanism. The API's key functions include collecting data, verifying the integrity and format of incoming data using Pydantic models, and providing robust services for the storage and retrieval of all checks and their corresponding proofs.
+### Aggregation Engine
+
+The Aggregation Engine acts as the central consolidator of data from the entire probe network. Its main responsibility is to collect and centralize data from the various scanning tools. As an additional critical function, this agent is also responsible for managing the Time-Stamp Protocol (TSP) process as defined by RFC 3161. By interacting with a trusted third-party provider (e.g., [freetsa.org](https://freetsa.org)), it can obtain a cryptographic timestamp for the collected data.
+
+### HTTP API
+
+The API is the central hub for all data interaction within the SCANDALE platform. It is built on the high-performance FastAPI framework, a choice made to support high-throughput data ingestion and provide asynchronous capabilities essential for real-time services like the Pub/Sub mechanism. The API's key functions include collecting data, verifying the integrity and format of incoming data using Pydantic models, and providing robust services for the storage and retrieval of all checks and their corresponding proofs.
 
 ## The SPADE Agent-Based Framework
 
@@ -331,11 +334,8 @@ $ curl -X 'GET' \
 This verification step confirms that:
 
 1. The timestamp token was issued by a trusted TSA.
-
 2. The token’s signature is cryptographically valid.
-
 3. The hash embedded in the token matches the hash of the stored scan payload.
-
 4. The data has not been altered since the timestamp was issued.
 
 The validation process is performed using the original TSA certificate and the RFC 3161 verification workflow, as illustrated in the following implementation excerpt:
