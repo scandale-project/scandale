@@ -88,37 +88,55 @@ flowchart LR
     E[External source] -->|HTTP POST| B
 ```
 
+The system supports multiple data ingestion paths, enabling both agent-based and external sources to submit scan results. The core operational flow can be summarized as follows:
 
-The system's data flow provides multiple ingress paths, ensuring flexibility for both agent-based and external data sources. The primary operational flows are as follows:
+1. Data Collection  
+   A distributed set of Probe agents performs localized scans. Each probe normalizes the output of its embedded tools into a standardized format before transmitting the results.
 
-1. Data Collection: A distributed network of Probes conducts localized scans. These agents execute their tasks and transmit normalized, standardized results to the Aggregation Engine.
-2. Aggregation & Timestamping: The Aggregation Engine consolidates data from the probe network. It can then request a cryptographic timestamp from a third-party RFC 3161 service for the consolidated data before forwarding it for storage.
-3. Storage & Retrieval: A high-performance FastAPI-based API serves as the primary data interface. It receives data via HTTP POST from the Aggregation Engine or directly from an External source, writes the information to a database, and provides services for retrieval. This API component can also independently request timestamps from the third-party service for data it receives.
+2. Aggregation and Timestamping  
+   The Aggregation Engine centralizes data received from the probe network. When required, it requests a cryptographic timestamp from a trusted third-party RFC 3161 Time-Stamping Authority (TSA) to produce verifiable proof of data existence at a given time.
+
+3. Ingestion and Storage  
+   A FastAPI-based HTTP API acts as the primary data interface. It accepts scan data either from the Aggregation Engine or directly from external sources, verifies the integrity of the submission, and persists both the scan results and their associated proofs in the database.
 
 
-## Analysis of Core Components
+## Core Components
 
 ### Probe Agents
 
-These agents are the primary data collectors distributed across the monitored environment. They are responsible for executing scans and feeding the results back into the system. Their two main responsibilities are embedding various scanning tools (probes) and normalizing the output from these tools into a standardized format before transferring the data. Probe agents operate in two distinct modes:
+Probe agents are the primary data collectors deployed across the monitored environment. They embed one or more scanning tools and are responsible for transforming heterogeneous tool outputs into a normalized, standardized representation before transmission.
 
-- One-shot: Designed for punctual tasks that are often triggered by a user action.
-  For large-scale jobs, the system can parallelize multiple one-shot agents to handle an extensive list of tasks efficiently.
-- Periodic: Configured to execute a specific task at scheduled intervals, enabling continuous and automated monitoring of system states.
+Probes operate in two execution modes:
+
+- **One-shot**: Intended for ad hoc or user-triggered tasks. Large workloads can be parallelized by spawning multiple one-shot agents.
+- **Periodic**: Configured to run scheduled tasks at fixed intervals, enabling continuous and automated monitoring.
+
 
 ### Aggregation Engine
 
-The Aggregation Engine acts as the central consolidator of data from the entire probe network. Its main responsibility is to collect and centralize data from the various scanning tools. As an additional critical function, this agent is also responsible for managing the Time-Stamp Protocol (TSP) process as defined by RFC 3161. By interacting with a trusted third-party provider (e.g., [freetsa.org](https://freetsa.org)), it can obtain a cryptographic timestamp for the collected data.
+The Aggregation Engine serves as the central consolidation point for all probe-generated data. Beyond aggregation, it manages the Time-Stamp Protocol (TSP) workflow defined in RFC 3161. By interacting with a trusted third-party TSA (e.g., [freetsa.org](https://freetsa.org)), it can obtain cryptographic timestamps that provide strong, externally verifiable evidence of data integrity and timing.
+
 
 ### HTTP API
 
-The API is the central hub for all data interaction within the SCANDALE platform. It is built on the high-performance FastAPI framework, a choice made to support high-throughput data ingestion and provide asynchronous capabilities essential for real-time services like the Pub/Sub mechanism. The API's key functions include collecting data, verifying the integrity and format of incoming data using Pydantic models, and providing robust services for the storage and retrieval of all checks and their corresponding proofs.
+The HTTP API is the main interaction layer of the SCANDALE platform. Built on FastAPI, it is designed for high-throughput ingestion and asynchronous processing, which are essential for real-time features such as Pub/Sub distribution.
 
-## The SPADE Agent-Based Framework
+Its responsibilities include:
 
-The entire backend architecture for deploying and managing the probe network relies on the Smart Python Agent Development Environment (SPADE). The strategic decision to build on a mature, agent-based framework offloads the complexity of agent lifecycle management, allowing SCANDALE to focus on its core mission of data collection and verification rather than reinventing foundational distributed systems infrastructure. Within this framework, each agent is an independent entity whose lifecycle is managed by the platform; each agent is authenticated, registered, and declares its availability via a presence notification system. This model provides a flexible and scalable foundation for orchestrating complex data collection tasks across a distributed environment.
+- Receiving scan data from aggregation components or external sources
+- Validating structure and integrity using Pydantic models
+- Verifying timestamp tokens offline using TSA certificates
+- Persisting scans and associated proofs
+- Exposing retrieval endpoints for stored data
 
-Having detailed the architectural components, the following section will explore the specific mechanisms and data formats that enable the system's core functionality.
+
+## SPADE Agent-Based Framework
+
+The backend architecture relies on the Smart Python Agent Development Environment (SPADE) to deploy and manage the probe network. Using a mature agent framework abstracts away agent lifecycle management and communication concerns, allowing SCANDALE to focus on data collection, aggregation, and verification.
+
+Within SPADE, each agent is an authenticated and registered entity that advertises its availability via presence notifications. This model provides a scalable and flexible foundation for orchestrating distributed scanning activities across heterogeneous environments.
+
+The following section details the data formats and verification mechanisms that underpin the system’s core guarantees.
 
 ![Bahaviour page](img/01-behaviour-page.png)
 
@@ -172,7 +190,7 @@ The structure for data originating from scans is designed for clarity and comple
 
 Data from the scans:
 
-```javascript
+```json
 {
     "version": "1",
     "format": "scanning",
@@ -194,7 +212,7 @@ The *result_parser* field specifies the logic for normalizing scan output, while
 
 Agent configuration:
 
-```javascript
+```json
 {
     "uuid": "",
     "period": 3600,
@@ -285,6 +303,8 @@ Example: retrieving the most recent timestamped item:
 
 ```bash
 $ curl -s -X 'GET' 'http://127.0.0.1:8000/items/?skip=0&limit=1' -H 'accept: application/json' | jq .
+```
+```json
 [
   {
     "scan_data": {
@@ -311,6 +331,8 @@ For a given scan UUID, the API exposes a dedicated endpoint to retrieve the corr
 
 ```bash
 $ curl -s -X 'GET' 'http://127.0.0.1:8000/TimeStampTokens/get_timestamp/3f68c6bf-6b35-48bf-9554-b90bb5c99cf5' -H 'accept: application/json' | jq .
+```
+```json
 {
   "timestamp": "2023-12-20T09:28:16"
 }
@@ -326,6 +348,8 @@ Beyond metadata inspection, SCANDALE provides an endpoint to perform a full cryp
 
 ```bash
 $ curl -s -X 'GET' 'http://127.0.0.1:8000/TimeStampTokens/check/3f68c6bf-6b35-48bf-9554-b90bb5c99cf5' -H 'accept: application/json' | jq .
+```
+```json
 {
   "validity": true
 }
