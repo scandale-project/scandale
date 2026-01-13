@@ -1,0 +1,23 @@
+cff-version: 1.1.0
+message: "If you use or build upon this work, please cite it."
+title: "A Libre Architecture for Verifiable Data Collection and Proof-of-Check Timestamping"
+version: 0.2.0
+doi: 10.13140/RG.2.2.28080.83205
+url: https://github.com/scandale-project/scandale/blob/main/paper/A_Libre_Architecture_for_Verifiable_Data_Collection_and_Proof_of_Check_Timestamping_2026.pdf
+repository-code: https://github.com/scandale-project/scandale
+date-released: 2026-01-13
+abstract: >
+  Establishing trusted, time-stamped records of system states in distributed environments presents a
+  significant challenge for maintaining accountability and security. Organizations often struggle to
+  produce non-repudiable proof that a specific check was performed or that a system was in a particular
+  state at a precise moment in time. SCANDALE is a libre software solution designed to address this
+  challenge by providing a robust backend architecture for collecting data from distributed probes and
+  storing immutable proofs of those checks. Its core components include a high-performance HTTP API with
+  real-time capabilities, an agent-based backend built on the Smart Python Agent Development Environment
+  (SPADE) for scalable probe management, and a dedicated service for cryptographic timestamping in
+  compliance with RFC 3161. The platform's primary contribution is its ability to transform operational
+  measurements into cryptographically verifiable evidence, yielding a durable and non-repudiable audit trail.
+authors:
+  - family-names: Bonhomme
+    given-names: Cédric
+    orcid: https://orcid.org/0009-0003-7679-0109
