@@ -64,6 +64,11 @@ A documentation is available [here](https://scandale.readthedocs.io) with more
 information about the architecture and the installation process.
 
 
+## How to cite
+
+Bonhomme, C. (2026). A Libre Architecture for Verifiable Data Collection and Proof-of-Check Timestamping (Version 0.2.0) [Computer software]. https://doi.org/10.13140/RG.2.2.28080.83205
+
+
 ## License
 
 `SCANDALE` is distributed under the terms of the
