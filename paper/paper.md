@@ -6,7 +6,7 @@ author:
   - "**Cédric Bonhomme**"
   - "*Computer Incident Response Center Luxembourg*"
   - "`cedric.bonhomme@circl.lu`"
-date: "2026"
+date: "2026-01-13"
 tags: ["SPADE", "MAS", "Agent", "Monitoring", "Timestamping", "RFC 3161", "Trust model"]
 toc: true
 lang: "en"
@@ -17,27 +17,26 @@ titlepage-rule-height: 0
 titlepage-background: "img/background.pdf"
 titlepage-author-spacing: 0.5
 toc-own-page: true
-watermark: "Draft"
 ---
 
 \phantomsection
 \addcontentsline{toc}{section}{Abstract}
 \section*{Abstract}
 
-Establishing trusted, time-stamped records of system states in distributed environments presents a significant challenge for maintaining accountability and security. Organizations often struggle to produce non-repudiable proof that a specific check was performed or that a system was in a particular state at a precise moment in time. SCANDALE is a libre software solution designed to address this challenge by providing a robust backend architecture for collecting data from distributed probes and storing immutable proofs of those checks. Its core components include a high-performance HTTP API with real-time capabilities, an agent-based backend built on the Smart Python Agent Development Environment (SPADE) for scalable probe management, and a dedicated service for cryptographic timestamping in compliance with RFC 3161. The platform’s primary contribution is its ability to transform operational measurements into cryptographically verifiable evidence, yielding a durable and non-repudiable audit trail.
+Establishing trusted, time-stamped records of system states in distributed environments presents a significant challenge for maintaining accountability and security. Organizations often struggle to produce non-repudiable proof that a specific check was performed or that a system was in a particular state at a precise moment in time. SCANDALE is a libre software solution designed to address this challenge by providing a robust backend architecture for collecting data from distributed probes and storing immutable proofs of those checks. Its core components include a high-performance HTTP API with real-time capabilities, an agent-based backend built on the Smart Python Agent Development Environment (SPADE) for scalable probe management, and a dedicated service for cryptographic timestamping in compliance with RFC 3161. The platform’s primary contribution is its ability to transform operational measurements into **cryptographically verifiable evidence**, yielding a durable and non-repudiable audit trail.
 
 
 # Introduction: The Imperative for Verifiable System Audits
 
 In modern cybersecurity and IT operations, the ability to produce verifiable data is of strategic importance. Proving that a specific action was taken or that a system was in a particular state at a precise time is critical during incident response, compliance audits, regulatory oversight, or contractual disputes. In the absence of tamper-evident mechanisms, organizations remain vulnerable to contestation and lack the evidentiary guarantees required to enforce accountability.
 
-[SCANDALE](https://github.com/scandale-project/scandale) is an open-source platform engineered to address this gap by enabling the creation of verifiable and non-repudiable audit artifacts. It provides a comprehensive architecture for collecting data from a network of distributed probes and cryptographically timestamping the resulting artifacts to produce authoritative “proofs of check.” These proofs make it possible to demonstrate, without reliance on implicit trust, that a given observation existed at a specific point in time.
+[SCANDALE](https://github.com/scandale-project/scandale)^[Source code of SCANDALE: https://github.com/scandale-project/scandale] is an open-source platform engineered to address this gap by enabling the creation of verifiable and non-repudiable audit artifacts. It provides a comprehensive architecture for collecting data from a network of distributed probes and cryptographically timestamping the resulting artifacts to produce authoritative “proofs of check.” These proofs make it possible to demonstrate, without reliance on implicit trust, that a given observation existed at a specific point in time. SCANDALE is distributed under the terms of the [GNU Affero General Public License version 3](https://www.gnu.org/licenses/agpl-3.0.html)^[AGPLv3: https://www.gnu.org/licenses/agpl-3.0.html] and is fully operational.
 
 The platform is composed of three primary components:
 
 * A documented HTTP API featuring a publish–subscribe mechanism for real-time data dissemination.
 * A backend built on the Smart Python Agent Development Environment (SPADE), responsible for deploying, coordinating, and monitoring distributed probes.
-* A cryptographic timestamping service that anchors collected data to an external Time-Stamping Authority (TSA) in accordance with RFC 3161 standards [@rfc3161].
+* A cryptographic timestamping service that anchors collected data to an external **Time-Stamping Authority** (TSA) in accordance with RFC 3161 standards [@rfc3161].
 
 This paper presents the design principles, architecture, and validation mechanisms of SCANDALE, with a particular focus on how cryptographic timestamping and offline verification enable trust-minimizing, long-term auditability.
 
@@ -184,7 +183,7 @@ asyncio.run(main())
 
 ## Standardized Data Formats
 
-To ensure seamless interoperability between components, SCANDALE employs standardized JSON formats, with validation enforced by Pydantic.
+To ensure seamless interoperability between components, SCANDALE employs standardized JSON formats, with validation enforced by [Pydantic](https://pydantic.dev)^[Pydandic: https://pydantic.dev].
 
 The structure for data originating from scans is designed for clarity and completeness. The meta object contains essential context like a UUID, source, and timestamp, while the payload contains the base64-encoded raw output from the scanning tool.
 
@@ -206,7 +205,7 @@ Data from the scans:
 }
 ```
 
-The configuration for each probe agent is also defined in a standardized format.
+The configuration for each probe agent is also defined in JSON format.
 This allows administrators to define an agent's behavior, including its execution period, target, and the command it should run.
 The *result_parser* field specifies the logic for normalizing scan output, while the *up_agent* field designates the destination for the processed data, typically the Aggregation Engine.
 
@@ -412,7 +411,7 @@ The SCANDALE project is licensed under the GNU Affero General Public License ver
 
 This paper is licensed under the
 [Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/)
-license.
+license^[https://creativecommons.org/licenses/by-sa/4.0].
 
 
 # References

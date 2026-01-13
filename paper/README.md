@@ -43,7 +43,7 @@ pandoc paper.md \
 [Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/)
 
 ~~~
-Copyright (c) 2025 Computer Incident Response Center Luxembourg (CIRCL)
-Copyright (C) 2025 Cédric Bonhomme - https://github.com/cedricbonhomme
+Copyright (c) 2025-2026 Computer Incident Response Center Luxembourg (CIRCL)
+Copyright (C) 2025-2026 Cédric Bonhomme - https://github.com/cedricbonhomme
 ~~~
 
