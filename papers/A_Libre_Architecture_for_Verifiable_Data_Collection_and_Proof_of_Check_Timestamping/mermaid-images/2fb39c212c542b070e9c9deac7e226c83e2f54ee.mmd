@@ -1,0 +1,27 @@
+sequenceDiagram
+    participant Probe
+    participant Aggregation as Aggregation Engine
+    participant TSA as Third-party TSA
+    participant API as FastAPI
+    participant DB as Database
+    participant Client
+
+    %% Data collection
+    Probe->>Aggregation: Send standardized scan result
+    Aggregation->>Aggregation: Validate & normalize scan data
+
+    %% Timestamp acquisition
+    Aggregation->>TSA: Request timestamp (RT.timestamp)
+    TSA-->>Aggregation: Return TimeStampToken (TST)
+
+    %% Store scan + token
+    Aggregation->>API: HTTP POST scan data + TST
+    API->>DB: Store scan data + TST
+    DB-->>API: Confirmation stored
+
+    %% Offline token verification
+    Client->>API: Request token verification (scan_uuid)
+    API->>DB: Retrieve scan data + TST
+    DB-->>API: Return scan + TST
+    API->>API: Verify token signature offline using TSA certificate
+    API-->>Client: Return validity result (true/false)

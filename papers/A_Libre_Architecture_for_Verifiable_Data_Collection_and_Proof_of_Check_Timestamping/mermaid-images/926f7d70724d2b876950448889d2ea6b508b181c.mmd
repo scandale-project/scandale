@@ -1,0 +1,26 @@
+flowchart LR
+    %% Probes send data
+    P[Probe] -->|Standardized result| A(Aggregation Engine)
+    P1[Probe] -->|Standardized result| A
+    P2[Probe] -->|Standardized result| A
+
+    %% Aggregation engine requests timestamp from TSA
+    A -.->|Request timestamp RT.timestamp| TSA[Third-party TSA]
+
+    %% Aggregation sends data and token to API
+    A -->|HTTP POST scan data + TST| B[FastAPI API]
+
+    %% API writes to database
+    B -->|Write scan + token| G[Database]
+
+    %% API offline validation of token
+    B -.->|Verify token signature offline using TSA certificate| B
+
+    %% Agents registry
+    P -.-> H[Agents registry]
+    P1 -.-> H
+    P2 -.-> H
+    A -.-> H
+
+    %% External sources can also post scan data
+    E[External source] -->|HTTP POST| B
